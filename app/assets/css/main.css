@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.poster-aspect {
+	aspect-ratio: 2 / 3;
+}
