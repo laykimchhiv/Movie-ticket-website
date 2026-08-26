@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const mobileMenu = ref(false)
 </script>
 
@@ -12,7 +11,7 @@ const mobileMenu = ref(false)
 					🎬
 				</div>
 
-				<span class="text-xl font-bold">
+				<span class="text-xl font-bold text-white">
 					Cine<span class="text-red-500">Book</span>
 				</span>
 			</a>
@@ -30,7 +29,7 @@ const mobileMenu = ref(false)
 					<input
 						type="text"
 						placeholder="Search movie..."
-						class="w-48 rounded-full border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm outline-none placeholder:text-gray-500 focus:border-red-500"
+						class="w-48 rounded-full border text-white border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm outline-none placeholder:text-gray-500 focus:border-red-500"
 					/>
 				</div>
 
