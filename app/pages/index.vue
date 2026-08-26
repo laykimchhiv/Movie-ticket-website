@@ -166,49 +166,13 @@ const filteredMovies = () => {
 
             <!-- Movie Grid -->
             <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-
-                <div v-for="movie in filteredMovies()" :key="movie.title"
-                    class="group overflow-hidden rounded-2xl border border-white/10 bg-[#15151b] transition duration-300 hover:-translate-y-2 hover:border-red-500/50">
-
-                    <!-- Poster -->
-                    <div class="relative poster-aspect overflow-hidden">
-
-                        <img :src="movie.image" :alt="movie.title"
-                            class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
-
-                        <!-- Rating -->
-                        <div
-                            class="absolute right-2 top-2 rounded-lg bg-black/70 px-2 py-1 text-xs font-semibold backdrop-blur">
-                            ⭐ {{ movie.rating }}
-                        </div>
-
-                        <!-- Hover Button -->
-                        <div
-                            class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition group-hover:opacity-100">
-                            <button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold hover:bg-red-700">
-                                Book Now
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <!-- Movie Info -->
-                    <div class="p-4">
-
-                        <h3 class="truncate font-semibold">
-                            {{ movie.title }}
-                        </h3>
-
-                        <p class="mt-1 truncate text-xs text-gray-500">
-                            {{ movie.genre }}
-                        </p>
-
-                    </div>
-
-                </div>
-
+                <UserMovieCard
+                v-for="movie in filteredMovies()"
+                :key="movie.title"
+                :movie="movie"
+                @book="handleBook"
+                />
             </div>
-
             <!-- Empty Search -->
             <div v-if="filteredMovies().length === 0" class="py-20 text-center text-gray-500">
                 No movies found.
