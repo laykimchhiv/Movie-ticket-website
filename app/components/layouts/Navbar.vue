@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const mobileMenu = ref(false)
 </script>
 
@@ -12,16 +11,16 @@ const mobileMenu = ref(false)
 					🎬
 				</div>
 
-				<span class="text-xl font-bold">
+				<span class="text-xl font-bold text-white">
 					Cine<span class="text-red-500">Book</span>
 				</span>
 			</a>
 
 			<nav class="hidden items-center gap-8 md:flex">
-				<a href="#" class="text-sm font-medium text-white">Home</a>
-				<a href="#movies" class="text-sm text-gray-400 transition hover:text-white">Movies</a>
-				<a href="#coming" class="text-sm text-gray-400 transition hover:text-white">Coming Soon</a>
-				<a href="#about" class="text-sm text-gray-400 transition hover:text-white">About</a>
+				<NuxtLink to="/" class="text-sm font-medium text-white">Home</NuxtLink>
+				<NuxtLink to="/movie" class="text-sm text-gray-400 transition hover:text-white">Movies</NuxtLink>
+				<NuxtLink to="/coming" class="text-sm text-gray-400 transition hover:text-white">Coming Soon</NuxtLink>
+				<NuxtLink to="/about" class="text-sm text-gray-400 transition hover:text-white">About</NuxtLink>
 			</nav>
 
 			<div class="hidden items-center gap-4 md:flex">
@@ -30,7 +29,7 @@ const mobileMenu = ref(false)
 					<input
 						type="text"
 						placeholder="Search movie..."
-						class="w-48 rounded-full border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm outline-none placeholder:text-gray-500 focus:border-red-500"
+						class="w-48 rounded-full border text-white border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm outline-none placeholder:text-gray-500 focus:border-red-500"
 					/>
 				</div>
 

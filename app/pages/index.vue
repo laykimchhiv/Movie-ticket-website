@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
 const movies = ref([
@@ -76,11 +76,15 @@ const comingSoon = ref([
 const search = ref('')
 
 const filteredMovies = () => {
-    if (!search.value) return movies.value
+  if (!search.value) return movies.value
 
-    return movies.value.filter((movie) =>
-        movie.title.toLowerCase().includes(search.value.toLowerCase())
-    )
+  return movies.value.filter((movie) =>
+    movie.title.toLowerCase().includes(search.value.toLowerCase())
+  )
+}
+
+const handleBook = (movie: any) => {
+  console.log('Booking:', movie.title)
 }
 </script>
 
@@ -163,7 +167,6 @@ const filteredMovies = () => {
 
             </div>
 
-
             <!-- Movie Grid -->
             <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
                 <UserMovieCard
@@ -173,13 +176,13 @@ const filteredMovies = () => {
                 @book="handleBook"
                 />
             </div>
+
             <!-- Empty Search -->
             <div v-if="filteredMovies().length === 0" class="py-20 text-center text-gray-500">
                 No movies found.
             </div>
 
         </section>
-
 
         <!-- ================= COMING SOON ================= -->
         <section id="coming" class="border-y border-white/5 bg-[#101014]">
@@ -195,7 +198,6 @@ const filteredMovies = () => {
                         Upcoming Movies
                     </h2>
                 </div>
-
 
                 <div class="grid grid-cols-2 gap-5 sm:grid-cols-4">
 
@@ -227,7 +229,6 @@ const filteredMovies = () => {
             </div>
 
         </section>
-
 
         <!-- ================= WHY CHOOSE US ================= -->
         <section id="about" class="mx-auto max-w-7xl px-5 py-20 lg:px-8">
@@ -265,7 +266,6 @@ const filteredMovies = () => {
 
                 </div>
 
-
                 <div
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
@@ -284,7 +284,6 @@ const filteredMovies = () => {
 
                 </div>
 
-
                 <div
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
@@ -302,7 +301,6 @@ const filteredMovies = () => {
                     </p>
 
                 </div>
-
 
                 <div
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
@@ -325,7 +323,6 @@ const filteredMovies = () => {
             </div>
 
         </section>
-
 
         <!-- ================= CTA ================= -->
         <section class="px-5 pb-20">
@@ -350,7 +347,6 @@ const filteredMovies = () => {
 
         </section>
 
-
         <!-- ================= FOOTER ================= -->
         <footer class="border-t border-white/10 bg-[#08080b]">
 
@@ -374,7 +370,6 @@ const filteredMovies = () => {
                         </p>
                     </div>
 
-
                     <div>
                         <h3 class="font-semibold">
                             Quick Links
@@ -388,7 +383,6 @@ const filteredMovies = () => {
                         </div>
                     </div>
 
-
                     <div>
                         <h3 class="font-semibold">
                             Support
@@ -401,7 +395,6 @@ const filteredMovies = () => {
                             <a href="#" class="hover:text-white">Terms</a>
                         </div>
                     </div>
-
 
                     <div>
                         <h3 class="font-semibold">
@@ -427,7 +420,6 @@ const filteredMovies = () => {
                     </div>
 
                 </div>
-
 
                 <div class="mt-10 border-t border-white/10 pt-6 text-center text-xs text-gray-600">
                     © 2026 CineBook. All rights reserved.
