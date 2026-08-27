@@ -1,0 +1,90 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Avengers: Endgame",
+      "genre": ["Action", "Adventure", "Sci-Fi"],
+      "rating": 8.4,
+      "releaseDate": "2019-04-26",
+      "description": "The Avengers face their greatest challenge in a final battle to save the universe.",
+      "poster": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/avengers-endgame.mp4"
+    },
+    {
+      "id": 2,
+      "title": "Spider-Man: No Way Home",
+      "genre": ["Action", "Adventure", "Sci-Fi"],
+      "rating": 8.2,
+      "releaseDate": "2021-12-17",
+      "description": "Peter Parker's identity is revealed and he asks Doctor Strange for help.",
+      "poster": "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/14QbnygCuTO0vl7CAFmPf1fgZfV.jpg",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/spiderman.mp4"
+    }
+  ],
+
+  "series": [
+    {
+      "id": 101,
+      "title": "One Piece",
+      "genre": ["Action", "Adventure", "Fantasy"],
+      "rating": 8.7,
+      "poster": "https://image.tmdb.org/t/p/w500/unk1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+      "type": "series",
+      "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
+      "parts": [
+        {
+          "id": 1,
+          "part": 1,
+          "title": "Part 1",
+          "description": "The beginning of Luffy's adventure.",
+          "videoUrl": "https://example.com/videos/one-piece-part-1.mp4"
+        },
+        {
+          "id": 2,
+          "part": 2,
+          "title": "Part 2",
+          "description": "Luffy continues his journey with his crew.",
+          "videoUrl": "https://example.com/videos/one-piece-part-2.mp4"
+        },
+        {
+          "id": 3,
+          "part": 3,
+          "title": "Part 3",
+          "description": "The crew faces a new adventure.",
+          "videoUrl": "https://example.com/videos/one-piece-part-3.mp4"
+        }
+      ]
+    }
+  ],
+
+  "categories": [
+    {
+      "id": 1,
+      "name": "Action"
+    },
+    {
+      "id": 2,
+      "name": "Adventure"
+    },
+    {
+      "id": 3,
+      "name": "Animation"
+    },
+    {
+      "id": 4,
+      "name": "Comedy"
+    },
+    {
+      "id": 5,
+      "name": "Drama"
+    },
+    {
+      "id": 6,
+      "name": "Sci-Fi"
+    }
+  ]
+}

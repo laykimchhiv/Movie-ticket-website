@@ -17,10 +17,10 @@ const mobileMenu = ref(false)
 			</a>
 
 			<nav class="hidden items-center gap-8 md:flex">
-				<a href="#" class="text-sm font-medium text-white">Home</a>
-				<a href="#movies" class="text-sm text-gray-400 transition hover:text-white">Movies</a>
-				<a href="#coming" class="text-sm text-gray-400 transition hover:text-white">Coming Soon</a>
-				<a href="#about" class="text-sm text-gray-400 transition hover:text-white">About</a>
+				<NuxtLink to="/" class="text-sm font-medium text-white">Home</NuxtLink>
+				<NuxtLink to="/movie" class="text-sm text-gray-400 transition hover:text-white">Movies</NuxtLink>
+				<NuxtLink to="/coming" class="text-sm text-gray-400 transition hover:text-white">Coming Soon</NuxtLink>
+				<NuxtLink to="/about" class="text-sm text-gray-400 transition hover:text-white">About</NuxtLink>
 			</nav>
 
 			<div class="hidden items-center gap-4 md:flex">

@@ -76,11 +76,15 @@ const comingSoon = ref([
 const search = ref('')
 
 const filteredMovies = () => {
-    if (!search.value) return movies.value
+  if (!search.value) return movies.value
 
-    return movies.value.filter((movie) =>
-        movie.title.toLowerCase().includes(search.value.toLowerCase())
-    )
+  return movies.value.filter((movie) =>
+    movie.title.toLowerCase().includes(search.value.toLowerCase())
+  )
+}
+
+const handleBook = (movie: any) => {
+  console.log('Booking:', movie.title)
 }
 </script>
 
