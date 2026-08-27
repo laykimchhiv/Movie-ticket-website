@@ -3,6 +3,7 @@
     {
       "id": 1,
       "title": "Avengers: Endgame",
+      "category": "Hollywood",
       "genre": ["Action", "Adventure", "Sci-Fi"],
       "rating": 8.4,
       "releaseDate": "2019-04-26",
@@ -15,6 +16,7 @@
     {
       "id": 2,
       "title": "Spider-Man: No Way Home",
+      "category": "Hollywood",
       "genre": ["Action", "Adventure", "Sci-Fi"],
       "rating": 8.2,
       "releaseDate": "2021-12-17",
@@ -23,6 +25,216 @@
       "backdrop": "https://image.tmdb.org/t/p/w1280/14QbnygCuTO0vl7CAFmPf1fgZfV.jpg",
       "type": "movie",
       "videoUrl": "https://example.com/videos/spiderman.mp4"
+    },
+
+    {
+      "id": 3,
+      "title": "My Bias My Boss",
+      "category": "K-Drama",
+      "genre": ["Drama", "Romance"],
+      "rating": 8.8,
+      "releaseDate": "2023-05-10",
+      "description": "An office romance unfolds when an idol superfan accidentally lands a job working under her favorite star.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm8EKnIM6khdRa_rSFjkWxIPtLDDJhi2yI2p7VqKVXkg&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/my-bias-my-boss.mp4"
+    },
+
+    {
+      "id": 4,
+      "title": "True Beauty",
+      "category": "K-Drama",
+      "genre": ["Drama", "Romance", "Comedy"],
+      "rating": 9.3,
+      "releaseDate": "2020-12-09",
+      "description": "A high school student masters the art of makeup to navigate school social life and unexpected love triangles.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8EElKa7ncrbbgTaBrCbqQZ2tAoECMtFBiAwp4TxIVZw&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/true-beauty.mp4"
+    },
+
+    {
+      "id": 5,
+      "title": "Lovely Runner",
+      "category": "K-Drama",
+      "genre": ["Drama", "Romance", "Fantasy"],
+      "rating": 9.0,
+      "releaseDate": "2024-04-08",
+      "description": "A devoted fan travels back in time to save her favorite celebrity from a tragic fate.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfQWCmWxXi2Zon9mFWgd-vSRFPc0fLSwJFJW3zgR31JA&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/lovely-runner.mp4"
+    },
+
+    {
+      "id": 6,
+      "title": "Revenged Love",
+      "category": "C-Drama",
+      "genre": ["Drama", "Romance"],
+      "rating": 8.9,
+      "releaseDate": "2022-09-14",
+      "description": "A tale of passion, betrayal, and justice as two rivals navigate power and emotion.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSHMeGNwJcSSzhzV7DRsTEujnUHEOskbmzdozMq6DT2g&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/revenged-love.mp4"
+    },
+
+    {
+      "id": 7,
+      "title": "Speed and Love",
+      "category": "C-Drama",
+      "genre": ["Action", "Drama", "Romance"],
+      "rating": 8.8,
+      "releaseDate": "2023-07-06",
+      "description": "A high-octane racing thriller exploring ambition, speed, and romance on the track.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo0WxExpAE7HQjqMt7SC-QxVLA5fiQqdQn_wIKx8wZFA&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/speed-and-love.mp4"
+    },
+
+    {
+      "id": 8,
+      "title": "GoodBoy",
+      "category": "K-Drama",
+      "genre": ["Action", "Crime", "Drama"],
+      "rating": 8.8,
+      "releaseDate": "2024-01-15",
+      "description": "Former Olympic athletes form a special police force unit to fight violent crime.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKDaZtZGmxQVUPr-2U_WFWg6gBQRaTE3wvdZvwdFuhKA&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/goodboy.mp4"
+    },
+
+    {
+      "id": 9,
+      "title": "Teach You a Lesson",
+      "category": "K-Drama",
+      "genre": ["Drama"],
+      "rating": 8.8,
+      "releaseDate": "2023-11-02",
+      "description": "A dedicated educator takes unconventional steps to reform a troubled classroom.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReFXv9aTMyla5zfKp1NMkZzBqfaOPsN5fQo2_RilS8LQ&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/teach-you-a-lesson.mp4"
+    },
+
+    {
+      "id": 10,
+      "title": "Falling Into Your Smile",
+      "category": "C-Drama",
+      "genre": ["Drama", "Romance", "Comedy"],
+      "rating": 8.8,
+      "releaseDate": "2021-06-23",
+      "description": "An aspiring female gamer steps into the professional esports arena and finds love.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnMPwoclH6yHyuAzjzL3bknsETKrebvIu6ugsen_Umew&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/falling-into-your-smile.mp4"
+    },
+
+    {
+      "id": 11,
+      "title": "When I Fly Towards You",
+      "category": "C-Drama",
+      "genre": ["Drama", "Romance"],
+      "rating": 8.8,
+      "releaseDate": "2023-06-13",
+      "description": "A sweet youth romance following high school classmates growing up together.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyigsrxDWwGBkpfs788k4y-XMPrEzjNUm7tSE_W3PfOg&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/when-i-fly-towards-you.mp4"
+    },
+
+    {
+      "id": 12,
+      "title": "ABO Desire",
+      "category": "BL Series",
+      "genre": ["Drama", "Romance", "Fantasy"],
+      "rating": 8.8,
+      "releaseDate": "2023-08-20",
+      "description": "A romantic fantasy story following two contrasting personalities bound by fate.",
+      "poster": "https://i.mydramalist.com/mOYj21_4f.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/abo-desire.mp4"
+    },
+
+    {
+      "id": 13,
+      "title": "Bloodhounds",
+      "category": "K-Drama",
+      "genre": ["Action", "Crime", "Drama"],
+      "rating": 8.8,
+      "releaseDate": "2023-06-09",
+      "description": "Two young boxers join forces with a benevolent moneylender to take down a ruthless loan shark.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl0P50aPfNdBLxNwRED4ILm1rITCRdAvHI7-0m-a3DSQ&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/bloodhounds.mp4"
+    },
+
+    {
+      "id": 14,
+      "title": "The Batman",
+      "category": "Hollywood",
+      "genre": ["Action", "Crime"],
+      "rating": 7.8,
+      "releaseDate": "2022-03-04",
+      "description": "Batman investigates corruption and crime in Gotham City.",
+      "poster": "https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/the-batman.mp4"
+    },
+
+    {
+      "id": 15,
+      "title": "Dune",
+      "category": "Hollywood",
+      "genre": ["Sci-Fi", "Adventure"],
+      "rating": 8.0,
+      "releaseDate": "2021-10-22",
+      "description": "A young heir must survive political conflict and a dangerous desert world.",
+      "poster": "https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/dune.mp4"
+    },
+
+    {
+      "id": 16,
+      "title": "Inside Out 2",
+      "category": "Hollywood",
+      "genre": ["Animation", "Comedy", "Adventure"],
+      "rating": 7.6,
+      "releaseDate": "2024-06-14",
+      "description": "New emotions arrive as Riley enters a new stage of her life.",
+      "poster": "https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/inside-out-2.mp4"
+    },
+
+    {
+      "id": 17,
+      "title": "Top Gun: Maverick",
+      "category": "Hollywood",
+      "genre": ["Action"],
+      "rating": 8.3,
+      "releaseDate": "2022-05-27",
+      "description": "A legendary pilot returns to train a new generation of aviators.",
+      "poster": "https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1DX17ljH.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     }
   ],
 
@@ -30,9 +242,11 @@
     {
       "id": 101,
       "title": "One Piece",
+      "category": "Anime",
       "genre": ["Action", "Adventure", "Fantasy"],
       "rating": 8.7,
       "poster": "https://image.tmdb.org/t/p/w500/unk1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+      "backdrop": "",
       "type": "series",
       "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
       "parts": [
@@ -85,6 +299,18 @@
     {
       "id": 6,
       "name": "Sci-Fi"
+    },
+    {
+      "id": 7,
+      "name": "Romance"
+    },
+    {
+      "id": 8,
+      "name": "Fantasy"
+    },
+    {
+      "id": 9,
+      "name": "Crime"
     }
   ]
 }
