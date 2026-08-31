@@ -95,7 +95,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script >
 const API_BASE = 'http://localhost:8000'
 
 const route = useRoute()
