@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+const { isLoggedIn } = useAuth()
+const showLogin = ref(false)
+
+const handleMovieClick = (movie: any) => {
+  if (!isLoggedIn.value) {
+    showLogin.value = true
+    return
+  }
+  navigateTo(`/watch/${movie.id}`)
+}
 
 const movies = ref([
     {
+        id: 1,
         title: 'Avengers: Endgame',
         genre: 'Action • Adventure',
         rating: '8.4',
@@ -10,6 +21,7 @@ const movies = ref([
             'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg',
     },
     {
+        id: 2,
         title: 'Spider-Man: No Way Home',
         genre: 'Action • Sci-Fi',
         rating: '8.2',
@@ -17,6 +29,7 @@ const movies = ref([
             'https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
     },
     {
+        id: 14,
         title: 'The Batman',
         genre: 'Action • Crime',
         rating: '7.8',
@@ -24,6 +37,7 @@ const movies = ref([
             'https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg',
     },
     {
+        id: 17,
         title: 'Top Gun: Maverick',
         genre: 'Action • Drama',
         rating: '8.3',
@@ -31,6 +45,7 @@ const movies = ref([
             'https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1DX17ljH.jpg',
     },
     {
+        id: 15,
         title: 'Dune',
         genre: 'Sci-Fi • Adventure',
         rating: '8.0',
@@ -38,6 +53,7 @@ const movies = ref([
             'https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg',
     },
     {
+        id: 16,
         title: 'Inside Out 2',
         genre: 'Animation • Family',
         rating: '7.6',
@@ -108,8 +124,11 @@ const handleBook = (movie: any) => {
                 <div class="max-w-2xl">
 
                     <span
-                        class="mb-5 inline-block rounded-full bg-red-600/20 px-4 py-2 text-sm font-medium text-red-400">
-                        🔥 Now Showing
+                        class="mb-5 inline-flex items-center gap-2 rounded-full bg-red-600/20 px-4 py-2 text-sm font-medium text-red-400">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                        </svg>
+                        Now Showing
                     </span>
 
                     <h1 class="text-4xl font-black leading-tight sm:text-5xl lg:text-7xl">
@@ -125,9 +144,11 @@ const handleBook = (movie: any) => {
                     <div class="mt-7 flex flex-wrap items-center gap-4">
 
                         <button
-                            @click="navigateTo('/movie')"
-                            class="rounded-xl bg-red-600 px-7 py-3.5 font-semibold transition hover:bg-red-700 hover:scale-105">
-                            🎟️ Book Ticket
+                            class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-7 py-3.5 font-semibold transition hover:bg-red-700 hover:scale-105">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                            </svg>
+                            Book Ticket
                         </button>
 
                         <button
@@ -139,9 +160,24 @@ const handleBook = (movie: any) => {
                     </div>
 
                     <div class="mt-8 flex gap-6 text-sm text-gray-400">
-                        <span>⭐ 8.4 Rating</span>
-                        <span>🎬 Action</span>
-                        <span>⏱ 2h 30m</span>
+                        <span class="inline-flex items-center gap-1">
+                            <svg class="h-4 w-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            8.4 Rating
+                        </span>
+                        <span class="inline-flex items-center gap-1">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                            </svg>
+                            Action
+                        </span>
+                        <span class="inline-flex items-center gap-1">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            2h 30m
+                        </span>
                     </div>
 
                 </div>
@@ -175,7 +211,7 @@ const handleBook = (movie: any) => {
                 v-for="movie in filteredMovies()"
                 :key="movie.title"
                 :movie="movie"
-                @click="navigateTo('/movie')"
+                @click="handleMovieClick"
                 />
             </div>
 
@@ -254,8 +290,10 @@ const handleBook = (movie: any) => {
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
-                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10 text-2xl">
-                        🎟️
+                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
+                        <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                        </svg>
                     </div>
 
                     <h3 class="font-bold">
@@ -272,8 +310,10 @@ const handleBook = (movie: any) => {
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
-                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10 text-2xl">
-                        🪑
+                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
+                        <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
                     </div>
 
                     <h3 class="font-bold">
@@ -290,8 +330,10 @@ const handleBook = (movie: any) => {
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
-                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10 text-2xl">
-                        💳
+                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
+                        <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
                     </div>
 
                     <h3 class="font-bold">
@@ -308,8 +350,10 @@ const handleBook = (movie: any) => {
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
-                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10 text-2xl">
-                        📱
+                        class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
+                        <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
                     </div>
 
                     <h3 class="font-bold">
@@ -357,10 +401,12 @@ const handleBook = (movie: any) => {
                 <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
                     <div>
-                        <div class="flex items-center gap-2">
-                            <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-600">
-                                🎬
-                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-600">
+                                    <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                                    </svg>
+                                </div>
 
                             <span class="font-bold">
                                 Cine<span class="text-red-500">Book</span>
@@ -432,4 +478,5 @@ const handleBook = (movie: any) => {
         </footer>
 
     </div>
+    <UserLogin v-if="showLogin" @close="showLogin = false" />
 </template>
