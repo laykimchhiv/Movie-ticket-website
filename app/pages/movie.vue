@@ -7,7 +7,15 @@
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 py-5">
           <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-bold tracking-tight text-red-500">Movies</h2>
+            <div class="flex items-center gap-3">
+              <button
+                @click="navigateTo('/')"
+                class="text-sm text-gray-400 transition hover:text-white"
+              >
+                ← Back
+              </button>
+              <h2 class="text-2xl font-bold tracking-tight text-red-500">Movies</h2>
+            </div>
             <button
               @click="showAll = !showAll"
               class="md:hidden text-xs text-gray-400 border border-white/10 rounded-lg px-3 py-1.5"
@@ -16,13 +24,46 @@
             </button>
           </div>
 
-          <div class="w-full md:w-80 relative">
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Search movies..."
-              class="w-full bg-gray-900 border border-gray-700 text-white placeholder-gray-500 px-4 py-3 rounded-xl focus:outline-none focus:border-red-500 text-sm transition-all"
-            />
+          <div class="relative w-full md:w-96">
+            <div class="flex w-full items-center gap-2">
+              <input
+                ref="searchInput"
+                v-model="searchQuery"
+                @focus="showSearchDropdown = true"
+                @click="showSearchDropdown = true"
+                @blur="setTimeout(() => showSearchDropdown = false, 200)"
+                type="text"
+                placeholder="Search movies..."
+                class="w-full bg-gray-900 border border-gray-700 text-white placeholder-gray-500 px-4 py-3 rounded-xl focus:outline-none focus:border-red-500 text-sm transition-all"
+              />
+              <button
+                class="rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold transition hover:bg-red-700"
+              >
+                Search
+              </button>
+            </div>
+
+            <div
+              v-if="showSearchDropdown && searchQuery.trim() && searchResults.length > 0"
+              class="absolute left-0 right-0 top-full z-50 mt-2 max-h-80 overflow-y-auto rounded-xl border border-white/10 bg-[#15151b] shadow-2xl"
+            >
+              <button
+                v-for="movie in searchResults"
+                :key="movie.id"
+                @mousedown="searchQuery = movie.title; showSearchDropdown = false"
+                class="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-white/5"
+              >
+                <span class="text-sm">🎬</span>
+                <span class="truncate text-sm font-medium text-white">{{ movie.title }}</span>
+              </button>
+            </div>
+
+            <div
+              v-else-if="showSearchDropdown && searchQuery.trim() && searchResults.length === 0"
+              class="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border border-white/10 bg-[#15151b] p-4 text-center"
+            >
+              <p class="text-sm text-gray-400">No movies found starting with "{{ searchQuery }}"</p>
+            </div>
           </div>
         </div>
 
@@ -135,10 +176,12 @@ interface Movie {
 }
 
 const API_BASE = 'http://localhost:8000'
+const route = useRoute()
 
-const searchQuery = ref('')
+const searchQuery = ref((route.query.q as string) || '')
 const selectedCategory = ref('all')
 const showAll = ref(true)
+const showSearchDropdown = ref(false)
 const selectedMovie = ref<Movie | null>(null)
 
 const { data: categories } = await useFetch<{ id: string; name: string }[]>(
@@ -170,12 +213,20 @@ const filteredMovies = computed(() => {
   const list = movies.value ?? []
 
   return list.filter((movie) => {
-    const matchesSearch = movie.title.toLowerCase().includes(search)
+    const matchesSearch = search === '' || movie.title.toLowerCase().startsWith(search)
     const matchesCategory =
       selectedCategory.value === 'all' ||
       movie.genre.includes(selectedCategory.value)
 
     return matchesSearch && matchesCategory
   })
+})
+
+const searchResults = computed(() => {
+  const search = searchQuery.value.toLowerCase().trim()
+  if (!search) return []
+  return (movies.value ?? [])
+    .filter((movie) => movie.title.toLowerCase().startsWith(search))
+    .slice(0, 8)
 })
 </script>
