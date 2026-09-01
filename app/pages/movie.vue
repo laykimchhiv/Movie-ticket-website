@@ -97,7 +97,7 @@
           v-for="movie in (showAll ? filteredMovies : filteredMovies.slice(0, 6))"
           :key="movie.id"
           :movie="movie"
-          @click="selectedMovie = movie"
+          @click="handleMovieClick"
         />
       </div>
 
@@ -111,58 +111,14 @@
         </p>
       </div>
     </main>
-
-    <!-- Trailer Modal -->
-    <div
-      v-if="selectedMovie"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
-      @click.self="selectedMovie = null"
-    >
-        <div class="flex h-full w-full max-w-6xl flex-col items-start justify-center p-4">
-          <button
-            @click="selectedMovie = null"
-            class="absolute right-4 top-4 z-10 rounded-full bg-white/10 px-3 py-2 text-sm hover:bg-white/20"
-          >
-            ✕
-          </button>
-
-          <div class="aspect-video w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-black">
-            <video
-              :src="selectedMovie.videoUrl"
-              controls
-              autoplay
-              class="h-full w-full"
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="mt-6 flex flex-col items-start gap-3 text-left">
-            <h2 class="text-2xl font-bold sm:text-3xl">{{ selectedMovie.title }}</h2>
-            <div class="flex flex-wrap items-center gap-2 text-xs">
-              <span
-                v-for="g in selectedMovie.genre.split(', ')"
-                :key="g"
-                class="rounded bg-gray-800 px-2 py-0.5 text-gray-300"
-              >
-                {{ g }}
-              </span>
-              <span class="text-yellow-400 font-semibold">⭐ {{ selectedMovie.rating }}</span>
-            </div>
-            <p class="text-sm text-gray-400">
-              {{ selectedMovie.releaseDate || '' }}
-            </p>
-            <p class="max-w-2xl text-sm leading-relaxed text-gray-300 mb-10">
-              {{ selectedMovie.description }}
-            </p>
-          </div>
-        </div>
-    </div>
+    <UserLogin v-if="showLogin" @close="showLogin = false" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+const { isLoggedIn } = useAuth()
+const showLogin = ref(false)
 
 interface Movie {
   id: number | string
@@ -180,9 +136,14 @@ const route = useRoute()
 
 const searchQuery = ref((route.query.q as string) || '')
 const selectedCategory = ref('all')
-const showAll = ref(true)
-const showSearchDropdown = ref(false)
-const selectedMovie = ref<Movie | null>(null)
+
+const handleMovieClick = (movie: Movie) => {
+  if (!isLoggedIn.value) {
+    showLogin.value = true
+    return
+  }
+  navigateTo(`/watch/${movie.id}`)
+}
 
 const { data: categories } = await useFetch<{ id: string; name: string }[]>(
   `${API_BASE}/categories`

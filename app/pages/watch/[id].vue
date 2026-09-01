@@ -10,7 +10,8 @@
       </NuxtLink>
     </div>
 
-    <div v-if="item" class="mx-auto max-w-7xl px-5 py-6 lg:px-8">
+    <!-- Video Player (logged in) -->
+    <div v-if="isLoggedIn && item" class="mx-auto max-w-7xl px-5 py-6 lg:px-8">
       <!-- Player -->
       <div
         class="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black"
@@ -84,7 +85,7 @@
 
     <!-- Not found -->
     <div
-      v-else-if="!pending"
+      v-else-if="!isLoggedIn && !pending"
       class="mx-auto max-w-7xl px-5 py-20 text-center lg:px-8"
     >
       <p class="text-gray-400">This title could not be found.</p>
@@ -92,14 +93,18 @@
         ← Back to Movies
       </NuxtLink>
     </div>
+
+    <UserLogin v-if="showLogin" @close="showLogin = false" />
   </div>
 </template>
 
-<script >
+<script setup>
 const API_BASE = 'http://localhost:8000'
 
 const route = useRoute()
 const id = route.params.id
+const { isLoggedIn } = useAuth()
+const showLogin = ref(!isLoggedIn)
 
 const { data: item, pending } = await useAsyncData(`watch-${id}`, async () => {
   try {
