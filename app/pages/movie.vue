@@ -50,7 +50,7 @@
           v-for="movie in filteredMovies"
           :key="movie.id"
           :movie="movie"
-          @click="navigateTo(`/watch/${movie.id}`)"
+          @click="handleMovieClick"
         />
       </div>
 
@@ -64,11 +64,14 @@
         </p>
       </div>
     </main>
+    <UserLogin v-if="showLogin" @close="showLogin = false" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+const { isLoggedIn } = useAuth()
+const showLogin = ref(false)
 
 interface Movie {
   id: number | string
@@ -82,6 +85,14 @@ const API_BASE = 'http://localhost:8000'
 
 const searchQuery = ref('')
 const selectedCategory = ref('all')
+
+const handleMovieClick = (movie: Movie) => {
+  if (!isLoggedIn.value) {
+    showLogin.value = true
+    return
+  }
+  navigateTo(`/watch/${movie.id}`)
+}
 
 const { data: categories } = await useFetch<{ id: string; name: string }[]>(
   `${API_BASE}/categories`
