@@ -10,8 +10,8 @@
       </NuxtLink>
     </div>
 
-    <!-- Video Player (logged in) -->
-    <div v-if="isLoggedIn && item" class="mx-auto max-w-7xl px-5 py-6 lg:px-8">
+    <!-- Video Player -->
+    <div v-if="item" class="mx-auto max-w-7xl px-5 py-6 lg:px-8">
       <!-- Player -->
       <div
         class="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black"
@@ -60,8 +60,8 @@
         </div>
       </div>
 
-      <!-- Series Parts -->
-      <div v-if="item.parts && item.parts.length" class="mt-8">
+      <!-- Episodes -->
+      <div v-if="item.parts && item.parts.length > 1" class="mt-8">
         <h2 class="mb-3 text-lg font-semibold">Episodes</h2>
 
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -85,7 +85,7 @@
 
     <!-- Not found -->
     <div
-      v-else-if="!isLoggedIn && !pending"
+      v-else-if="!pending"
       class="mx-auto max-w-7xl px-5 py-20 text-center lg:px-8"
     >
       <p class="text-gray-400">This title could not be found.</p>
@@ -97,30 +97,52 @@
     <UserLogin v-if="showLogin" @close="showLogin = false" />
   </div>
 </template>
-
 <script setup>
+import { ref, watch } from 'vue'
+
 const API_BASE = 'http://localhost:8000'
 
 const route = useRoute()
 const id = route.params.id
-const { isLoggedIn } = useAuth()
-const showLogin = ref(!isLoggedIn)
 
-const { data: item, pending } = await useAsyncData(`watch-${id}`, async () => {
-  try {
-    return await $fetch(`${API_BASE}/movies/${id}`)
-  } catch {
+console.log('Movie ID:', id)
+console.log('API URL:', `${API_BASE}/movies/${id}`)
+
+const { isLoggedIn } = useAuth()
+const showLogin = ref(!isLoggedIn.value)
+
+const { data: item, pending, error } = await useAsyncData(
+  `watch-${id}`,
+  async () => {
     try {
-      return await $fetch(`${API_BASE}/series/${id}`)
-    } catch {
+      const movie = await $fetch(`${API_BASE}/movies/${id}`)
+
+      console.log('Movie from API:', movie)
+
+      return movie
+    } catch (err) {
+      console.error('API ERROR:', err)
       return null
     }
   }
-})
+)
 
-const currentVideo = ref(
-  item.value?.type === 'series'
-    ? item.value?.parts?.[0]?.videoUrl
-    : item.value?.videoUrl
+console.log('Final item:', item.value)
+console.log('Final error:', error.value)
+
+const currentVideo = ref('')
+
+watch(
+  () => item.value,
+  (newItem) => {
+    if (!newItem) return
+
+    if (newItem.parts?.length > 0) {
+      currentVideo.value = newItem.parts[0].videoUrl
+    } else {
+      currentVideo.value = newItem.videoUrl
+    }
+  },
+  { immediate: true }
 )
 </script>

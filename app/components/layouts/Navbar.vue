@@ -3,6 +3,9 @@ const mobileMenu = ref(false)
 const showLogin = ref(false)
 const showProfileMenu = ref(false)
 const { user, isLoggedIn, logout } = useAuth()
+const route = useRoute()
+
+const isActive = (path: string) => route.path === path
 
 const handleLogout = () => {
   logout()
@@ -27,10 +30,10 @@ const handleLogout = () => {
 			</a>
 
 			<nav class="hidden items-center gap-8 md:flex">
-				<NuxtLink to="/" class="text-sm font-medium text-white">Home</NuxtLink>
-				<NuxtLink to="/movie" class="text-sm text-gray-400 transition hover:text-white">Movies</NuxtLink>
-				<NuxtLink to="/coming" class="text-sm text-gray-400 transition hover:text-white">Coming Soon</NuxtLink>
-				<NuxtLink to="/about" class="text-sm text-gray-400 transition hover:text-white">About</NuxtLink>
+				<NuxtLink to="/" :class="['text-sm font-medium transition', isActive('/') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Home</NuxtLink>
+				<NuxtLink to="/movie" :class="['text-sm font-medium transition', isActive('/movie') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Movies</NuxtLink>
+				<NuxtLink to="/coming" :class="['text-sm font-medium transition', isActive('/coming') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Coming Soon</NuxtLink>
+				<NuxtLink to="/about" :class="['text-sm font-medium transition', isActive('/about') ? 'text-red-400' : 'text-gray-400 hover:text-white']">About</NuxtLink>
 			</nav>
 
 			<div class="hidden items-center gap-4 md:flex">
@@ -126,10 +129,10 @@ const handleLogout = () => {
 
 		<div v-if="mobileMenu" class="border-t border-white/10 bg-[#111116] px-5 py-5 md:hidden">
 			<div class="flex flex-col gap-4">
-				<a href="#" class="text-gray-300">Home</a>
-				<a href="#movies" class="text-gray-300">Movies</a>
-				<a href="#coming" class="text-gray-300">Coming Soon</a>
-				<a href="#about" class="text-gray-300">About</a>
+				<NuxtLink to="/" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
+				<NuxtLink to="/movie" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
+				<NuxtLink to="/coming" :class="['text-sm font-medium', isActive('/coming') ? 'text-red-400' : 'text-gray-300']">Coming Soon</NuxtLink>
+				<NuxtLink to="/about" :class="['text-sm font-medium', isActive('/about') ? 'text-red-400' : 'text-gray-300']">About</NuxtLink>
 				<template v-if="isLoggedIn">
 					<NuxtLink to="/profile" class="text-gray-300">My Profile</NuxtLink>
 					<button class="rounded-lg bg-red-600 py-3 font-semibold text-left text-red-400" @click="handleLogout">Logout</button>

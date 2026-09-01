@@ -16,12 +16,6 @@
               </button>
               <h2 class="text-2xl font-bold tracking-tight text-red-500">Movies</h2>
             </div>
-            <button
-              @click="showAll = !showAll"
-              class="md:hidden text-xs text-gray-400 border border-white/10 rounded-lg px-3 py-1.5"
-            >
-              {{ showAll ? 'Show Less' : 'Show All' }}
-            </button>
           </div>
 
           <div class="relative w-full md:w-96">
@@ -94,7 +88,7 @@
         class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5"
       >
         <UserMovieCard
-          v-for="movie in (showAll ? filteredMovies : filteredMovies.slice(0, 6))"
+          v-for="movie in filteredMovies"
           :key="movie.id"
           :movie="movie"
           @click="handleMovieClick"

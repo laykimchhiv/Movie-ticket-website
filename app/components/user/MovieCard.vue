@@ -33,12 +33,8 @@ const handleClick = () => {
     @click="handleClick"
   >
     <!-- Poster -->
-    <div class="relative aspect-3/4 overflow-hidden">
-      <img
-        :src="movie.image"
-        :alt="movie.title"
-        class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-      />
+    <div class="relative aspect-3/4 overflow-hidden flex items-center justify-center bg-gray-800">
+      <span class="text-4xl font-bold text-gray-600">{{ movie.id }}</span>
 
       <!-- Rating -->
       <div

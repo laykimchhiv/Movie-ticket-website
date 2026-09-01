@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 const { isLoggedIn } = useAuth()
 const showLogin = ref(false)
+
+const API_BASE = 'http://localhost:8000'
 
 const handleMovieClick = (movie: any) => {
   if (!isLoggedIn.value) {
@@ -11,56 +13,17 @@ const handleMovieClick = (movie: any) => {
   navigateTo(`/watch/${movie.id}`)
 }
 
-const movies = ref([
-    {
-        id: 1,
-        title: 'Avengers: Endgame',
-        genre: 'Action • Adventure',
-        rating: '8.4',
-        image:
-            'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg',
-    },
-    {
-        id: 2,
-        title: 'Spider-Man: No Way Home',
-        genre: 'Action • Sci-Fi',
-        rating: '8.2',
-        image:
-            'https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
-    },
-    {
-        id: 14,
-        title: 'The Batman',
-        genre: 'Action • Crime',
-        rating: '7.8',
-        image:
-            'https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg',
-    },
-    {
-        id: 17,
-        title: 'Top Gun: Maverick',
-        genre: 'Action • Drama',
-        rating: '8.3',
-        image:
-            'https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1DX17ljH.jpg',
-    },
-    {
-        id: 15,
-        title: 'Dune',
-        genre: 'Sci-Fi • Adventure',
-        rating: '8.0',
-        image:
-            'https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg',
-    },
-    {
-        id: 16,
-        title: 'Inside Out 2',
-        genre: 'Animation • Family',
-        rating: '7.6',
-        image:
-            'https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg',
-    },
-])
+const { data: rawMovies } = await useFetch<any[]>(`${API_BASE}/movies`)
+
+const movies = computed(() =>
+  (rawMovies.value?.slice(0,6) ?? []).map((m) => ({
+    id: m.id,
+    title: m.title,
+    genre: Array.isArray(m.genre) ? m.genre.join(', ') : m.genre,
+    rating: m.rating,
+    image: m.poster,
+  }))
+)
 
 const comingSoon = ref([
     {
@@ -91,13 +54,13 @@ const comingSoon = ref([
 
 const search = ref('')
 
-const filteredMovies = () => {
+const filteredMovies = computed(() => {
   if (!search.value) return movies.value
 
   return movies.value.filter((movie) =>
     movie.title.toLowerCase().includes(search.value.toLowerCase())
   )
-}
+})
 
 const handleBook = (movie: any) => {
   console.log('Booking:', movie.title)
@@ -208,7 +171,7 @@ const handleBook = (movie: any) => {
             <!-- Movie Grid -->
             <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
                 <UserMovieCard
-                v-for="movie in filteredMovies()"
+                v-for="movie in filteredMovies"
                 :key="movie.title"
                 :movie="movie"
                 @click="handleMovieClick"
@@ -216,7 +179,7 @@ const handleBook = (movie: any) => {
             </div>
 
             <!-- Empty Search -->
-            <div v-if="filteredMovies().length === 0" class="py-20 text-center text-gray-500">
+            <div v-if="filteredMovies.length === 0" class="py-20 text-center text-gray-500">
                 No movies found.
             </div>
 

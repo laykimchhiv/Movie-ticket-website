@@ -339,34 +339,33 @@
       "backdrop": "",
       "type": "movie",
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
-    }
-  ],
-
-  "series": [
+    },
     {
       "id": 101,
       "title": "One Piece",
       "category": "Anime",
       "genre": ["Action", "Adventure", "Fantasy"],
       "rating": 8.7,
+      "releaseDate": "1999-10-20",
+      "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
       "poster": "https://image.tmdb.org/t/p/w500/unk1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
       "backdrop": "",
       "type": "series",
-      "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
+      "videoUrl": "https://example.com/videos/one-piece-part-1.mp4",
       "parts": [
         {
           "id": 1,
           "part": 1,
           "title": "Part 1",
           "description": "The beginning of Luffy's adventure.",
-          "videoUrl": "https://example.com/videos/one-piece-part-1.mp4"
+          "videoUrl": "https://www.pexels.com/download/video/27797883/"
         },
         {
           "id": 2,
           "part": 2,
           "title": "Part 2",
           "description": "Luffy continues his journey with his crew.",
-          "videoUrl": "https://example.com/videos/one-piece-part-2.mp4"
+          "videoUrl": "https://www.pexels.com/download/video/32729029/"
         },
         {
           "id": 3,
