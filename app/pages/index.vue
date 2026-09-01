@@ -144,14 +144,13 @@ const handleBook = (movie: any) => {
                     <div class="mt-7 flex flex-wrap items-center gap-4">
 
                         <button
-                            class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-7 py-3.5 font-semibold transition hover:bg-red-700 hover:scale-105">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                            </svg>
-                            Book Ticket
+                            @click="navigateTo('/movie')"
+                            class="rounded-xl bg-red-600 px-7 py-3.5 font-semibold transition hover:bg-red-700 hover:scale-105">
+                            🎟️ Book Ticket
                         </button>
 
                         <button
+                            @click="navigateTo('/movie')"
                             class="rounded-xl border border-white/20 bg-white/10 px-7 py-3.5 font-semibold backdrop-blur transition hover:bg-white/20">
                             Explore Movies
                         </button>
@@ -198,7 +197,7 @@ const handleBook = (movie: any) => {
                     </h2>
                 </div>
 
-                <button class="hidden text-sm font-medium text-red-500 hover:text-red-400 sm:block">
+                <button @click="navigateTo('/movie')" class="hidden text-sm font-medium text-red-500 hover:text-red-400 sm:block">
                     View All →
                 </button>
 
@@ -210,7 +209,7 @@ const handleBook = (movie: any) => {
                 v-for="movie in filteredMovies()"
                 :key="movie.title"
                 :movie="movie"
-                @click="handleMovieClick"
+                @click="navigateTo('/movie')"
                 />
             </div>
 

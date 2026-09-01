@@ -11,7 +11,7 @@
       "poster": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
       "backdrop": "https://image.tmdb.org/t/p/w1280/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
       "type": "movie",
-      "videoUrl": "https://example.com/videos/avengers-endgame.mp4"
+      "videoUrl": "https://www.pexels.com/download/video/17487722/"
     },
     {
       "id": 2,
@@ -38,7 +38,7 @@
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm8EKnIM6khdRa_rSFjkWxIPtLDDJhi2yI2p7VqKVXkg&s=10",
       "backdrop": "",
       "type": "movie",
-      "videoUrl": "https://example.com/videos/my-bias-my-boss.mp4"
+      "videoUrl": "https://www.pexels.com/download/video/32729029/"
     },
 
     {
@@ -48,7 +48,7 @@
       "genre": ["Drama", "Romance", "Comedy"],
       "rating": 9.3,
       "releaseDate": "2020-12-09",
-      "description": "A high school student masters the art of makeup to navigate school social life and unexpected love triangles.",
+      "description": "Im Joo Kyung is a high schooler who is upbeat and positive about most things – except for her appearance! She hates the idea of being seen in public without makeup, but fortunately has become a self-taught makeup expert, with a little help from a plethora of internet video tutorials. What she has learned online has transformed her life. At school, she is known as one of the prettiest girls in class – although she secretly lives in fear of her schoolmates discovering what she looks like behind the makeup! In fact, there is only one person from school who has ever seen her minus her “mask” – Lee Su Ho. He is a top-grade student with impressive basketball skills. He is also dashingly handsome, and many of his female classmates have a crush on him. However, Lee Su Ho harbors a few dark secrets from his past, and shuns attention in class. Slowly, these two individuals become drawn together – and learn more about one another’s secrets! (Source: Viki)",
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8EElKa7ncrbbgTaBrCbqQZ2tAoECMtFBiAwp4TxIVZw&s=10",
       "backdrop": "",
       "type": "movie",
@@ -108,7 +108,7 @@
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKDaZtZGmxQVUPr-2U_WFWg6gBQRaTE3wvdZvwdFuhKA&s=10",
       "backdrop": "",
       "type": "movie",
-      "videoUrl": "https://example.com/videos/goodboy.mp4"
+      "videoUrl": "https://www.pexels.com/download/video/32729029/"
     },
 
     {
@@ -174,7 +174,7 @@
       "genre": ["Action", "Crime", "Drama"],
       "rating": 8.8,
       "releaseDate": "2023-06-09",
-      "description": "Two young boxers join forces with a benevolent moneylender to take down a ruthless loan shark.",
+      "description": "Having taken down the loan sharks, Geon U is more motivated than ever to pursue his dream of becoming a boxing champion — with U Jin now fully in his corner as his coach and chosen family. After grueling training and countless fights, Geon U finally claims the long-awaited victory, and the two soak in the roar of the crowd — until a new threat emerges that shakes their sense of invincibility. Enter Baek Jeong, who rules over an underground boxing league and crushes even reigning champions with ruthless ease. Driven only by money and violence, he sets his sights on Geon U as his next opponent. With the threat closing in, Geon U and U Jin brace for what’s coming. Once again, they’re pushed into a brutal fight to protect the people and principles that matter most.",
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl0P50aPfNdBLxNwRED4ILm1rITCRdAvHI7-0m-a3DSQ&s=10",
       "backdrop": "",
       "type": "movie",
@@ -232,6 +232,58 @@
       "releaseDate": "2022-05-27",
       "description": "A legendary pilot returns to train a new generation of aviators.",
       "poster": "https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1DX17ljH.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 18,
+      "title": "High and low",
+      "category": "Hollywood",
+      "genre": ["Action"],
+      "rating": 8.3,
+      "releaseDate": "2019-05-27",
+      "description": "The Power of Community & Protecting Your​ home The Class Divide Everyone is a Leading Character ",
+      "poster": "https://i.pinimg.com/736x/a2/e9/55/a2e9554aaa497b08bc9803e0bc4fd1ac.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 19,
+      "title": "Double Helix",
+      "category": "C-Drama",
+      "genre": ["Drama", "Romance"],
+      "rating": 8.3,
+      "releaseDate": "2019-05-27",
+      "description": "love heard bf to enemy",
+      "poster": "https://i.pinimg.com/736x/3b/d1/c7/3bd1c7be492ea85e64ea3454e1c62cc7.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 20,
+      "title": "the prosecutors proposal",
+      "category": "K-Drama",
+      "genre": ["Drama", "Romance"],
+      "rating": 8.3,
+      "releaseDate": "2026-05-27",
+      "description": "A legendary pilot returns to train a new generation of aviators.",
+      "poster": "https://i.pinimg.com/736x/7a/4d/6f/7a4d6fcff6dc46607e68e3918ef69957.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 21,
+      "title": "When Life Gives You Tangerines",
+      "category": "K-Drama",
+      "genre": ["Drama", "Romance"],
+      "rating": 8.3,
+      "releaseDate": "2025-05-27",
+      "description": "A legendary pilot returns to train a new generation of aviators.",
+      "poster": "https://i.pinimg.com/736x/5b/76/ed/5b76ed9acb47ada0055dae30665e8c6f.jpg",
       "backdrop": "",
       "type": "movie",
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
