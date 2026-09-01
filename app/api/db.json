@@ -8,7 +8,7 @@
       "rating": 8.4,
       "releaseDate": "2019-04-26",
       "description": "The Avengers face their greatest challenge in a final battle to save the universe.",
-      "poster": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+      "poster": "https://i.pinimg.com/736x/67/91/b3/6791b331f134fa878b6c66e9b9d833c2.jpg",
       "backdrop": "https://image.tmdb.org/t/p/w1280/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
       "type": "movie",
       "videoUrl": "https://www.pexels.com/download/video/17487722/"
@@ -24,7 +24,7 @@
       "poster": "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
       "backdrop": "https://image.tmdb.org/t/p/w1280/14QbnygCuTO0vl7CAFmPf1fgZfV.jpg",
       "type": "movie",
-      "videoUrl": "https://example.com/videos/spiderman.mp4"
+      "videoUrl": "https://www.pexels.com/download/video/8507721/"
     },
 
     {
@@ -264,7 +264,7 @@
     },
     {
       "id": 20,
-      "title": "the prosecutors proposal",
+      "title": "The prosecutors proposal",
       "category": "K-Drama",
       "genre": ["Drama", "Romance"],
       "rating": 8.3,
@@ -341,17 +341,42 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 101,
+      "id": 26,
+      "title": "Shutline",
+      "category": "K-Drama",
+      "genre": ["Drama", "Romance","Animation"],
+      "rating": 9.0,
+      "releaseDate": "2019-08-10",
+      "description": "The story of the gang member Jake Gillan, and auto mechanic Moon Shingun.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT95LNFhI1s_RtUo2f-3aJmIhmbvlGeZi7juJqHmOnVheSGabhN9Qk-svE&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+        {
+      "id": 27,
+      "title": "The lion king",
+      "category": "Anime",
+      "genre": ["Comedy","Animation"],
+      "rating": 9.0,
+      "releaseDate": "2019-08-10",
+      "description": "A young lion prince named Simba must overcome loss and fear to reclaim his rightful place as king of the Pride Lands.",
+      "poster": "https://lumiere-a.akamaihd.net/v1/images/p_thelionking_19752_1_0b9de87b.jpeg?region=0%2C0%2C540%2C810",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 28,
       "title": "One Piece",
       "category": "Anime",
-      "genre": ["Action", "Adventure", "Fantasy"],
+      "genre": ["Action", "Adventure", "Fantasy","Animation"],
       "rating": 8.7,
       "releaseDate": "1999-10-20",
       "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
-      "poster": "https://image.tmdb.org/t/p/w500/unk1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+      "poster": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p186423_b_v8_ae.jpg",
       "backdrop": "",
       "type": "series",
-      "videoUrl": "https://example.com/videos/one-piece-part-1.mp4",
       "parts": [
         {
           "id": 1,
@@ -372,8 +397,66 @@
           "part": 3,
           "title": "Part 3",
           "description": "The crew faces a new adventure.",
-          "videoUrl": "https://example.com/videos/one-piece-part-3.mp4"
+          "videoUrl": "https://www.pexels.com/download/video/3885582/"
         }
+      ]
+    },
+    {
+      "id": 29,
+      "title": "Zootopia",
+      "category": "Anime",
+      "genre": ["Comedy", "Adventure", "Fantasy","Animation"],
+      "rating": 8.7,
+      "releaseDate": "2016-10-20",
+      "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
+      "poster": "https://i.pinimg.com/1200x/93/0e/bd/930ebdcbe7dda50d57f4fa109ca7bb4c.jpg",
+      "backdrop": "",
+      "type": "series",
+      "parts": [
+        {
+          "id": 1,
+          "part": 1,
+          "title": "Part 1",
+          "description": "Judy Hopps, a determined rabbit police officer, teams up with the clever fox Nick Wilde to solve mysterious cases across Zootopia while learning to trust each other.",
+          "videoUrl": "https://www.pexels.com/download/video/31916185/"
+        },
+        {
+          "id": 2,
+          "part": 2,
+          "title": "Part 2",
+          "description": "Judy and Nick continue their adventures as police partners, facing new mysteries, dangerous criminals, and unexpected challenges while strengthening their friendship.",
+          "videoUrl": "https://www.pexels.com/download/video/20061583/"
+        }
+     
+      ]
+    },
+    {
+      "id": 30,
+      "title": "Sing",
+      "category": "Anime",
+      "genre": ["Comedy", "Adventure", "Fantasy","Animation"],
+      "rating": 8.7,
+      "releaseDate": "1999-10-20",
+      "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
+      "poster": "https://i.pinimg.com/736x/a5/3a/5a/a53a5a247ec5aa3016b2f85f56621922.jpg",
+      "backdrop": "",
+      "type": "series",
+      "parts": [
+        {
+          "id": 1,
+          "part": 1,
+          "title": "Part 1",
+          "description": "A koala named Buster Moon organizes a singing competition to save his struggling theater. A group of talented animals joins the competition, each hoping to change their lives through music",
+          "videoUrl": "https://www.pexels.com/download/video/31916185/"
+        },
+        {
+          "id": 2,
+          "part": 2,
+          "title": "Part 2",
+          "description": "Buster Moon and his talented performers aim to put on their biggest show yet in a glamorous new city. They must convince a reclusive rock star to join them while overcoming many challenges.",
+          "videoUrl": "https://www.pexels.com/download/video/20061583/"
+        }
+     
       ]
     }
   ],
