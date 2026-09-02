@@ -5,6 +5,8 @@ const password = ref('')
 const confirmPassword = ref('')
 const showPassword = ref(false)
 const agreeTerms = ref(false)
+const errorMessage = ref('')
+const { register } = useAuth()
 
 const emit = defineEmits<{
   close: []
@@ -12,9 +14,28 @@ const emit = defineEmits<{
 }>()
 
 const handleRegister = () => {
-  if (username.value && email.value && password.value && confirmPassword.value) {
-    if (password.value !== confirmPassword.value) return
-    emit('close')
+  errorMessage.value = ''
+
+  if (!username.value || !email.value || !password.value || !confirmPassword.value) {
+    errorMessage.value = 'Please fill in all fields.'
+    return
+  }
+
+  if (!agreeTerms.value) {
+    errorMessage.value = 'Please agree to the Terms of Service and Privacy Policy.'
+    return
+  }
+
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'Passwords do not match.'
+    return
+  }
+
+  try {
+    register(username.value, email.value, password.value)
+    emit('switchToLogin')
+  } catch (e: any) {
+    errorMessage.value = e.message || 'Registration failed. Please try again.'
   }
 }
 </script>
@@ -57,6 +78,14 @@ const handleRegister = () => {
       <!-- Form -->
       <div class="p-7">
         <form @submit.prevent="handleRegister" class="space-y-4">
+          <!-- Error Message -->
+          <div
+            v-if="errorMessage"
+            class="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400"
+          >
+            {{ errorMessage }}
+          </div>
+
           <!-- Username -->
           <div>
             <label class="mb-2 block text-sm font-medium text-gray-300">Username</label>
