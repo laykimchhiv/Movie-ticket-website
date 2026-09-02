@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 const { isLoggedIn } = useAuth()
 const showLogin = ref(false)
 
@@ -130,6 +130,10 @@ const route = useRoute()
 
 const searchQuery = ref((route.query.q as string) || '')
 const selectedCategory = ref('all')
+
+watch(() => route.query.q, (newQ) => {
+  searchQuery.value = (newQ as string) || ''
+})
 
 const handleMovieClick = (movie: Movie) => {
   if (!isLoggedIn.value) {
@@ -168,7 +172,7 @@ const filteredMovies = computed(() => {
   const list = movies.value ?? []
 
   return list.filter((movie) => {
-    const matchesSearch = search === '' || movie.title.toLowerCase().startsWith(search)
+    const matchesSearch = search === '' || movie.title.toLowerCase().includes(search)
     const matchesCategory =
       selectedCategory.value === 'all' ||
       movie.genre.includes(selectedCategory.value)

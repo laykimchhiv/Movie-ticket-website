@@ -7,6 +7,45 @@ const route = useRoute()
 
 const isActive = (path: string) => route.path === path
 
+const API_BASE = 'http://localhost:8000'
+const searchQuery = ref('')
+const searchResults = ref<any[]>([])
+const showSearchDropdown = ref(false)
+
+const handleSearch = async () => {
+  const q = searchQuery.value.trim()
+  if (!q) return
+  await navigateTo(`/movie?q=${encodeURIComponent(q)}`)
+}
+
+const fetchSearchResults = async () => {
+  const q = searchQuery.value.trim()
+  if (!q) {
+    searchResults.value = []
+    return
+  }
+  try {
+    const data = await $fetch<any[]>(`${API_BASE}/movies?q=${encodeURIComponent(q)}`)
+    searchResults.value = data.slice(0, 6)
+  } catch {
+    searchResults.value = []
+  }
+}
+
+watch(
+  () => searchQuery.value,
+  () => {
+    fetchSearchResults()
+    showSearchDropdown.value = true
+  }
+)
+
+const handleResultClick = (title: string) => {
+  searchQuery.value = title
+  showSearchDropdown.value = false
+  navigateTo(`/movie?q=${encodeURIComponent(title)}`)
+}
+
 const handleLogout = () => {
   logout()
   showProfileMenu.value = false
@@ -43,11 +82,45 @@ const handleLogout = () => {
 					</svg>
 					<input
 						v-model="searchQuery"
+						@blur="setTimeout(() => showSearchDropdown = false, 200)"
 						@keyup.enter="handleSearch"
 						type="text"
 						placeholder="Search movie..."
 						class="w-48 rounded-full border text-white border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm outline-none placeholder:text-gray-500 focus:border-red-500"
 					/>
+
+					<div
+						v-if="showSearchDropdown && searchQuery.trim() && searchResults.length > 0"
+						class="absolute left-0 right-0 top-full z-50 mt-2 max-h-96 overflow-y-auto rounded-xl border border-white/10 bg-[#15151b] shadow-2xl"
+					>
+						<div class="grid grid-cols-3 gap-2 p-2">
+							<div
+								v-for="movie in searchResults"
+								:key="movie.id"
+								@mousedown="handleResultClick(movie.title)"
+								class="cursor-pointer overflow-hidden rounded-lg border border-white/10 bg-[#1a1a20] transition hover:border-red-500/50"
+							>
+								<div class="aspect-2/3 overflow-hidden">
+									<img
+										:src="movie.poster"
+										:alt="movie.title"
+										class="h-full w-full object-cover"
+									/>
+								</div>
+								<div class="p-2">
+									<p class="truncate text-xs font-medium text-white">{{ movie.title }}</p>
+									<p class="mt-1 truncate text-[10px] text-gray-400">{{ movie.rating }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						v-else-if="showSearchDropdown && searchQuery.trim() && searchResults.length === 0"
+						class="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border border-white/10 bg-[#15151b] p-4 text-center"
+					>
+						<p class="text-sm text-gray-400">No movies found for "{{ searchQuery }}"</p>
+					</div>
 				</div>
 
 				<template v-if="isLoggedIn">
