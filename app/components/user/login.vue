@@ -3,6 +3,7 @@ const username = ref('')
 const password = ref('')
 const showPassword = ref(false)
 const rememberMe = ref(false)
+const errorMessage = ref('')
 const { login } = useAuth()
 const showRegister = ref(false)
 
@@ -11,9 +12,16 @@ const emit = defineEmits<{
 }>()
 
 const handleLogin = () => {
-  if (username.value && password.value) {
+  errorMessage.value = ''
+  if (!username.value || !password.value) {
+    errorMessage.value = 'Please enter your username and password.'
+    return
+  }
+  try {
     login(username.value, password.value)
     emit('close')
+  } catch (e: any) {
+    errorMessage.value = e.message || 'Login failed. Please try again.'
   }
 }
 </script>
@@ -63,6 +71,14 @@ const handleLogin = () => {
       <!-- Form -->
       <div class="p-7">
         <form @submit.prevent="handleLogin" class="space-y-5">
+          <!-- Error Message -->
+          <div
+            v-if="errorMessage"
+            class="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400"
+          >
+            {{ errorMessage }}
+          </div>
+
           <!-- Username -->
           <div>
             <label class="mb-2 block text-sm font-medium text-gray-300">Username</label>

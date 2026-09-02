@@ -7,6 +7,13 @@ interface User {
   avatar: string
 }
 
+interface RegisteredUser {
+  id: number
+  username: string
+  password: string
+  email: string
+}
+
 interface AuthData {
   user: User
   token: string
@@ -15,6 +22,7 @@ interface AuthData {
 const user = ref<User | null>(null)
 const token = ref<string>('')
 const favorites = ref<number[]>([])
+const users = ref<RegisteredUser[]>([])
 
 const loadFromStorage = () => {
   if (typeof window === 'undefined') return
@@ -28,6 +36,17 @@ const loadFromStorage = () => {
   if (storedFavs) {
     favorites.value = JSON.parse(storedFavs)
   }
+  const storedUsers = localStorage.getItem('users')
+  if (storedUsers) {
+    users.value = JSON.parse(storedUsers)
+  } else {
+    const seed: RegisteredUser[] = [
+      { id: 1, username: 'john_doe', password: 'password123', email: 'john@cinebook.com' },
+      { id: 2, username: 'jane_smith', password: 'securepass', email: 'jane@cinebook.com' },
+    ]
+    users.value = seed
+    localStorage.setItem('users', JSON.stringify(seed))
+  }
 }
 
 loadFromStorage()
@@ -35,12 +54,17 @@ loadFromStorage()
 export function useAuth() {
   const isLoggedIn = computed(() => !!user.value && !!token.value)
 
-  const login = (username: string, password: string) => {
+  const login = (username: string, password: string): User => {
+    const found = users.value.find((u) => u.username === username && u.password === password)
+    if (!found) {
+      throw new Error('Invalid username or password')
+    }
+
     const userData: User = {
-      id: 1,
-      name: username,
-      email: `${username}@cinebook.com`,
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=dc2626&color=fff`,
+      id: found.id,
+      name: found.username,
+      email: found.email,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(found.username)}&background=dc2626&color=fff`,
     }
     const authToken = 'token_' + Math.random().toString(36).substring(2)
 
@@ -50,6 +74,8 @@ export function useAuth() {
     if (typeof window !== 'undefined') {
       localStorage.setItem('auth', JSON.stringify({ user: userData, token: authToken }))
     }
+
+    return userData
   }
 
   const logout = () => {
@@ -60,6 +86,37 @@ export function useAuth() {
       localStorage.removeItem('auth')
       localStorage.removeItem('favorites')
     }
+  }
+
+  const register = (username: string, email: string, password: string): User => {
+    if (users.value.some((u) => u.username === username)) {
+      throw new Error('Username already exists')
+    }
+
+    const newId = users.value.length > 0 ? Math.max(...users.value.map((u) => u.id)) + 1 : 1
+    const newUser: RegisteredUser = { id: newId, username, password, email }
+    users.value.push(newUser)
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('users', JSON.stringify(users.value))
+    }
+
+    const userData: User = {
+      id: newUser.id,
+      name: newUser.username,
+      email: newUser.email,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(newUser.username)}&background=dc2626&color=fff`,
+    }
+    const authToken = 'token_' + Math.random().toString(36).substring(2)
+
+    user.value = userData
+    token.value = authToken
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('auth', JSON.stringify({ user: userData, token: authToken }))
+    }
+
+    return userData
   }
 
   const addFavorite = (movieId: number) => {
@@ -84,9 +141,11 @@ export function useAuth() {
     user,
     token,
     isLoggedIn,
+    users,
     favorites,
     login,
     logout,
+    register,
     addFavorite,
     removeFavorite,
     isFavorite,
