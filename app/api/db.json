@@ -353,7 +353,7 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
-        {
+    {
       "id": 27,
       "title": "The lion king",
       "category": "Anime",
@@ -404,7 +404,7 @@
     {
       "id": 29,
       "title": "Zootopia",
-      "category": "Anime",
+      "category": "Comedy",
       "genre": ["Comedy", "Adventure", "Fantasy","Animation"],
       "rating": 8.7,
       "releaseDate": "2016-10-20",
@@ -433,7 +433,7 @@
     {
       "id": 30,
       "title": "Sing",
-      "category": "Anime",
+      "category": "Comedy",
       "genre": ["Comedy", "Adventure", "Fantasy","Animation"],
       "rating": 8.7,
       "releaseDate": "1999-10-20",
@@ -458,6 +458,71 @@
         }
      
       ]
+    },
+    {
+      "id":31 ,
+      "title": "Puss in Boots",
+      "category": "Comedy",
+      "genre": ["Action", "Comedy","Animation"],
+      "rating": 9.0,
+      "releaseDate": "2011-06-10",
+      "description": "The story of the gang member Jake Gillan, and auto mechanic Moon Puss in Boots, a brave and clever cat, teams up with his old friend Humpty Dumpty and the mysterious Kitty Softpaws to steal the legendary magic beans. Along the way, they face dangerous enemies and discover the true meaning of friendship and trust.",
+      "poster": "https://m.media-amazon.com/images/M/MV5BOTQwMGU5YTEtYmQzMy00MTM0LWFhNzAtOGY2Yzc1MzBkYTYyXkEyXkFqcGc@._V1_.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 32,
+      "title": "The Bad Guys",
+      "category": "Comedy",
+      "genre": [ "Action","Animation"],
+      "rating": 8.5,
+      "releaseDate": "2022-08-10",
+      "description": "A group of notorious animal criminals decides to pretend to be good in order to avoid prison. But when they discover that becoming heroes might be harder—and more rewarding—than stealing, their leader, Mr. Wolf, begins to question their criminal lifestyle",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ66lCRec8gQIF83S0S4DZLCyg7VYk333VK1djNdcZ_cIraSCEji3slgyyi&s=10",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 33,
+      "title": "Tokyo Revengers",
+      "category": "Action",
+      "genre": ["Action"],
+      "rating": 9.0,
+      "releaseDate": "2021-08-10",
+      "description": "Takemichi Hanagaki gets the chance to travel back in time after learning that his former girlfriend has been killed by the Tokyo Manji Gang. Determined to change the future, he returns to his middle-school days and becomes involved with the gang, risking everything to save the people he cares about.",
+      "poster": "https://a.storyblok.com/f/178900/639x426/56ff4a5a40/7b5ed03041b9ea4aa242741bc334f7d51632794330_main.jpg/m/filters:quality(95)format(webp)",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 34,
+      "title": "Death Note",
+      "category": "Action ",
+      "genre": [ "Action","Animation"],
+      "rating": 8.2,
+      "releaseDate": "2019-08-10",
+      "description": "After the events of Death Note, the brilliant detective L has only a few days to stop a deadly biological threat that could destroy humanity. With the help of a young boy and a mysterious girl, L races against time to uncover the truth and save the world.",
+      "poster": "https://asianwiki.com/images/3/38/Deathnoteposter.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+    },
+    {
+      "id": 35,
+      "title": "Kakegurui",
+      "category": "Action ",
+      "genre": ["Drama", "Romance","Action"],
+      "rating": 9.0,
+      "releaseDate": "2019-08-10",
+      "description": "At the prestigious Hyakkaou Private Academy, students compete in dangerous and high-stakes gambling games where the winner gains power and status. When the fearless gambler Yumeko Jabami gets involved, she challenges powerful opponents and turns the academy’s gambling world upside down",
+      "poster": "https://a.ltrbxd.com/resized/film-poster/4/9/2/7/7/2/492772-kakegurui-the-movie-0-230-0-345-crop.jpg?v=8703624de1",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     }
   ],
 
