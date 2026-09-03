@@ -13,16 +13,22 @@ const emit = defineEmits<{
   switchToLogin: []
 }>()
 
-const handleRegister = () => {
+const handleRegister = async () => {
   errorMessage.value = ''
 
-  if (!username.value || !email.value || !password.value || !confirmPassword.value) {
+  if (
+    !username.value ||
+    !email.value ||
+    !password.value ||
+    !confirmPassword.value
+  ) {
     errorMessage.value = 'Please fill in all fields.'
     return
   }
 
   if (!agreeTerms.value) {
-    errorMessage.value = 'Please agree to the Terms of Service and Privacy Policy.'
+    errorMessage.value =
+      'Please agree to the Terms of Service and Privacy Policy.'
     return
   }
 
@@ -32,10 +38,18 @@ const handleRegister = () => {
   }
 
   try {
-    register(username.value, email.value, password.value)
+    await register(
+      username.value,
+      email.value,
+      password.value
+    )
+
+    // Registration successful
     emit('switchToLogin')
+
   } catch (e: any) {
-    errorMessage.value = e.message || 'Registration failed. Please try again.'
+    errorMessage.value =
+      e.message || 'Registration failed. Please try again.'
   }
 }
 </script>
