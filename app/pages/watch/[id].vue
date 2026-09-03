@@ -12,19 +12,32 @@
 
     <!-- Video Player -->
     <div v-if="item" class="mx-auto max-w-7xl px-5 py-6 lg:px-8">
+      <!-- Login Notice (only when not logged in) -->
+      <div v-if="!isLoggedIn" class="mb-5 flex items-center justify-between gap-3 rounded-xl border border-yellow-500/20 bg-yellow-500/5 px-4 py-3 text-sm text-yellow-300">
+        <span>You need to login to watch this movie.</span>
+        <button
+          @click="showLogin = true"
+          class="rounded-lg bg-red-600 px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-red-700"
+        >
+          Login
+        </button>
+      </div>
+
       <!-- Player -->
       <div
         class="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black"
       >
         <video
+          v-if="isLoggedIn"
           :key="currentVideo"
           :src="currentVideo"
           controls
           autoplay
           class="h-full w-full"
-        >
-          Your browser does not support the video tag.
-        </video>
+        ></video>
+        <div v-else class="flex h-full w-full items-center justify-center text-sm text-gray-400">
+          🔒 Video locked — please login to watch
+        </div>
       </div>
 
       <!-- Details -->
@@ -98,37 +111,32 @@
   </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 const API_BASE = 'http://localhost:8000'
 
 const route = useRoute()
-const id = route.params.id
 
-console.log('Movie ID:', id)
-console.log('API URL:', `${API_BASE}/movies/${id}`)
+const auth = useAuth()
+const isLoggedIn = auth.isLoggedIn
+const user = auth.user
+const showLogin = ref(false)
 
-const { isLoggedIn } = useAuth()
-const showLogin = ref(!isLoggedIn.value)
+const id = computed(() => route.params.id)
 
-const { data: item, pending, error } = await useAsyncData(
-  `watch-${id}`,
+const { data: item, pending, error, refresh } = await useAsyncData(
+  `watch-${id.value}`,
   async () => {
     try {
-      const movie = await $fetch(`${API_BASE}/movies/${id}`)
-
-      console.log('Movie from API:', movie)
-
+      const movie = await $fetch(`${API_BASE}/movies/${id.value}`)
       return movie
     } catch (err) {
       console.error('API ERROR:', err)
       return null
     }
-  }
+  },
+  { watch: [id] }
 )
-
-console.log('Final item:', item.value)
-console.log('Final error:', error.value)
 
 const currentVideo = ref('')
 
@@ -136,7 +144,6 @@ watch(
   () => item.value,
   (newItem) => {
     if (!newItem) return
-
     if (newItem.parts?.length > 0) {
       currentVideo.value = newItem.parts[0].videoUrl
     } else {

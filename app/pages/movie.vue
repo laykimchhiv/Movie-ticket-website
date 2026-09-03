@@ -140,7 +140,7 @@ const handleMovieClick = (movie: Movie) => {
     showLogin.value = true
     return
   }
-  navigateTo(`/watch/${movie.id}`)
+  navigateTo(`/watch/${movie.id}`) 
 }
 
 const { data: categories } = await useFetch<{ id: string; name: string }[]>(
