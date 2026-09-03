@@ -16,9 +16,12 @@
       </div>
       <button
         @click="$emit('close')"
-        class="ml-auto lg:hidden text-gray-400 hover:text-white"
+        class="ml-auto lg:hidden w-10 h-10 rounded-xl bg-[#1b1b22]
+               border border-gray-800 text-gray-400 hover:text-white
+               hover:border-red-500/40 hover:bg-red-500/10
+               flex items-center justify-center transition"
       >
-        <Icon name="mdi:close" />
+        <Icon name="mdi:close" class="text-lg" />
       </button>
     </div>
 
@@ -56,22 +59,6 @@
         <span>{{ item.label }}</span>
       </NuxtLink>
     </nav>
-
-    <!-- Admin Profile -->
-    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
-      <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-[#1b1b22] transition">
-        <div class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center font-bold">
-          A
-        </div>
-        <div class="flex-1 min-w-0">
-          <p class="text-sm font-medium truncate">Admin</p>
-          <p class="text-xs text-gray-500 truncate">admin@movieflix.com</p>
-        </div>
-        <button class="text-gray-500 hover:text-white">
-          <Icon name="mdi:dots-vertical" />
-        </button>
-      </div>
-    </div>
   </aside>
 </template>
 
@@ -84,11 +71,11 @@ defineEmits(['close'])
 const mainMenu = [
   { label: 'Dashboard', icon: 'mdi:view-dashboard', to: '/admin/dashboard' },
   { label: 'Movies', icon: 'mdi:movie', to: '/admin/movies' },
-  { label: 'Categories', icon: 'mdi:tag', to: '#' },
-  { label: 'Users', icon: 'mdi:account-group', to: '#' }
+  { label: 'Categories', icon: 'mdi:tag', to: '/admin/category' },
+  { label: 'Users', icon: 'mdi:account-group', to: '/admin/users' }
 ]
 
 const systemMenu = [
-  { label: 'Settings', icon: 'mdi:cog', to: '#' }
+  { label: 'Settings', icon: 'mdi:cog', to: '/admin/settings' }
 ]
 </script>

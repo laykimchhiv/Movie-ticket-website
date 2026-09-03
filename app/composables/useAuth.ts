@@ -1,10 +1,13 @@
 import { ref, computed } from 'vue'
 
+type UserRole = 'user' | 'admin'
+
 interface User {
   id: number
-  name: string
+  username: string
   email: string
   avatar: string
+  role: UserRole
 }
 
 interface RegisteredUser {
@@ -12,6 +15,7 @@ interface RegisteredUser {
   username: string
   password: string
   email: string
+  role: UserRole
 }
 
 interface AuthData {
@@ -19,129 +23,246 @@ interface AuthData {
   token: string
 }
 
+const API_URL = 'http://localhost:8000'
+
 const user = ref<User | null>(null)
 const token = ref<string>('')
 const favorites = ref<number[]>([])
-const users = ref<RegisteredUser[]>([])
 
 const loadFromStorage = () => {
   if (typeof window === 'undefined') return
-  const stored = localStorage.getItem('auth')
-  if (stored) {
-    const data: AuthData = JSON.parse(stored)
+
+  // Load logged-in user
+  const storedAuth = localStorage.getItem('auth')
+
+  if (storedAuth) {
+    const data: AuthData = JSON.parse(storedAuth)
+
     user.value = data.user
     token.value = data.token
   }
+
+  // Load favorites
   const storedFavs = localStorage.getItem('favorites')
+
   if (storedFavs) {
     favorites.value = JSON.parse(storedFavs)
-  }
-  const storedUsers = localStorage.getItem('users')
-  if (storedUsers) {
-    users.value = JSON.parse(storedUsers)
-  } else {
-    const seed: RegisteredUser[] = [
-      { id: 1, username: 'john_doe', password: 'password123', email: 'john@cinebook.com' },
-      { id: 2, username: 'jane_smith', password: 'securepass', email: 'jane@cinebook.com' },
-    ]
-    users.value = seed
-    localStorage.setItem('users', JSON.stringify(seed))
   }
 }
 
 loadFromStorage()
 
 export function useAuth() {
-  const isLoggedIn = computed(() => !!user.value && !!token.value)
+  const isLoggedIn = computed(() => {
+    return !!user.value && !!token.value
+  })
 
-  const login = (username: string, password: string): User => {
-    const found = users.value.find((u) => u.username === username && u.password === password)
-    if (!found) {
-      throw new Error('Invalid username or password')
+  const role = computed(() => {
+    return user.value?.role || 'user'
+  })
+
+  const hasRole = (required: UserRole) => {
+    return role.value === required
+  }
+
+  // =========================
+  // LOGIN
+  // =========================
+  const login = async (
+    username: string,
+    password: string
+  ): Promise<User> => {
+
+    // Get all users from JSON Server
+    const response = await fetch(`${API_URL}/users`)
+
+    if (!response.ok) {
+      throw new Error('Cannot connect to server')
     }
 
+    const users: RegisteredUser[] = await response.json()
+
+    // Compare username/email and password
+    const found = users.find(
+      (u) =>
+        (u.username === username || u.email === username) &&
+        u.password === password
+    )
+
+    if (!found) {
+      throw new Error('Invalid username/email or password')
+    }
+
+    // Create user data
     const userData: User = {
       id: found.id,
-      name: found.username,
+      username: found.username,
       email: found.email,
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(found.username)}&background=dc2626&color=fff`,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        found.username
+      )}&background=dc2626&color=fff`,
+      role: found.role || 'user',
     }
-    const authToken = 'token_' + Math.random().toString(36).substring(2)
+
+    // Create token
+    const authToken =
+      'token_' + Math.random().toString(36).substring(2)
 
     user.value = userData
     token.value = authToken
 
+    // Save ONLY login information to localStorage
     if (typeof window !== 'undefined') {
-      localStorage.setItem('auth', JSON.stringify({ user: userData, token: authToken }))
+      localStorage.setItem(
+        'auth',
+        JSON.stringify({
+          user: userData,
+          token: authToken,
+        })
+      )
     }
 
     return userData
   }
 
+  // =========================
+  // REGISTER
+  // =========================
+  const register = async (
+    username: string,
+    email: string,
+    password: string
+  ): Promise<User> => {
+
+    // Get users from JSON Server
+    const response = await fetch(`${API_URL}/users`)
+
+    if (!response.ok) {
+      throw new Error('Cannot connect to server')
+    }
+
+    const users: RegisteredUser[] = await response.json()
+
+    // Check username
+    if (users.some((u) => u.username === username)) {
+      throw new Error('Username already exists')
+    }
+
+    // Check email
+    if (users.some((u) => u.email === email)) {
+      throw new Error('Email already exists')
+    }
+
+    // Create new user
+    const newUser = {
+      username,
+      email,
+      password,
+      role: 'user',
+    }
+
+    // Save to JSON Server
+    const createResponse = await fetch(`${API_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    })
+
+    if (!createResponse.ok) {
+      throw new Error('Registration failed')
+    }
+
+    // JSON Server returns the newly created user
+    const savedUser: RegisteredUser =
+      await createResponse.json()
+
+    // Create frontend user data
+    const userData: User = {
+      id: savedUser.id,
+      username: savedUser.username,
+      email: savedUser.email,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        savedUser.username
+      )}&background=dc2626&color=fff`,
+      role: savedUser.role || 'user',
+    }
+
+    // Create token
+    const authToken =
+      'token_' + Math.random().toString(36).substring(2)
+
+    user.value = userData
+    token.value = authToken
+
+    // Save logged-in state
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(
+        'auth',
+        JSON.stringify({
+          user: userData,
+          token: authToken,
+        })
+      )
+    }
+
+    return userData
+  }
+
+  // =========================
+  // LOGOUT
+  // =========================
   const logout = () => {
     user.value = null
     token.value = ''
     favorites.value = []
+
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth')
       localStorage.removeItem('favorites')
     }
   }
 
-  const register = (username: string, email: string, password: string): User => {
-    if (users.value.some((u) => u.username === username)) {
-      throw new Error('Username already exists')
-    }
-
-    const newId = users.value.length > 0 ? Math.max(...users.value.map((u) => u.id)) + 1 : 1
-    const newUser: RegisteredUser = { id: newId, username, password, email }
-    users.value.push(newUser)
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('users', JSON.stringify(users.value))
-    }
-
-    const userData: User = {
-      id: newUser.id,
-      name: newUser.username,
-      email: newUser.email,
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(newUser.username)}&background=dc2626&color=fff`,
-    }
-    const authToken = 'token_' + Math.random().toString(36).substring(2)
-
-    user.value = userData
-    token.value = authToken
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('auth', JSON.stringify({ user: userData, token: authToken }))
-    }
-
-    return userData
-  }
-
+  // =========================
+  // FAVORITES
+  // =========================
   const addFavorite = (movieId: number) => {
     if (!favorites.value.includes(movieId)) {
       favorites.value.push(movieId)
+
       if (typeof window !== 'undefined') {
-        localStorage.setItem('favorites', JSON.stringify(favorites.value))
+        localStorage.setItem(
+          'favorites',
+          JSON.stringify(favorites.value)
+        )
       }
     }
   }
 
   const removeFavorite = (movieId: number) => {
-    favorites.value = favorites.value.filter((id) => id !== movieId)
+    favorites.value = favorites.value.filter(
+      (id) => id !== movieId
+    )
+
     if (typeof window !== 'undefined') {
-      localStorage.setItem('favorites', JSON.stringify(favorites.value))
+      localStorage.setItem(
+        'favorites',
+        JSON.stringify(favorites.value)
+      )
     }
   }
 
-  const isFavorite = (movieId: number) => favorites.value.includes(movieId)
+  const isFavorite = (movieId: number) => {
+    return favorites.value.includes(movieId)
+  }
 
   return {
     user,
     token,
     isLoggedIn,
-    users,
+    role,
+    hasRole,
     favorites,
     login,
     logout,

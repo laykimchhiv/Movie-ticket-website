@@ -1,10 +1,14 @@
 {
   "movies": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Avengers: Endgame",
       "category": "Hollywood",
-      "genre": ["Action", "Adventure", "Sci-Fi"],
+      "genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
       "rating": 8.4,
       "releaseDate": "2019-04-26",
       "description": "The Avengers face their greatest challenge in a final battle to save the universe.",
@@ -14,10 +18,14 @@
       "videoUrl": "https://www.pexels.com/download/video/17487722/"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Spider-Man: No Way Home",
       "category": "Hollywood",
-      "genre": ["Action", "Adventure", "Sci-Fi"],
+      "genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
       "rating": 8.2,
       "releaseDate": "2021-12-17",
       "description": "Peter Parker's identity is revealed and he asks Doctor Strange for help.",
@@ -26,12 +34,14 @@
       "type": "movie",
       "videoUrl": "https://www.pexels.com/download/video/8507721/"
     },
-
     {
-      "id": 3,
+      "id": "3",
       "title": "My Bias My Boss",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance"],
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
       "rating": 8.8,
       "releaseDate": "2023-05-10",
       "description": "An office romance unfolds when an idol superfan accidentally lands a job working under her favorite star.",
@@ -40,12 +50,15 @@
       "type": "movie",
       "videoUrl": "https://www.pexels.com/download/video/32729029/"
     },
-
     {
-      "id": 4,
+      "id": "4",
       "title": "True Beauty",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance", "Comedy"],
+      "genre": [
+        "Drama",
+        "Romance",
+        "Comedy"
+      ],
       "rating": 9.3,
       "releaseDate": "2020-12-09",
       "description": "Im Joo Kyung is a high schooler who is upbeat and positive about most things – except for her appearance! She hates the idea of being seen in public without makeup, but fortunately has become a self-taught makeup expert, with a little help from a plethora of internet video tutorials. What she has learned online has transformed her life. At school, she is known as one of the prettiest girls in class – although she secretly lives in fear of her schoolmates discovering what she looks like behind the makeup! In fact, there is only one person from school who has ever seen her minus her “mask” – Lee Su Ho. He is a top-grade student with impressive basketball skills. He is also dashingly handsome, and many of his female classmates have a crush on him. However, Lee Su Ho harbors a few dark secrets from his past, and shuns attention in class. Slowly, these two individuals become drawn together – and learn more about one another’s secrets! (Source: Viki)",
@@ -54,13 +67,16 @@
       "type": "movie",
       "videoUrl": "https://www.pexels.com/download/video/27797883/"
     },
-
     {
-      "id": 5,
+      "id": "5",
       "title": "Lovely Runner",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance", "Fantasy"],
-      "rating": 9.0,
+      "genre": [
+        "Drama",
+        "Romance",
+        "Fantasy"
+      ],
+      "rating": 9,
       "releaseDate": "2024-04-08",
       "description": "A devoted fan travels back in time to save her favorite celebrity from a tragic fate.",
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfQWCmWxXi2Zon9mFWgd-vSRFPc0fLSwJFJW3zgR31JA&s=10",
@@ -68,12 +84,14 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/lovely-runner.mp4"
     },
-
     {
-      "id": 6,
+      "id": "6",
       "title": "Revenged Love",
       "category": "C-Drama",
-      "genre": ["Drama", "Romance"],
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
       "rating": 8.9,
       "releaseDate": "2022-09-14",
       "description": "A tale of passion, betrayal, and justice as two rivals navigate power and emotion.",
@@ -82,12 +100,15 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/revenged-love.mp4"
     },
-
     {
-      "id": 7,
+      "id": "7",
       "title": "Speed and Love",
       "category": "C-Drama",
-      "genre": ["Action", "Drama", "Romance"],
+      "genre": [
+        "Action",
+        "Drama",
+        "Romance"
+      ],
       "rating": 8.8,
       "releaseDate": "2023-07-06",
       "description": "A high-octane racing thriller exploring ambition, speed, and romance on the track.",
@@ -96,12 +117,15 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/speed-and-love.mp4"
     },
-
     {
-      "id": 8,
+      "id": "8",
       "title": "GoodBoy",
       "category": "K-Drama",
-      "genre": ["Action", "Crime", "Drama"],
+      "genre": [
+        "Action",
+        "Crime",
+        "Drama"
+      ],
       "rating": 8.8,
       "releaseDate": "2024-01-15",
       "description": "Former Olympic athletes form a special police force unit to fight violent crime.",
@@ -110,12 +134,13 @@
       "type": "movie",
       "videoUrl": "https://www.pexels.com/download/video/32729029/"
     },
-
     {
-      "id": 9,
+      "id": "9",
       "title": "Teach You a Lesson",
       "category": "K-Drama",
-      "genre": ["Drama"],
+      "genre": [
+        "Drama"
+      ],
       "rating": 8.8,
       "releaseDate": "2023-11-02",
       "description": "A dedicated educator takes unconventional steps to reform a troubled classroom.",
@@ -124,12 +149,15 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/teach-you-a-lesson.mp4"
     },
-
     {
-      "id": 10,
+      "id": "10",
       "title": "Falling Into Your Smile",
       "category": "C-Drama",
-      "genre": ["Drama", "Romance", "Comedy"],
+      "genre": [
+        "Drama",
+        "Romance",
+        "Comedy"
+      ],
       "rating": 8.8,
       "releaseDate": "2021-06-23",
       "description": "An aspiring female gamer steps into the professional esports arena and finds love.",
@@ -138,12 +166,14 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/falling-into-your-smile.mp4"
     },
-
     {
-      "id": 11,
+      "id": "11",
       "title": "When I Fly Towards You",
       "category": "C-Drama",
-      "genre": ["Drama", "Romance"],
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
       "rating": 8.8,
       "releaseDate": "2023-06-13",
       "description": "A sweet youth romance following high school classmates growing up together.",
@@ -152,12 +182,15 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/when-i-fly-towards-you.mp4"
     },
-
     {
-      "id": 12,
+      "id": "12",
       "title": "ABO Desire",
       "category": "BL Series",
-      "genre": ["Drama", "Romance", "Fantasy"],
+      "genre": [
+        "Drama",
+        "Romance",
+        "Fantasy"
+      ],
       "rating": 8.8,
       "releaseDate": "2023-08-20",
       "description": "A romantic fantasy story following two contrasting personalities bound by fate.",
@@ -166,12 +199,15 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/abo-desire.mp4"
     },
-
     {
-      "id": 13,
+      "id": "13",
       "title": "Bloodhounds",
       "category": "K-Drama",
-      "genre": ["Action", "Crime", "Drama"],
+      "genre": [
+        "Action",
+        "Crime",
+        "Drama"
+      ],
       "rating": 8.8,
       "releaseDate": "2023-06-09",
       "description": "Having taken down the loan sharks, Geon U is more motivated than ever to pursue his dream of becoming a boxing champion — with U Jin now fully in his corner as his coach and chosen family. After grueling training and countless fights, Geon U finally claims the long-awaited victory, and the two soak in the roar of the crowd — until a new threat emerges that shakes their sense of invincibility. Enter Baek Jeong, who rules over an underground boxing league and crushes even reigning champions with ruthless ease. Driven only by money and violence, he sets his sights on Geon U as his next opponent. With the threat closing in, Geon U and U Jin brace for what’s coming. Once again, they’re pushed into a brutal fight to protect the people and principles that matter most.",
@@ -180,12 +216,14 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/bloodhounds.mp4"
     },
-
     {
-      "id": 14,
+      "id": "14",
       "title": "The Batman",
       "category": "Hollywood",
-      "genre": ["Action", "Crime"],
+      "genre": [
+        "Action",
+        "Crime"
+      ],
       "rating": 7.8,
       "releaseDate": "2022-03-04",
       "description": "Batman investigates corruption and crime in Gotham City.",
@@ -194,13 +232,15 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/the-batman.mp4"
     },
-
     {
-      "id": 15,
+      "id": "15",
       "title": "Dune",
       "category": "Hollywood",
-      "genre": ["Sci-Fi", "Adventure"],
-      "rating": 8.0,
+      "genre": [
+        "Sci-Fi",
+        "Adventure"
+      ],
+      "rating": 8,
       "releaseDate": "2021-10-22",
       "description": "A young heir must survive political conflict and a dangerous desert world.",
       "poster": "https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
@@ -208,12 +248,15 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/dune.mp4"
     },
-
     {
-      "id": 16,
+      "id": "16",
       "title": "Inside Out 2",
       "category": "Hollywood",
-      "genre": ["Animation", "Comedy", "Adventure"],
+      "genre": [
+        "Animation",
+        "Comedy",
+        "Adventure"
+      ],
       "rating": 7.6,
       "releaseDate": "2024-06-14",
       "description": "New emotions arrive as Riley enters a new stage of her life.",
@@ -222,12 +265,13 @@
       "type": "movie",
       "videoUrl": "https://example.com/videos/inside-out-2.mp4"
     },
-
     {
-      "id": 17,
+      "id": "17",
       "title": "Top Gun: Maverick",
       "category": "Hollywood",
-      "genre": ["Action"],
+      "genre": [
+        "Action"
+      ],
       "rating": 8.3,
       "releaseDate": "2022-05-27",
       "description": "A legendary pilot returns to train a new generation of aviators.",
@@ -237,10 +281,12 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 18,
+      "id": "18",
       "title": "High and low",
       "category": "Hollywood",
-      "genre": ["Action"],
+      "genre": [
+        "Action"
+      ],
       "rating": 10,
       "releaseDate": "2019-05-27",
       "description": "The Power of Community & Protecting Your​ home The Class Divide Everyone is a Leading Character ",
@@ -250,10 +296,13 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 19,
+      "id": "19",
       "title": "Double Helix",
       "category": "C-Drama",
-      "genre": ["Drama", "Romance"],
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
       "rating": 8.5,
       "releaseDate": "2019-05-27",
       "description": "love heard bf to enemy",
@@ -263,10 +312,13 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 20,
+      "id": "20",
       "title": "The prosecutors proposal",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance"],
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
       "rating": 8.3,
       "releaseDate": "2026-05-27",
       "description": "A legendary pilot returns to train a new generation of aviators.",
@@ -276,10 +328,13 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 21,
+      "id": "21",
       "title": "When Life Gives You Tangerines",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance"],
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
       "rating": 9.5,
       "releaseDate": "2025-05-27",
       "description": "A legendary pilot returns to train a new generation of aviators.",
@@ -289,11 +344,14 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 22,
+      "id": "22",
       "title": "Friendly Rivalry",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance"],
-      "rating": 9.0,
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
+      "rating": 9,
       "releaseDate": "2025-02-10",
       "description": "Woo Seul Ki grew up in an orphanage out in a province. She moves to Seoul and enrolls in Chaehwa High School, which is a school for the top 1% students in South Korea. Woo Seul Ki doesn't get along with the other students. A student named Yoo Je Yi approaches her and they become friends. Yoo Je Yi is the most powerful student in the school. She has a high IQ, comes from a wealthy family background, and is attractive physically. She has lived as the envy of other people since she was born and she is aware of her superiority. She is also cunning enough to know how to take advantage of her position. She shows special interest in transfer student Woo Seul Ki. They soon develop a dangerous relationship between friendship and obsession",
       "poster": "https://i.pinimg.com/736x/52/4d/81/524d817b89ef852d6d2a84830745fc9e.jpg",
@@ -302,11 +360,14 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 23,
+      "id": "23",
       "title": "Affinity",
       "category": "C-Drama",
-      "genre": ["Drama", "Romance"],
-      "rating": 9.0,
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
+      "rating": 9,
       "releaseDate": "2026-02-22",
       "description": "Five years ago, Wu Nongyu followed her brother Wu Siyuan to the scene of a murder, where her life became entwined with Xie Xinxu, who was then suspected to be the killer. Her very presence seemed to exert a strange, instinctive pull on him. A single glance was enough to awaken an uncontrollable desire to possess her.Five years later, determined to have Wu Nongyu, Xie Xinxu disguises himself as a cold, ascetic medical professor and deliberately draws close to her. Step by step, he lays his traps, guiding her into falling in love with him, and the two embark on a perilous journey together. A man born with an extreme lack of empathy, almost mad by nature, gradually learns what normal human emotions feel like through his constant companionship with a girl as warm and radiant as the sun.",
       "poster": "https://i.pinimg.com/736x/d2/0d/e9/d20de90cf647a7cb56aec83732cda9c4.jpg",
@@ -315,10 +376,14 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 24,
+      "id": "24",
       "title": "Weak Hero Class 2",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance","Action"],
+      "genre": [
+        "Drama",
+        "Romance",
+        "Action"
+      ],
       "rating": 9.3,
       "releaseDate": "2025-03-10",
       "description": "A story of survival unfolds as model student Yeon Si Eun transfers to Eunjang High School with the trauma of standing up to violence for his friend but failing to protect him in the end, and confronts even greater violence because he cannot lose his friend again.",
@@ -328,10 +393,14 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 25,
+      "id": "25",
       "title": "The Uncanny Counter",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance","Action"],
+      "genre": [
+        "Drama",
+        "Romance",
+        "Action"
+      ],
       "rating": 10,
       "releaseDate": "2021-08-10",
       "description": "Tells the story of demon hunters called Counters who come to earth under the guise of being employees at a noodle restaurant in order to capture evil spirits that have returned to earth in pursuit of eternal life. So Moon is the youngest of the Counters. After suffering from a mysterious car accident as a child, he eventually becomes a central figure among the Counters. Do Ha Na has the ability to",
@@ -341,11 +410,15 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 26,
+      "id": "26",
       "title": "Shutline",
       "category": "K-Drama",
-      "genre": ["Drama", "Romance","Animation"],
-      "rating": 9.0,
+      "genre": [
+        "Drama",
+        "Romance",
+        "Animation"
+      ],
+      "rating": 9,
       "releaseDate": "2019-08-10",
       "description": "The story of the gang member Jake Gillan, and auto mechanic Moon Shingun.",
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT95LNFhI1s_RtUo2f-3aJmIhmbvlGeZi7juJqHmOnVheSGabhN9Qk-svE&s=10",
@@ -354,11 +427,14 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 27,
+      "id": "27",
       "title": "The lion king",
       "category": "Anime",
-      "genre": ["Comedy","Animation"],
-      "rating": 9.0,
+      "genre": [
+        "Comedy",
+        "Animation"
+      ],
+      "rating": 9,
       "releaseDate": "2019-08-10",
       "description": "A young lion prince named Simba must overcome loss and fear to reclaim his rightful place as king of the Pride Lands.",
       "poster": "https://lumiere-a.akamaihd.net/v1/images/p_thelionking_19752_1_0b9de87b.jpeg?region=0%2C0%2C540%2C810",
@@ -367,10 +443,15 @@
       "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     },
     {
-      "id": 28,
+      "id": "28",
       "title": "One Piece",
       "category": "Anime",
-      "genre": ["Action", "Adventure", "Fantasy","Animation"],
+      "genre": [
+        "Action",
+        "Adventure",
+        "Fantasy",
+        "Animation"
+      ],
       "rating": 8.7,
       "releaseDate": "1999-10-20",
       "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
@@ -402,10 +483,15 @@
       ]
     },
     {
-      "id": 29,
+      "id": "29",
       "title": "Zootopia",
-      "category": "Comedy",
-      "genre": ["Comedy", "Adventure", "Fantasy","Animation"],
+      "category": "Anime",
+      "genre": [
+        "Comedy",
+        "Adventure",
+        "Fantasy",
+        "Animation"
+      ],
       "rating": 8.7,
       "releaseDate": "2016-10-20",
       "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
@@ -427,14 +513,18 @@
           "description": "Judy and Nick continue their adventures as police partners, facing new mysteries, dangerous criminals, and unexpected challenges while strengthening their friendship.",
           "videoUrl": "https://www.pexels.com/download/video/20061583/"
         }
-     
       ]
     },
     {
-      "id": 30,
+      "id": "30",
       "title": "Sing",
-      "category": "Comedy",
-      "genre": ["Comedy", "Adventure", "Fantasy","Animation"],
+      "category": "Anime",
+      "genre": [
+        "Comedy",
+        "Adventure",
+        "Fantasy",
+        "Animation"
+      ],
       "rating": 8.7,
       "releaseDate": "1999-10-20",
       "description": "Follow Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
@@ -456,112 +546,62 @@
           "description": "Buster Moon and his talented performers aim to put on their biggest show yet in a glamorous new city. They must convince a reclusive rock star to join them while overcoming many challenges.",
           "videoUrl": "https://www.pexels.com/download/video/20061583/"
         }
-     
       ]
-    },
-    {
-      "id":31 ,
-      "title": "Puss in Boots",
-      "category": "Comedy",
-      "genre": ["Action", "Comedy","Animation"],
-      "rating": 9.0,
-      "releaseDate": "2011-06-10",
-      "description": "The story of the gang member Jake Gillan, and auto mechanic Moon Puss in Boots, a brave and clever cat, teams up with his old friend Humpty Dumpty and the mysterious Kitty Softpaws to steal the legendary magic beans. Along the way, they face dangerous enemies and discover the true meaning of friendship and trust.",
-      "poster": "https://m.media-amazon.com/images/M/MV5BOTQwMGU5YTEtYmQzMy00MTM0LWFhNzAtOGY2Yzc1MzBkYTYyXkEyXkFqcGc@._V1_.jpg",
-      "backdrop": "",
-      "type": "movie",
-      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
-    },
-    {
-      "id": 32,
-      "title": "The Bad Guys",
-      "category": "Comedy",
-      "genre": [ "Action","Animation"],
-      "rating": 8.5,
-      "releaseDate": "2022-08-10",
-      "description": "A group of notorious animal criminals decides to pretend to be good in order to avoid prison. But when they discover that becoming heroes might be harder—and more rewarding—than stealing, their leader, Mr. Wolf, begins to question their criminal lifestyle",
-      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ66lCRec8gQIF83S0S4DZLCyg7VYk333VK1djNdcZ_cIraSCEji3slgyyi&s=10",
-      "backdrop": "",
-      "type": "movie",
-      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
-    },
-    {
-      "id": 33,
-      "title": "Tokyo Revengers",
-      "category": "Action",
-      "genre": ["Action"],
-      "rating": 9.0,
-      "releaseDate": "2021-08-10",
-      "description": "Takemichi Hanagaki gets the chance to travel back in time after learning that his former girlfriend has been killed by the Tokyo Manji Gang. Determined to change the future, he returns to his middle-school days and becomes involved with the gang, risking everything to save the people he cares about.",
-      "poster": "https://a.storyblok.com/f/178900/639x426/56ff4a5a40/7b5ed03041b9ea4aa242741bc334f7d51632794330_main.jpg/m/filters:quality(95)format(webp)",
-      "backdrop": "",
-      "type": "movie",
-      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
-    },
-    {
-      "id": 34,
-      "title": "Death Note",
-      "category": "Action ",
-      "genre": [ "Action","Animation"],
-      "rating": 8.2,
-      "releaseDate": "2019-08-10",
-      "description": "After the events of Death Note, the brilliant detective L has only a few days to stop a deadly biological threat that could destroy humanity. With the help of a young boy and a mysterious girl, L races against time to uncover the truth and save the world.",
-      "poster": "https://asianwiki.com/images/3/38/Deathnoteposter.jpg",
-      "backdrop": "",
-      "type": "movie",
-      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
-    },
-    {
-      "id": 35,
-      "title": "Kakegurui",
-      "category": "Action ",
-      "genre": ["Drama", "Romance","Action"],
-      "rating": 9.0,
-      "releaseDate": "2019-08-10",
-      "description": "At the prestigious Hyakkaou Private Academy, students compete in dangerous and high-stakes gambling games where the winner gains power and status. When the fearless gambler Yumeko Jabami gets involved, she challenges powerful opponents and turns the academy’s gambling world upside down",
-      "poster": "https://a.ltrbxd.com/resized/film-poster/4/9/2/7/7/2/492772-kakegurui-the-movie-0-230-0-345-crop.jpg?v=8703624de1",
-      "backdrop": "",
-      "type": "movie",
-      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
     }
   ],
-
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Action"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Adventure"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Animation"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Comedy"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Drama"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Sci-Fi"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Romance"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Fantasy"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Crime"
     }
-  ]
+  ],
+  "users": [
+    {
+      "username": "mesa",
+      "email": "mesa@gmail.com",
+      "password": "mesa123",
+      "role": "admin",
+      "id": "5ns-ETwNNQg"
+    },
+    {
+      "username": "chhiv",
+      "email": "chhiv@gmail.com",
+      "password": "12345",
+      "role": "user",
+      "id": "HpJc_IVoNHg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

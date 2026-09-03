@@ -63,7 +63,7 @@
               ></span>
             </button>
 
-            <!-- Admin -->
+            <!-- Admin Profile -->
             <div class="hidden sm:flex items-center gap-3 ml-2">
               <div
                 class="w-9 h-9 rounded-full bg-red-600
@@ -93,8 +93,8 @@
         <!-- Error State -->
         <div v-else-if="error" class="bg-red-500/10 border border-red-500/30 rounded-2xl p-6 text-center">
           <Icon name="mdi:alert-circle" class="text-4xl text-red-400 mb-3" />
-          <p class="text-red-400">Failed to load dashboard data</p>
-          <p class="text-gray-500 text-sm mt-1">Please make sure the API server is running</p>
+          <p class="text-red-400 font-semibold">Failed to load dashboard data</p>
+          <p class="text-gray-500 text-sm mt-1">Please make sure the API server (JSON Server on port 8000) is running.</p>
         </div>
 
         <template v-else>
@@ -280,7 +280,7 @@
                       class="w-full max-w-12 bg-red-500 rounded-t-lg
                              hover:bg-red-400 transition cursor-pointer"
                       :style="{ height: item.height + '%', minHeight: '8px' }"
-                      :title="item.count + ' movies'"
+                      :title="item.count + ' items'"
                     ></div>
 
                   </div>
@@ -462,9 +462,9 @@
                       <div class="flex items-center gap-3">
 
                         <img
-                          :src="movie.poster"
+                          :src="movie.poster || 'https://via.placeholder.com/48x64'"
                           :alt="movie.title"
-                          class="w-12 h-16 object-cover rounded-lg"
+                          class="w-12 h-16 object-cover rounded-lg bg-gray-800"
                         />
 
                         <div>
@@ -473,7 +473,7 @@
                           </p>
 
                           <p class="text-xs text-gray-500 mt-1">
-                            {{ movie.genre?.join(', ') }}
+                            {{ Array.isArray(movie.genre) ? movie.genre.join(', ') : movie.genre }}
                           </p>
                         </div>
 
@@ -483,15 +483,15 @@
 
                     <!-- Category -->
                     <td class="px-6 py-4 text-gray-400">
-                      {{ movie.category }}
+                      {{ movie.category || 'N/A' }}
                     </td>
 
                     <!-- Rating -->
                     <td class="px-6 py-4">
-                      <span class="text-yellow-400">
+                      <span class="text-yellow-400 mr-1">
                         <Icon name="mdi:star" />
                       </span>
-                      {{ movie.rating }}
+                      {{ movie.rating || '0.0' }}
                     </td>
 
                     <!-- Type -->
@@ -510,7 +510,7 @@
 
                     <!-- Year -->
                     <td class="px-6 py-4 text-gray-400">
-                      {{ movie.releaseDate?.substring(0, 4) }}
+                      {{ movie.releaseDate ? movie.releaseDate.substring(0, 4) : 'N/A' }}
                     </td>
 
                   </tr>
@@ -532,29 +532,32 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed } from 'vue'
 
-definePageMeta({ layout: 'admin' })
+definePageMeta({ 
+  layout: 'admin', 
+  middleware: ['auth'], 
+  role: 'admin' 
+})
 
 /*
 |--------------------------------------------------------------------------
-| Mobile Sidebar
+| Mobile Sidebar State
 |--------------------------------------------------------------------------
 */
 const sidebarOpen = ref(false)
 
 /*
 |--------------------------------------------------------------------------
-| API Base URL
+| API Base URL (Port 8000 for JSON Server)
 |--------------------------------------------------------------------------
 */
-const API_BASE = 'http://localhost:3001'
+const API_BASE = 'http://localhost:8000'
 
 /*
 |--------------------------------------------------------------------------
-| Fetch Data from API
+| Fetch Data from JSON Server
 |--------------------------------------------------------------------------
 */
 const { data: moviesData, pending, error } = await useFetch(`${API_BASE}/movies`)
@@ -565,14 +568,14 @@ const categories = computed(() => categoriesData.value || [])
 
 /*
 |--------------------------------------------------------------------------
-| Statistics
+| Derived Statistics Calculations
 |--------------------------------------------------------------------------
 */
 const stats = computed(() => {
   const allMovies = movies.value
   const movieCount = allMovies.filter(m => m.type !== 'series').length
   const seriesCount = allMovies.filter(m => m.type === 'series').length
-  const totalRating = allMovies.reduce((sum, m) => sum + (m.rating || 0), 0)
+  const totalRating = allMovies.reduce((sum, m) => sum + (Number(m.rating) || 0), 0)
   const avg = allMovies.length ? (totalRating / allMovies.length).toFixed(1) : '0.0'
 
   return {
@@ -585,15 +588,17 @@ const stats = computed(() => {
 
 /*
 |--------------------------------------------------------------------------
-| Category Stats for Chart
+| Category Distribution Stats for Chart
 |--------------------------------------------------------------------------
 */
 const categoryStats = computed(() => {
   const allMovies = movies.value
+  if (!allMovies.length) return []
+
   const counts = {}
 
   allMovies.forEach(m => {
-    const cat = m.category || 'Unknown'
+    const cat = m.category || 'Uncategorized'
     counts[cat] = (counts[cat] || 0) + 1
   })
 

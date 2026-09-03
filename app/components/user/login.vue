@@ -1,27 +1,38 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const username = ref('')
 const password = ref('')
 const showPassword = ref(false)
 const rememberMe = ref(false)
 const errorMessage = ref('')
-const { login } = useAuth()
 const showRegister = ref(false)
+
+const { login } = useAuth()
 
 const emit = defineEmits<{
   close: []
 }>()
 
-const handleLogin = () => {
+const handleLogin = async () => {
   errorMessage.value = ''
+
   if (!username.value || !password.value) {
-    errorMessage.value = 'Please enter your username and password.'
+    errorMessage.value =
+      'Please enter your username and password.'
     return
   }
+
   try {
-    login(username.value, password.value)
+    // Wait for JSON Server user comparison
+    await login(username.value, password.value)
+
+    // Login successful
     emit('close')
+
   } catch (e: any) {
-    errorMessage.value = e.message || 'Login failed. Please try again.'
+    errorMessage.value =
+      e.message || 'Login failed. Please try again.'
   }
 }
 </script>
