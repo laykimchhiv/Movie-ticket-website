@@ -61,10 +61,6 @@ const filteredMovies = computed(() => {
     movie.title.toLowerCase().includes(search.value.toLowerCase())
   )
 })
-
-const handleBook = (movie: any) => {
-  console.log('Booking:', movie.title)
-}
 </script>
 
 <template>
@@ -89,9 +85,10 @@ const handleBook = (movie: any) => {
                     <span
                         class="mb-5 inline-flex items-center gap-2 rounded-full bg-red-600/20 px-4 py-2 text-sm font-medium text-red-400">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Now Showing
+                        Now Streaming
                     </span>
 
                     <h1 class="text-4xl font-black leading-tight sm:text-5xl lg:text-7xl">
@@ -99,25 +96,25 @@ const handleBook = (movie: any) => {
                         <span class="text-red-500">Like Never Before.</span>
                     </h1>
 
-                    <p class="mt-6 max-w-xl text-base leading-7 text-gray-300 sm:text-lg">
-                        Discover the latest movies, choose your favorite seats,
-                        and book your cinema tickets easily with CineBook.
+                    <p class="mt-4 max-w-xl text-base leading-7 text-gray-300 sm:text-md">
+                        Discover thousands of blockbuster films, create personalized watchlists, and stream seamlessly on any device with CineBook.
                     </p>
 
                     <div class="mt-7 flex flex-wrap items-center gap-4">
 
                         <button
+                            @click="navigateTo('/movie')"
                             class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-7 py-3.5 font-semibold transition hover:bg-red-700 hover:scale-105">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                             </svg>
-                            Book Ticket
+                            Start Watching
                         </button>
 
                         <button
                             @click="navigateTo('/movie')"
                             class="rounded-xl border border-white/20 bg-white/10 px-7 py-3.5 font-semibold backdrop-blur transition hover:bg-white/20">
-                            Explore Movies
+                            Explore Catalog
                         </button>
 
                     </div>
@@ -158,7 +155,7 @@ const handleBook = (movie: any) => {
                     </p>
 
                     <h2 class="text-3xl font-bold sm:text-4xl">
-                        Now Showing
+                        Now Streaming
                     </h2>
                 </div>
 
@@ -196,7 +193,7 @@ const handleBook = (movie: any) => {
                     </p>
 
                     <h2 class="text-3xl font-bold sm:text-4xl">
-                        Upcoming Movies
+                        Upcoming Releases
                     </h2>
                 </div>
 
@@ -249,82 +246,86 @@ const handleBook = (movie: any) => {
 
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
+                <!-- Card 1: Watch Anywhere -->
                 <div
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
                         class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
                         <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
 
                     <h3 class="font-bold">
-                        Easy Booking
+                        Watch Anywhere
                     </h3>
 
                     <p class="mt-2 text-sm leading-6 text-gray-500">
-                        Book your movie tickets quickly and easily.
+                        Stream on all your favorite devices with ease.
                     </p>
 
                 </div>
 
+                <!-- Card 2: 4K Ultra HD -->
                 <div
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
                         class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
                         <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
                     </div>
 
                     <h3 class="font-bold">
-                        Choose Your Seat
+                        4K Ultra HD
                     </h3>
 
                     <p class="mt-2 text-sm leading-6 text-gray-500">
-                        Select your favorite seat before watching.
+                        Experience crystal-clear visuals and immersive audio.
                     </p>
 
                 </div>
 
+                <!-- Card 3: Zero Buffering -->
                 <div
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
                         class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
                         <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                     </div>
 
                     <h3 class="font-bold">
-                        Secure Payment
+                        Zero Buffering
                     </h3>
 
                     <p class="mt-2 text-sm leading-6 text-gray-500">
-                        Simple and secure ticket payment.
+                        Fast, high-speed playback on all network connections.
                     </p>
 
                 </div>
 
+                <!-- Card 4: Custom Watchlists -->
                 <div
                     class="rounded-2xl border border-white/10 bg-[#15151b] p-7 text-center transition hover:-translate-y-1 hover:border-red-500/30">
 
                     <div
                         class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600/10">
                         <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                         </svg>
                     </div>
 
                     <h3 class="font-bold">
-                        Digital Ticket
+                        Custom Watchlists
                     </h3>
 
                     <p class="mt-2 text-sm leading-6 text-gray-500">
-                        Get your ticket digitally after booking.
+                        Build and manage your personal movie library with one tap.
                     </p>
 
                 </div>
@@ -340,16 +341,17 @@ const handleBook = (movie: any) => {
                 class="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-linear-to-r from-red-700 to-red-500 px-6 py-12 text-center sm:px-12">
 
                 <h2 class="text-3xl font-black sm:text-4xl">
-                    Ready for your next movie?
+                    Ready for your next movie night?
                 </h2>
 
                 <p class="mx-auto mt-3 max-w-xl text-sm text-red-100 sm:text-base">
-                    Find a movie you love and book your seat today.
+                    Discover thousands of movies and start streaming on CineBook today.
                 </p>
 
                 <button
+                    @click="navigateTo('/movie')"
                     class="mt-7 rounded-xl bg-white px-7 py-3.5 font-bold text-red-600 transition hover:bg-gray-100">
-                    View All Movies →
+                    Start Watching →
                 </button>
 
             </div>
@@ -364,12 +366,12 @@ const handleBook = (movie: any) => {
                 <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
                     <div>
-                            <div class="flex items-center gap-2">
-                                <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-600">
-                                    <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-                                    </svg>
-                                </div>
+                        <div class="flex items-center gap-2">
+                            <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-600">
+                                <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                                </svg>
+                            </div>
 
                             <span class="font-bold">
                                 Cine<span class="text-red-500">Book</span>
@@ -377,7 +379,7 @@ const handleBook = (movie: any) => {
                         </div>
 
                         <p class="mt-4 max-w-xs text-sm leading-6 text-gray-500">
-                            Your simple and convenient movie ticket booking platform.
+                            Your ultimate platform for discovering and streaming movies online.
                         </p>
                     </div>
 
@@ -440,6 +442,6 @@ const handleBook = (movie: any) => {
 
         </footer>
 
+        <UserLogin v-if="showLogin" @close="showLogin = false" />
     </div>
-    <UserLogin v-if="showLogin" @close="showLogin = false" />
 </template>
