@@ -46,6 +46,12 @@ const handleResultClick = (title: string) => {
   navigateTo(`/movie?q=${encodeURIComponent(title)}`)
 }
 
+const handleSearchBlur = () => {
+  setTimeout(() => {
+    showSearchDropdown.value = false
+  }, 200)
+}
+
 const handleLogout = () => {
   logout()
   showProfileMenu.value = false
@@ -71,7 +77,7 @@ const handleLogout = () => {
 			<nav class="hidden items-center gap-8 md:flex">
 				<NuxtLink to="/" :class="['text-sm font-medium transition', isActive('/') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Home</NuxtLink>
 				<NuxtLink to="/movie" :class="['text-sm font-medium transition', isActive('/movie') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Movies</NuxtLink>
-				<NuxtLink to="/coming" :class="['text-sm font-medium transition', isActive('/coming') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Coming Soon</NuxtLink>
+				<NuxtLink to="/watchlist" :class="['text-sm font-medium transition', isActive('/watchlist') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Watchlist</NuxtLink>
 				<NuxtLink to="/about" :class="['text-sm font-medium transition', isActive('/about') ? 'text-red-400' : 'text-gray-400 hover:text-white']">About</NuxtLink>
 			</nav>
 
@@ -82,7 +88,7 @@ const handleLogout = () => {
 					</svg>
 					<input
 						v-model="searchQuery"
-						@blur="setTimeout(() => showSearchDropdown = false, 200)"
+						@blur="handleSearchBlur"
 						@keyup.enter="handleSearch"
 						type="text"
 						placeholder="Search movie..."
@@ -129,8 +135,8 @@ const handleLogout = () => {
 							class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1 pl-1 pr-3 transition hover:border-white/20"
 							@click="showProfileMenu = !showProfileMenu"
 						>
-							<img :src="user?.avatar" :alt="user?.name" class="h-8 w-8 rounded-full" />
-							<span class="text-sm font-medium text-white">{{ user?.name }}</span>
+<img :src="user?.avatar" :alt="user?.username" class="h-8 w-8 rounded-full" />
+						<span class="text-sm font-medium text-white">{{ user?.username }}</span>
 							<span class="text-xs text-gray-400">▼</span>
 						</button>
 
@@ -139,7 +145,7 @@ const handleLogout = () => {
 							class="absolute right-0 top-14 w-56 overflow-hidden rounded-xl border border-white/10 bg-[#15151b] shadow-xl"
 						>
 							<div class="border-b border-white/10 p-4">
-								<p class="text-sm font-semibold text-white">{{ user?.name }}</p>
+								<p class="text-sm font-semibold text-white">{{ user?.username }}</p>
 								<p class="text-xs text-gray-400">{{ user?.email }}</p>
 							</div>
 							<div class="p-2">
