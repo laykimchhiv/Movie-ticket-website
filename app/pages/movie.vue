@@ -113,6 +113,7 @@
 import { ref, computed, watch } from 'vue'
 const { isLoggedIn } = useAuth()
 const showLogin = ref(false)
+const showSearchDropdown = ref(false)
 
 interface Movie {
   id: number | string

@@ -75,7 +75,7 @@ const handleLogin = async () => {
             </svg>
           </div>
           <h2 class="text-xl font-bold text-white">Welcome Back</h2>
-          <p class="mt-1 text-sm text-red-200">Sign in to your CineBook account</p>
+          <p class="mt-1 text-sm text-red-200">Sign in to your Flixora account</p>
         </div>
       </div>
 
