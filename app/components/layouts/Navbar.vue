@@ -1,8 +1,7 @@
 <script setup lang="ts">
 const mobileMenu = ref(false)
 const showLogin = ref(false)
-const showProfileMenu = ref(false)
-const { user, isLoggedIn, logout } = useAuth()
+const { user, isLoggedIn, isLoaded, logout } = useAuth()
 const route = useRoute()
 
 const isActive = (path: string) => route.path === path
@@ -54,7 +53,6 @@ const handleSearchBlur = () => {
 
 const handleLogout = () => {
   logout()
-  showProfileMenu.value = false
 }
 </script>
 
@@ -70,7 +68,7 @@ const handleLogout = () => {
 				</div>
 
 				<span class="text-xl font-bold text-white">
-					Cine<span class="text-red-500">Book</span>
+					Fli<span class="text-red-500">xora</span>
 				</span>
 			</a>
 
@@ -79,6 +77,7 @@ const handleLogout = () => {
 				<NuxtLink to="/movie" :class="['text-sm font-medium transition', isActive('/movie') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Movies</NuxtLink>
 				<NuxtLink to="/watchlist" :class="['text-sm font-medium transition', isActive('/watchlist') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Watchlist</NuxtLink>
 				<NuxtLink to="/about" :class="['text-sm font-medium transition', isActive('/about') ? 'text-red-400' : 'text-gray-400 hover:text-white']">About</NuxtLink>
+				<NuxtLink to="/profile" :class="['text-sm font-medium transition', isActive('/profile') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Profile</NuxtLink>
 			</nav>
 
 			<div class="hidden items-center gap-4 md:flex">
@@ -129,70 +128,24 @@ const handleLogout = () => {
 					</div>
 				</div>
 
-				<template v-if="isLoggedIn">
-					<div class="relative">
-						<button
-							class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1 pl-1 pr-3 transition hover:border-white/20"
-							@click="showProfileMenu = !showProfileMenu"
-						>
-<img :src="user?.avatar" :alt="user?.username" class="h-8 w-8 rounded-full" />
-						<span class="text-sm font-medium text-white">{{ user?.username }}</span>
-							<span class="text-xs text-gray-400">▼</span>
-						</button>
+			<template v-if="isLoaded && isLoggedIn">
+			<button
+				class="flex items-center justify-center rounded-full p-1 transition"
+				@click="navigateTo('/profile')"
+				aria-label="Open profile"
+			>
+				<img :src="user?.avatar" :alt="user?.username" class="h-9 w-9 rounded-full" />
+			</button>
+			</template>
 
-						<div
-							v-if="showProfileMenu"
-							class="absolute right-0 top-14 w-56 overflow-hidden rounded-xl border border-white/10 bg-[#15151b] shadow-xl"
-						>
-							<div class="border-b border-white/10 p-4">
-								<p class="text-sm font-semibold text-white">{{ user?.username }}</p>
-								<p class="text-xs text-gray-400">{{ user?.email }}</p>
-							</div>
-							<div class="p-2">
-								<NuxtLink
-									to="/profile"
-									class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-gray-300 transition hover:bg-white/5"
-									@click="showProfileMenu = false"
-								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-									</svg>
-									My Profile
-								</NuxtLink>
-								<NuxtLink
-									to="/profile?tab=favorites"
-									class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-gray-300 transition hover:bg-white/5"
-									@click="showProfileMenu = false"
-								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-									</svg>
-									Favorites
-								</NuxtLink>
-							</div>
-							<div class="border-t border-white/10 p-2">
-								<button
-									class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-400 transition hover:bg-red-500/10"
-									@click="handleLogout"
-								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-									</svg>
-									Logout
-								</button>
-							</div>
-						</div>
-					</div>
-				</template>
-
-				<template v-else>
-					<button
-						class="rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold transition hover:bg-red-700"
-						@click="showLogin = true"
-					>
-						Login
-					</button>
-				</template>
+			<template v-else-if="isLoaded && !isLoggedIn">
+				<button
+					class="rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold transition hover:bg-red-700"
+					@click="showLogin = true"
+				>
+					Login
+				</button>
+			</template>
 			</div>
 
 			<button
@@ -210,15 +163,17 @@ const handleLogout = () => {
 			<div class="flex flex-col gap-4">
 				<NuxtLink to="/" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
 				<NuxtLink to="/movie" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
+				<NuxtLink to="/watchlist" :class="['text-sm font-medium', isActive('/watchlist') ? 'text-red-400' : 'text-gray-300']">Watchlist</NuxtLink>
 				<NuxtLink to="/coming" :class="['text-sm font-medium', isActive('/coming') ? 'text-red-400' : 'text-gray-300']">Coming Soon</NuxtLink>
 				<NuxtLink to="/about" :class="['text-sm font-medium', isActive('/about') ? 'text-red-400' : 'text-gray-300']">About</NuxtLink>
-				<template v-if="isLoggedIn">
-					<NuxtLink to="/profile" class="text-gray-300">My Profile</NuxtLink>
-					<button class="rounded-lg bg-red-600 py-3 font-semibold text-left text-red-400" @click="handleLogout">Logout</button>
-				</template>
-				<template v-else>
-					<button class="rounded-lg bg-red-600 py-3 font-semibold" @click="showLogin = true">Login</button>
-				</template>
+				<NuxtLink to="/profile" :class="['text-sm font-medium', isActive('/profile') ? 'text-red-400' : 'text-gray-300']">Profile</NuxtLink>
+			<template v-if="isLoaded && isLoggedIn">
+				<NuxtLink to="/profile" class="text-gray-300">My Profile</NuxtLink>
+				<button class="rounded-lg bg-red-600 py-3 font-semibold text-left text-red-400" @click="handleLogout">Logout</button>
+			</template>
+			<template v-else-if="isLoaded && !isLoggedIn">
+				<button class="rounded-lg bg-red-600 py-3 font-semibold" @click="showLogin = true">Login</button>
+			</template>
 			</div>
 		</div>
 	</header>

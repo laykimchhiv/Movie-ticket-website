@@ -10,15 +10,16 @@ const emit = defineEmits<{
   click: [movie: any]
 }>()
 
-const { isFavorite, addFavorite, removeFavorite, isLoggedIn } = useAuth()
+const { isInWatchlist, addToWatchlist, removeFromWatchlist, isLoggedIn } =
+  useAuth()
 
-const toggleFavorite = (e: Event) => {
+const toggleWatchlist = (e: Event) => {
   e.stopPropagation()
   if (!isLoggedIn.value) return
-  if (isFavorite(props.movie.id)) {
-    removeFavorite(props.movie.id)
+  if (isInWatchlist(props.movie.id)) {
+    removeFromWatchlist(props.movie.id)
   } else {
-    addFavorite(props.movie.id)
+    addToWatchlist(props.movie.id)
   }
 }
 
@@ -50,17 +51,33 @@ const handleClick = () => {
         {{ movie.rating }}
       </div>
 
-      <!-- Favorite Button -->
+      <!-- Watchlist Button -->
       <button
         class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-sm backdrop-blur transition hover:bg-black/80"
-        :class="{ 'text-red-500': isFavorite(movie.id) }"
-        @click="toggleFavorite"
+        :class="{ 'text-red-500': isInWatchlist(movie.id) }"
+        @click="toggleWatchlist"
       >
-        <svg v-if="isFavorite(movie.id)" class="h-4 w-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        <svg
+          v-if="isInWatchlist(movie.id)"
+          class="h-4 w-4 text-red-500"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M5 3h14a2 2 0 012 2v18l-7-3-7 3V5a2 2 0 012-2z" />
         </svg>
-        <svg v-else class="h-4 w-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        <svg
+          v-else
+          class="h-4 w-4 text-white"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 3h14a2 2 0 012 2v18l-7-3-7 3V5a2 2 0 012-2z"
+          />
         </svg>
       </button>
     </div>

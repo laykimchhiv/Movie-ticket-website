@@ -47,7 +47,7 @@
           </div>
 
           <!-- Right side -->
-          <div class="flex items-center gap-3 ml-auto">
+          <div class="flex items-center gap-3 ml-auto relative">
 
             <!-- Notification -->
             <button
@@ -56,26 +56,39 @@
                      flex items-center justify-center"
             >
               <Icon name="mdi:bell" />
-
-              <span
-                class="absolute top-2 right-2 w-2 h-2
-                       bg-red-500 rounded-full"
-              ></span>
             </button>
 
             <!-- Admin Profile -->
-            <div class="hidden sm:flex items-center gap-3 ml-2">
-              <div
-                class="w-9 h-9 rounded-full bg-red-600
-                       flex items-center justify-center font-semibold"
-              >
-                A
-              </div>
+            <div class="hidden sm:flex items-center gap-3 ml-2 relative">
+              <button @click="showProfileDropdown = !showProfileDropdown" class="flex items-center gap-3 px-2 py-1.5 rounded-xl hover:bg-[#1b1b22] transition cursor-pointer">
+                <div
+                  class="w-9 h-9 rounded-full bg-red-600
+                         flex items-center justify-center font-semibold"
+                >
+                  {{ user?.username?.charAt(0).toUpperCase() || 'A' }}
+                </div>
 
-              <div>
-                <p class="text-sm font-medium">Admin</p>
-                <p class="text-xs text-gray-500">Administrator</p>
-              </div>
+                <div class="text-left">
+                  <p class="text-sm font-medium">{{ user?.username || 'Admin' }}</p>
+                  <p class="text-xs text-gray-500">Administrator</p>
+                </div>
+
+                <Icon name="mdi:chevron-down" class="text-gray-500 text-lg transition-transform" :class="showProfileDropdown ? 'rotate-180' : ''" />
+              </button>
+
+               <!-- Dropdown -->
+               <div
+                 v-if="showProfileDropdown"
+                 class="absolute top-full right-0 mt-2 w-48 bg-[#15151c] border border-gray-800 rounded-xl shadow-xl z-50 overflow-hidden"
+               >
+                 <button
+                   @click="switchToUserView"
+                   class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-[#1b1b22] hover:text-white transition flex items-center gap-2"
+                 >
+                   <Icon name="mdi:account-switch" class="text-lg" />
+                   Switch to User View
+                 </button>
+               </div>
             </div>
 
           </div>
@@ -106,7 +119,7 @@
             </h2>
 
             <p class="text-gray-500 mt-1">
-              Welcome back, Admin. Here's what's happening with MovieFlix.
+              Welcome back, {{ user?.username || 'Admin' }}. Here's what's happening with MovieFlix.
             </p>
           </div>
 
@@ -266,7 +279,7 @@
               </div>
 
               <!-- Chart -->
-              <div class="h-64 flex items-end gap-2 sm:gap-4">
+              <div class="h-75 flex items-end gap-2 sm:gap-4">
 
                 <div
                   v-for="item in categoryStats"
@@ -274,16 +287,22 @@
                   class="flex-1 h-full flex flex-col justify-end items-center gap-2"
                 >
 
-                  <div class="w-full h-full flex items-end justify-center">
+                   <div class="w-full h-full flex items-end justify-center ">
 
-                    <div
-                      class="w-full max-w-12 bg-red-500 rounded-t-lg
-                             hover:bg-red-400 transition cursor-pointer"
-                      :style="{ height: item.height + '%', minHeight: '8px' }"
-                      :title="item.count + ' items'"
-                    ></div>
+                     <div
+                       class="relative w-full max-w-12 bg-red-500 rounded-t-lg
+                              hover:bg-red-400 transition cursor-pointer"
+                       :style="{ height: item.height + '%', minHeight: '8px' }"
+                       :title="item.count + ' items'"
+                     >
+                       <span
+                         class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-medium text-white"
+                       >
+                         {{ item.count }}
+                       </span>
+                     </div>
 
-                  </div>
+                   </div>
 
                   <span class="text-xs text-gray-500 text-center truncate w-full">
                     {{ item.name }}
@@ -295,109 +314,59 @@
 
             </div>
 
-            <!-- Quick Statistics -->
+            <!-- Top Rated Movies -->
             <div
               class="bg-[#15151c] border border-gray-800
                      rounded-2xl p-6"
             >
 
               <h3 class="text-lg font-semibold">
-                Quick Statistics
+                Top Rated Movies
               </h3>
 
               <p class="text-sm text-gray-500 mb-6">
-                Content overview
+                Highest rated content
               </p>
 
-              <div class="space-y-5">
+              <div class="space-y-3">
 
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-10 h-10 rounded-lg bg-red-500/10
-                             flex items-center justify-center text-red-400"
-                    >
-                      <Icon name="mdi:movie" />
-                    </div>
-
-                    <div>
-                      <p class="text-sm">Movies</p>
-                      <p class="text-xs text-gray-500">
-                        Type: movie
-                      </p>
-                    </div>
+                <div
+                  v-for="(movie, index) in topRatedMovies"
+                  :key="movie.id"
+                  class="flex items-center gap-4"
+                >
+                  <div class="flex items-center justify-center w-6 text-gray-600 text-sm font-medium">
+                    #{{ index + 1 }}
                   </div>
 
-                  <p class="font-semibold">
-                    {{ stats.movies }}
-                  </p>
-                </div>
+                  <img
+                    :src="movie.poster || 'https://via.placeholder.com/40x60'"
+                    :alt="movie.title"
+                    class="w-10 h-14 object-cover rounded-lg bg-gray-800"
+                  />
 
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-10 h-10 rounded-lg bg-purple-500/10
-                             flex items-center justify-center text-purple-400"
-                    >
-                      <Icon name="mdi:television" />
-                    </div>
-
-                    <div>
-                      <p class="text-sm">Series</p>
-                      <p class="text-xs text-gray-500">
-                        Type: series
-                      </p>
-                    </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate">
+                      {{ movie.title }}
+                    </p>
+                    <p class="text-xs text-gray-500 truncate">
+                      {{ Array.isArray(movie.genre) ? movie.genre.join(', ') : movie.genre }}
+                    </p>
                   </div>
 
-                  <p class="font-semibold">
-                    {{ stats.series }}
-                  </p>
-                </div>
-
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-10 h-10 rounded-lg bg-blue-500/10
-                             flex items-center justify-center text-blue-400"
-                    >
-                      <Icon name="mdi:tag" />
-                    </div>
-
-                    <div>
-                      <p class="text-sm">Categories</p>
-                      <p class="text-xs text-gray-500">
-                        Genres available
-                      </p>
-                    </div>
+                  <div class="flex items-center gap-1 text-yellow-400 text-sm font-medium">
+                    <Icon name="mdi:star" />
+                    {{ movie.rating || '0.0' }}
                   </div>
 
-                  <p class="font-semibold">
-                    {{ stats.categories }}
-                  </p>
                 </div>
 
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-10 h-10 rounded-lg bg-green-500/10
-                             flex items-center justify-center text-green-400"
-                    >
-                      <Icon name="mdi:star" />
-                    </div>
-
-                    <div>
-                      <p class="text-sm">Avg Rating</p>
-                      <p class="text-xs text-gray-500">
-                        Out of 10
-                      </p>
-                    </div>
-                  </div>
-
-                  <p class="font-semibold">
-                    {{ stats.avgRating }}
-                  </p>
-                </div>
+                <p
+                  v-if="!topRatedMovies.length"
+                  class="text-sm text-gray-500 text-center py-4"
+                >
+                  No movies available
+                </p>
 
               </div>
 
@@ -541,12 +510,34 @@ definePageMeta({
   role: 'admin' 
 })
 
+const { user } = useAuth()
+
 /*
 |--------------------------------------------------------------------------
 | Mobile Sidebar State
 |--------------------------------------------------------------------------
 */
 const sidebarOpen = ref(false)
+const showProfileDropdown = ref(false)
+
+const switchToUserView = () => {
+  if (user.value) {
+    const updatedUser = { ...user.value, role: 'user' }
+    user.value = updatedUser
+
+    if (typeof window !== 'undefined') {
+      const authData = localStorage.getItem('auth')
+      if (authData) {
+        const data = JSON.parse(authData)
+        data.user = updatedUser
+        localStorage.setItem('auth', JSON.stringify(data))
+      }
+    }
+  }
+
+  showProfileDropdown.value = false
+  navigateTo('/')
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -584,6 +575,17 @@ const stats = computed(() => {
     categories: categories.value.length,
     avgRating: avg
   }
+})
+
+/*
+|--------------------------------------------------------------------------
+| Top Rated Movies
+|--------------------------------------------------------------------------
+*/
+const topRatedMovies = computed(() => {
+  return [...movies.value]
+    .sort((a, b) => Number(b.rating) - Number(a.rating))
+    .slice(0, 5)
 })
 
 /*

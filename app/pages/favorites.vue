@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isLoggedIn, watchlist, removeFromWatchlist } = useAuth()
+const { isLoggedIn, favorites, removeFromFavorites } = useAuth()
 const showLogin = ref(false)
 
 const API_BASE = 'http://localhost:8000'
@@ -30,19 +30,19 @@ const movies = computed<Movie[]>(() =>
   }))
 )
 
-const watchlistMovies = computed(() => {
+const favoriteMovies = computed(() => {
   if (!rawMovies.value) return []
   return movies.value.filter((m) =>
-    watchlist.value.includes(m.id as any)
+    favorites.value.includes(m.id as any)
   )
 })
 
 const search = ref('')
 
 const filtered = computed(() => {
-  if (!search.value) return watchlistMovies.value
+  if (!search.value) return favoriteMovies.value
   const q = search.value.toLowerCase().trim()
-  return watchlistMovies.value.filter((m) =>
+  return favoriteMovies.value.filter((m) =>
     m.title.toLowerCase().includes(q)
   )
 })
@@ -55,8 +55,8 @@ const handleMovieClick = (movie: Movie) => {
   navigateTo(`/watch/${movie.id}`)
 }
 
-const clearWatchlist = () => {
-  watchlistMovies.value.forEach((m) => removeFromWatchlist(m.id as any))
+const clearFavorites = () => {
+  favoriteMovies.value.forEach((m) => removeFromFavorites(m.id as any))
 }
 </script>
 
@@ -86,10 +86,9 @@ const clearWatchlist = () => {
             </svg>
           </div>
 
-          <h2 class="text-2xl font-bold text-white">My Watchlist</h2>
+          <h2 class="text-2xl font-bold text-white">My Favorites</h2>
           <p class="mt-3 text-sm text-gray-400">
-            Sign in to save movies to your personal watchlist and pick up
-            right where you left off.
+            Sign in to save movies to your favorites and keep track of the ones you love.
           </p>
 
           <button
@@ -122,7 +121,7 @@ const clearWatchlist = () => {
             >
               Your List
             </p>
-            <h1 class="text-3xl font-bold sm:text-4xl">My Watchlist</h1>
+            <h1 class="text-3xl font-bold sm:text-4xl">My Favorites</h1>
           </div>
 
           <div class="relative w-full max-w-xs">
@@ -142,15 +141,15 @@ const clearWatchlist = () => {
             <input
               v-model="search"
               type="text"
-              placeholder="Search your watchlist..."
+              placeholder="Search your favorites..."
               class="w-full rounded-full border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 outline-none focus:border-red-500"
             />
           </div>
         </div>
 
         <p class="mt-4 text-sm text-gray-400">
-          {{ watchlistMovies.length }}
-          {{ watchlistMovies.length === 1 ? 'movie' : 'movies' }} saved
+          {{ favoriteMovies.length }}
+          {{ favoriteMovies.length === 1 ? 'movie' : 'movies' }} saved
         </p>
       </div>
     </section>
@@ -162,7 +161,7 @@ const clearWatchlist = () => {
         <div
           class="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-red-500/20 border-t-red-500"
         />
-        Loading your watchlist...
+        Loading your favorites...
       </div>
 
       <!-- Movies Grid -->
@@ -193,17 +192,12 @@ const clearWatchlist = () => {
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318A4.5 4.5 0 0117.682 6.318A4.5 4.5 0 0112 10.5a4.5 4.5 0 01-1.318-.882"
-          />
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
           />
         </svg>
 
         <p class="mt-4 text-sm text-gray-400">
-          {{ search ? 'No movies match your search.' : 'Your watchlist is empty.' }}
+          {{ search ? 'No movies match your search.' : 'Your favorites list is empty.' }}
         </p>
 
         <NuxtLink

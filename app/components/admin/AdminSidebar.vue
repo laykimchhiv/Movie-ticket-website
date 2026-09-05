@@ -11,7 +11,7 @@
         <Icon name="mdi:movie-open" class="text-xl text-white" />
       </div>
       <div>
-        <h1 class="font-bold text-lg">MovieFlix</h1>
+        <h1 class="font-bold text-lg">Flixora</h1>
         <p class="text-xs text-gray-500">Admin Panel</p>
       </div>
       <button

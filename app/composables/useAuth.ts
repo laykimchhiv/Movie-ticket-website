@@ -27,7 +27,9 @@ const API_URL = 'http://localhost:8000'
 
 const user = ref<User | null>(null)
 const token = ref<string>('')
+const watchlist = ref<number[]>([])
 const favorites = ref<number[]>([])
+const isLoaded = ref(false)
 
 const loadFromStorage = () => {
   if (typeof window === 'undefined') return
@@ -42,12 +44,21 @@ const loadFromStorage = () => {
     token.value = data.token
   }
 
-  // Load favorites
-  const storedFavs = localStorage.getItem('favorites')
+  // Load watchlist
+  const storedWatchlist = localStorage.getItem('watchlist')
 
-  if (storedFavs) {
-    favorites.value = JSON.parse(storedFavs)
+  if (storedWatchlist) {
+    watchlist.value = JSON.parse(storedWatchlist)
   }
+
+  // Load favorites
+  const storedFavorites = localStorage.getItem('favorites')
+
+  if (storedFavorites) {
+    favorites.value = JSON.parse(storedFavorites)
+  }
+
+  isLoaded.value = true
 }
 
 loadFromStorage()
@@ -100,7 +111,7 @@ export function useAuth() {
       email: found.email,
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
         found.username
-      )}&background=dc2626&color=fff`,
+      )}&background=6b7280&color=fff`,
       role: found.role || 'user',
     }
 
@@ -185,7 +196,7 @@ export function useAuth() {
       email: savedUser.email,
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
         savedUser.username
-      )}&background=dc2626&color=fff`,
+      )}&background=6b7280&color=fff`,
       role: savedUser.role || 'user',
     }
 
@@ -216,18 +227,53 @@ export function useAuth() {
   const logout = () => {
     user.value = null
     token.value = ''
+    watchlist.value = []
     favorites.value = []
 
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth')
+      localStorage.removeItem('watchlist')
       localStorage.removeItem('favorites')
     }
   }
 
   // =========================
+  // WATCHLIST
+  // =========================
+  const addToWatchlist = (movieId: number) => {
+    if (!watchlist.value.includes(movieId)) {
+      watchlist.value.push(movieId)
+
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(
+          'watchlist',
+          JSON.stringify(watchlist.value)
+        )
+      }
+    }
+  }
+
+  const removeFromWatchlist = (movieId: number) => {
+    watchlist.value = watchlist.value.filter(
+      (id) => id !== movieId
+    )
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(
+        'watchlist',
+        JSON.stringify(watchlist.value)
+      )
+    }
+  }
+
+  const isInWatchlist = (movieId: number) => {
+    return watchlist.value.includes(movieId)
+  }
+
+  // =========================
   // FAVORITES
   // =========================
-  const addFavorite = (movieId: number) => {
+  const addToFavorites = (movieId: number) => {
     if (!favorites.value.includes(movieId)) {
       favorites.value.push(movieId)
 
@@ -240,7 +286,7 @@ export function useAuth() {
     }
   }
 
-  const removeFavorite = (movieId: number) => {
+  const removeFromFavorites = (movieId: number) => {
     favorites.value = favorites.value.filter(
       (id) => id !== movieId
     )
@@ -253,7 +299,7 @@ export function useAuth() {
     }
   }
 
-  const isFavorite = (movieId: number) => {
+  const isInFavorites = (movieId: number) => {
     return favorites.value.includes(movieId)
   }
 
@@ -261,14 +307,19 @@ export function useAuth() {
     user,
     token,
     isLoggedIn,
+    isLoaded,
     role,
     hasRole,
+    watchlist,
     favorites,
     login,
     logout,
     register,
-    addFavorite,
-    removeFavorite,
-    isFavorite,
+    addToWatchlist,
+    removeFromWatchlist,
+    isInWatchlist,
+    addToFavorites,
+    removeFromFavorites,
+    isInFavorites,
   }
 }

@@ -589,16 +589,16 @@
   ],
   "users": [
     {
-      "username": "mesa",
-      "email": "mesa@gmail.com",
-      "password": "mesa123",
+      "username": "chhiv",
+      "email": "chhiv@gmail.com",
+      "password": "12345",
       "role": "admin",
       "id": "5ns-ETwNNQg"
     },
     {
-      "username": "chhiv",
-      "email": "chhiv@gmail.com",
-      "password": "12345",
+      "username": "mesa",
+      "email": "mesa@gmail.com",
+      "password": "mesa123",
       "role": "user",
       "id": "HpJc_IVoNHg"
     }

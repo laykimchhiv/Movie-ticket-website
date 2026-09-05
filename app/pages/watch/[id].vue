@@ -71,6 +71,33 @@
             {{ item.description }}
           </p>
         </div>
+
+        <!-- Favorite Button -->
+        <div class="mt-6 lg:mt-0 lg:self-start">
+          <button
+            @click="toggleFavorite"
+            :disabled="!isLoggedIn"
+            :class="[
+              'inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition',
+              isFavorited
+                ? 'border-red-500 bg-red-600 text-white hover:bg-red-700'
+                : 'border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20',
+            ]"
+          >
+            <svg
+              class="h-5 w-5"
+              :fill="isFavorited ? 'currentColor' : 'none'"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 21.35l-1.45-.32C5.45 15.93 2 12.18 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.39.81 4.42 2.02L12 5.71l.58-.58C13.61 3.81 15.26 3 17 3 20.08 3 22.5 5.42 22.5 8.5c0 3.68-3.45 7.43-8.55 12.54L12 21.35z"
+              />
+            </svg>
+            <span>{{ isFavorited ? 'Favorited' : 'Add to Favorites' }}</span>
+          </button>
+        </div>
       </div>
 
       <!-- Episodes -->
@@ -112,17 +139,36 @@
 </template>
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 const API_BASE = 'http://localhost:8000'
 
 const route = useRoute()
+const id = route.params.id
 
-const auth = useAuth()
-const isLoggedIn = auth.isLoggedIn
-const user = auth.user
-const showLogin = ref(false)
+console.log('Movie ID:', id)
+console.log('API URL:', `${API_BASE}/movies/${id}`)
 
-const id = computed(() => route.params.id)
+const { isLoggedIn, addToFavorites, removeFromFavorites, isInFavorites } =
+  useAuth()
+const showLogin = ref(!isLoggedIn.value)
+
+const isFavorited = computed(() => isInFavorites(Number(id)))
+
+const toggleFavorite = () => {
+  if (!isLoggedIn.value) {
+    showLogin.value = true
+    return
+  }
+
+  const movieId = Number(id)
+
+  if (isFavorited.value) {
+    removeFromFavorites(movieId)
+  } else {
+    addToFavorites(movieId)
+  }
+}
 
 const { data: item, pending, error, refresh } = await useAsyncData(
   `watch-${id.value}`,

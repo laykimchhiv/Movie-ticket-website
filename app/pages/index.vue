@@ -97,7 +97,7 @@ const filteredMovies = computed(() => {
                     </h1>
 
                     <p class="mt-4 max-w-xl text-base leading-7 text-gray-300 sm:text-md">
-                        Discover thousands of blockbuster films, create personalized watchlists, and stream seamlessly on any device with CineBook.
+                        Discover thousands of blockbuster films, create personalized watchlists, and stream seamlessly on any device with Flixora.
                     </p>
 
                     <div class="mt-7 flex flex-wrap items-center gap-4">
@@ -234,7 +234,7 @@ const filteredMovies = computed(() => {
             <div class="mb-12 text-center">
 
                 <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
-                    Why CineBook?
+                    Why Flixora?
                 </p>
 
                 <h2 class="text-3xl font-bold sm:text-4xl">
@@ -345,7 +345,7 @@ const filteredMovies = computed(() => {
                 </h2>
 
                 <p class="mx-auto mt-3 max-w-xl text-sm text-red-100 sm:text-base">
-                    Discover thousands of movies and start streaming on CineBook today.
+                    Discover thousands of movies and start streaming on Flixora today.
                 </p>
 
                 <button
@@ -435,7 +435,7 @@ const filteredMovies = computed(() => {
                 </div>
 
                 <div class="mt-10 border-t border-white/10 pt-6 text-center text-xs text-gray-600">
-                    © 2026 CineBook. All rights reserved.
+                    © 2026 Flixora. All rights reserved.
                 </div>
 
             </div>

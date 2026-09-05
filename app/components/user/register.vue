@@ -85,7 +85,7 @@ const handleRegister = async () => {
             </svg>
           </div>
           <h2 class="text-xl font-bold text-white">Create Account</h2>
-          <p class="mt-1 text-sm text-red-200">Join CineBook today</p>
+          <p class="mt-1 text-sm text-red-200">Join Flixora today</p>
         </div>
       </div>
 
