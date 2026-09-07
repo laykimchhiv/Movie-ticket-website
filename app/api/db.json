@@ -589,18 +589,25 @@
   ],
   "users": [
     {
-      "username": "chhiv",
-      "email": "chhiv@gmail.com",
-      "password": "12345",
+      "username": "mesa",
+      "email": "mesa@gmail.com",
+      "password": "mesa123",
       "role": "admin",
       "id": "5ns-ETwNNQg"
     },
     {
-      "username": "mesa",
-      "email": "mesa@gmail.com",
-      "password": "mesa123",
+      "username": "chhiv",
+      "email": "chhiv@gmail.com",
+      "password": "12345",
       "role": "user",
       "id": "HpJc_IVoNHg"
+    },
+    {
+      "username": "Azuralin",
+      "email": "muthdalin07@gmail.com",
+      "password": "061022",
+      "role": "user",
+      "id": "iybqQOWfXXY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
