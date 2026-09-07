@@ -547,6 +547,35 @@
           "videoUrl": "https://www.pexels.com/download/video/20061583/"
         }
       ]
+    },
+    {
+      "title": "Spider mouse",
+      "category": "Anime",
+      "genre": [
+        "Drama"
+      ],
+      "rating": 1,
+      "releaseDate": "2025-04-08",
+      "description": "Spider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouseSpider mouse",
+      "poster": "https://i.pinimg.com/736x/a9/db/70/a9db70d1ce556c9623dbbdf1b1cbc30f.jpg",
+      "videoUrl": "https://www.pexels.com/download/video/14369127/",
+      "type": "movie",
+      "id": "X1HtlH-e5Yc"
+    },
+    {
+      "id": "lZlmmcrvdLw",
+      "title": "nnn",
+      "category": "Animation",
+      "genre": [
+        "Action"
+      ],
+      "rating": 6,
+      "releaseDate": "2026-07-17",
+      "description": "nnnnnnnnnnnnnnnnnnnn",
+      "poster": "https://i.pinimg.com/736x/82/ae/99/82ae99a831107faa08a82c191e94f02e.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://www.pexels.com/download/video/10082445/"
     }
   ],
   "categories": [
@@ -609,7 +638,6 @@
       "role": "user",
       "id": "HpJc_IVoNHg"
     }
-    
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }

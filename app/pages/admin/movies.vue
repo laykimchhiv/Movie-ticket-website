@@ -196,7 +196,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
       @click.self="closeModal"
     >
-      <div class="bg-[#15151c] border border-gray-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div class="bg-[#15151c] border border-gray-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto scrollbar-hide">
         <div class="p-6 border-b border-gray-800 flex items-center justify-between sticky top-0 bg-[#15151c]">
           <h3 class="text-lg font-semibold">
             {{ isEditing ? 'Edit Movie' : 'Add New Movie' }}
@@ -305,6 +305,17 @@
           </div>
 
           <div>
+            <label class="block text-sm text-gray-400 mb-2">Video URL</label>
+            <input
+              v-model="form.videoUrl"
+              type="url"
+              class="w-full bg-[#0b0b0f] border border-gray-800 rounded-xl
+                     px-4 py-2.5 text-sm focus:outline-none focus:border-red-500"
+              placeholder="https://..."
+            />
+          </div>
+
+          <div>
             <label class="block text-sm text-gray-400 mb-2">Description</label>
             <textarea
               v-model="form.description"
@@ -405,6 +416,7 @@ const emptyForm = () => ({
   releaseDate: '',
   genreInput: '',
   poster: '',
+  videoUrl: '',
   description: ''
 })
 
@@ -459,6 +471,7 @@ const openEditModal = (movie) => {
     releaseDate: movie.releaseDate,
     genreInput: Array.isArray(movie.genre) ? movie.genre.join(', ') : '',
     poster: movie.poster,
+    videoUrl: movie.videoUrl || '',
     description: movie.description || ''
   })
   showModal.value = true
@@ -472,7 +485,18 @@ const closeModal = () => {
 const saveMovie = async () => {
   saving.value = true
   try {
+    const isNew = !isEditing.value
+    const nextId = isNew
+      ? String(
+          (movies.value || []).reduce((max, m) => {
+            const n = Number(m.id)
+            return Number.isFinite(n) && n > max ? n : max
+          }, 0) + 1
+        )
+      : String(form.id)
+
     const payload = {
+      id: nextId,
       title: form.title,
       category: form.category,
       genre: form.genreInput.split(',').map(g => g.trim()).filter(Boolean),
@@ -480,7 +504,9 @@ const saveMovie = async () => {
       releaseDate: form.releaseDate,
       description: form.description,
       poster: form.poster,
-      type: form.type
+      backdrop: '',
+      type: form.type,
+      videoUrl: form.videoUrl || ''
     }
 
     if (isEditing.value) {
