@@ -547,6 +547,36 @@
           "videoUrl": "https://www.pexels.com/download/video/20061583/"
         }
       ]
+    },
+    {
+      "id": "k5NE3z-o6-s",
+      "title": "The disastrous Life of Saiki K",
+      "category": "Animation",
+      "genre": [
+        "Action Comedy"
+      ],
+      "rating": 8,
+      "releaseDate": "2018-09-01",
+      "description": "A high school student with powerful psychic abilities tries to live an ordinary life by keeping his true nature a secret from his many quirky classmates and anyone else he comes across.",
+      "poster": "https://m.media-amazon.com/images/M/MV5BMzJhYWEyMWUtZDYwNS00NTU4LTgwODItYjBlNzEwMTc5MTc2XkEyXkFqcGc@._V1_.jpg",
+      "backdrop": "",
+      "type": "movie",
+      "videoUrl": "https://www.pexels.com/download/video/27220475/"
+    },
+    {
+      "id": "34A7g0Tun24",
+      "title": "Spy x Family",
+      "category": "Animation",
+      "genre": [
+        "Animation"
+      ],
+      "rating": 8.3,
+      "releaseDate": "2022-07-09",
+      "description": "World peace is at stake and secret agent Twilight must undergo his most difficult mission yet - pretend to be a family man. Posing as a loving husband and father, he'll infiltrate an elite school to get close to a high-profile politician.",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxa85cdTwF0Yzx9FrziquLsQsUC4V2CNHGHyrdhxEOncwQguWx07evwOslU9kjItFt8co2&s",
+      "backdrop": "",
+      "type": "series",
+      "videoUrl": "https://www.pexels.com/video/the-sun-rises-over-a-field-with-grass-and-trees-27742069/"
     }
   ],
   "categories": [
