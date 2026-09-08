@@ -20,20 +20,32 @@
 
           <div class="relative w-full md:w-96">
             <div class="flex w-full items-center gap-2">
-              <input
-                ref="searchInput"
-                v-model="searchQuery"
-                @focus="showSearchDropdown = true"
-                @click="showSearchDropdown = true"
-                @blur="setTimeout(() => showSearchDropdown = false, 200)"
-                type="text"
-                placeholder="Search movies..."
-                class="w-full bg-gray-900 border border-gray-700 text-white placeholder-gray-500 px-4 py-3 rounded-xl focus:outline-none focus:border-red-500 text-sm transition-all"
-              />
+              <div class="relative flex-1">
+                <input
+                  ref="searchInput"
+                  v-model="searchQuery"
+                  @focus="showSearchDropdown = true"
+                  @click="showSearchDropdown = true"
+                  @blur="setTimeout(() => showSearchDropdown = false, 200)"
+                  @keyup.enter="handleSearch"
+                  type="text"
+                  placeholder="Search movies..."
+                  class="w-full bg-gray-900 border border-gray-700 text-white placeholder-gray-500 px-4 py-3 rounded-xl focus:outline-none focus:border-red-500 text-sm transition-all"
+                />
+                <button
+                  v-if="searchQuery"
+                  @click="clearSearch"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              </div>
               <button
+                @click="searchQuery ? handleSearch() : clearSearch()"
                 class="rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold transition hover:bg-red-700"
               >
-                Search
+                {{ searchQuery ? 'Search' : 'Clear' }}
               </button>
             </div>
 
@@ -141,7 +153,21 @@ const handleMovieClick = (movie: Movie) => {
     showLogin.value = true
     return
   }
-  navigateTo(`/watch/${movie.id}`) 
+  navigateTo(`/watch/${movie.id}`)
+}
+
+const clearSearch = () => {
+  searchQuery.value = ''
+  if (route.query.q) {
+    navigateTo('/movie', { replace: true })
+  }
+}
+
+const handleSearch = () => {
+  const q = searchQuery.value.trim()
+  if (q) {
+    navigateTo(`/movie?q=${encodeURIComponent(q)}`)
+  }
 }
 
 const { data: categories } = await useFetch<{ id: string; name: string }[]>(
@@ -169,11 +195,13 @@ const movies = computed<Movie[]>(() =>
 )
 
 const filteredMovies = computed(() => {
-  const search = searchQuery.value.toLowerCase().trim()
+  const search = searchQuery.value.trim()
   const list = movies.value ?? []
 
+  if (!search) return list
+
   return list.filter((movie) => {
-    const matchesSearch = search === '' || movie.title.toLowerCase().includes(search)
+    const matchesSearch = movie.title.toLowerCase().includes(search.toLowerCase())
     const matchesCategory =
       selectedCategory.value === 'all' ||
       movie.genre.includes(selectedCategory.value)
