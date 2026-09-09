@@ -18,7 +18,17 @@ export default defineNuxtRouteMiddleware((to) => {
   // If the page declares a required role, enforce it
   const requiredRole: UserRole | undefined = to.meta.role as UserRole | undefined
 
-  if (requiredRole && data.user.role !== requiredRole) {
-    return navigateTo('/')
+  if (requiredRole) {
+    // Check the ORIGINAL role, not the current role.
+    // This allows admins to switch to user view and still access admin pages
+    // by navigating to /admin/dashboard directly.
+    const originalRole = localStorage.getItem('originalRole') as UserRole | null
+    const effectiveRole = (originalRole === 'admin' || originalRole === 'user')
+      ? originalRole
+      : data.user.role
+
+    if (effectiveRole !== requiredRole) {
+      return navigateTo('/')
+    }
   }
 })

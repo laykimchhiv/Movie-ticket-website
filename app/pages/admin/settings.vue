@@ -29,20 +29,6 @@
             <Icon name="mdi:menu" class="text-lg" />
           </button>
 
-          <div class="hidden sm:flex items-center relative w-64 lg:w-80">
-            <span class="absolute left-4 text-gray-500">
-              <Icon name="mdi:magnify" />
-            </span>
-            <input
-              type="text"
-              placeholder="Search settings..."
-              class="w-full bg-[#15151c] border border-gray-800
-                     rounded-xl py-2.5 pl-11 pr-4
-                     text-sm text-white placeholder-gray-500
-                     focus:outline-none focus:border-red-500"
-            />
-          </div>
-
           <div class="flex items-center gap-3 ml-auto">
             <button
               @click="saveSettings"
