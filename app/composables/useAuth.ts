@@ -64,6 +64,10 @@ const loadFromStorage = () => {
 loadFromStorage()
 
 export function useAuth() {
+  // Key used to remember the original role so it can be restored later.
+  // This survives reloads and lets the user switch back to admin.
+  const ORIGINAL_ROLE_KEY = 'originalRole'
+
   const isLoggedIn = computed(() => {
     return !!user.value && !!token.value
   })
@@ -131,6 +135,8 @@ export function useAuth() {
           token: authToken,
         })
       )
+      // Remember the original role so it can be restored later
+      localStorage.setItem(ORIGINAL_ROLE_KEY, userData.role)
     }
 
     return userData
@@ -216,6 +222,8 @@ export function useAuth() {
           token: authToken,
         })
       )
+      // Remember the original role so it can be restored later
+      localStorage.setItem(ORIGINAL_ROLE_KEY, userData.role)
     }
 
     return userData
@@ -235,6 +243,53 @@ export function useAuth() {
       localStorage.removeItem('watchlist')
       localStorage.removeItem('favorites')
     }
+  }
+
+  // =========================
+  // ROLE SWITCHING
+  // =========================
+  // Toggle between admin and user views without losing the original role.
+  // The original role is stored in a separate localStorage key so it
+  // survives reloads and the user can always switch back.
+  const getOriginalRole = (): UserRole => {
+    if (typeof window === 'undefined') return 'user'
+    const stored = localStorage.getItem(ORIGINAL_ROLE_KEY) as UserRole | null
+    if (stored === 'admin' || stored === 'user') return stored
+    // Fall back to the role stored in auth (set at login time)
+    const storedAuth = localStorage.getItem('auth')
+    if (storedAuth) {
+      try {
+        const data = JSON.parse(storedAuth)
+        return data.user?.role || 'user'
+      } catch {
+        return 'user'
+      }
+    }
+    return 'user'
+  }
+
+  const switchRole = (targetRole: UserRole) => {
+    if (!user.value) return
+
+    const updatedUser = { ...user.value, role: targetRole }
+    user.value = updatedUser
+
+    if (typeof window !== 'undefined') {
+      const storedAuth = localStorage.getItem('auth')
+      if (storedAuth) {
+        const data = JSON.parse(storedAuth)
+        data.user = updatedUser
+        localStorage.setItem('auth', JSON.stringify(data))
+      }
+    }
+  }
+
+  // Toggle between the current role and the original role.
+  const toggleRole = () => {
+    if (!user.value) return
+    const original = getOriginalRole()
+    const next: UserRole = user.value.role === original ? (original === 'admin' ? 'user' : 'admin') : original
+    switchRole(next)
   }
 
   // =========================
@@ -315,6 +370,9 @@ export function useAuth() {
     login,
     logout,
     register,
+    switchRole,
+    toggleRole,
+    getOriginalRole,
     addToWatchlist,
     removeFromWatchlist,
     isInWatchlist,

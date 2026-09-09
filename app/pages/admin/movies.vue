@@ -29,21 +29,6 @@
             <Icon name="mdi:menu" class="text-lg" />
           </button>
 
-          <div class="hidden sm:flex items-center relative w-64 lg:w-80">
-            <span class="absolute left-4 text-gray-500">
-              <Icon name="mdi:magnify" />
-            </span>
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Search movies..."
-              class="w-full bg-[#15151c] border border-gray-800
-                     rounded-xl py-2.5 pl-11 pr-4
-                     text-sm text-white placeholder-gray-500
-                     focus:outline-none focus:border-red-500"
-            />
-          </div>
-
           <div class="flex items-center gap-3 ml-auto">
             <button
               @click="openAddModal"
@@ -61,9 +46,14 @@
       <main class="p-4 sm:p-6 lg:p-8">
 
         <!-- Page Title -->
-        <div class="mb-8">
-          <h2 class="text-2xl sm:text-3xl font-bold">Movies</h2>
-          <p class="text-gray-500 mt-1">Manage all movies and series in your library</p>
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold">Movies</h2>
+            <p class="text-gray-500 mt-1">Manage all movies and series in your library</p>
+          </div>
+
+          <!-- Search -->
+          
         </div>
 
         <!-- Filter Tabs -->

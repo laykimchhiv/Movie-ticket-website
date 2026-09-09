@@ -14,7 +14,7 @@
     <!-- ==================== MAIN CONTENT ==================== -->
     <div class="lg:ml-64">
 
-      <!-- ==================== TOP NAVBAR ==================== -->
+<!-- ==================== TOP NAVBAR ==================== -->
       <header
         class="h-20 sticky top-0 z-30 bg-[#0b0b0f]/90 backdrop-blur-xl
                border-b border-gray-800"
@@ -29,22 +29,6 @@
           >
             <Icon name="mdi:menu" class="text-lg" />
           </button>
-
-          <!-- Search -->
-          <div class="hidden sm:flex items-center relative w-64 lg:w-80">
-            <span class="absolute left-4 text-gray-500">
-              <Icon name="mdi:magnify" />
-            </span>
-
-            <input
-              type="text"
-              placeholder="Search..."
-              class="w-full bg-[#15151c] border border-gray-800
-                     rounded-xl py-2.5 pl-11 pr-4
-                     text-sm text-white placeholder-gray-500
-                     focus:outline-none focus:border-red-500"
-            />
-          </div>
 
           <!-- Right side -->
           <div class="flex items-center gap-3 ml-auto relative">
@@ -76,19 +60,19 @@
                 <Icon name="mdi:chevron-down" class="text-gray-500 text-lg transition-transform" :class="showProfileDropdown ? 'rotate-180' : ''" />
               </button>
 
-               <!-- Dropdown -->
-               <div
-                 v-if="showProfileDropdown"
-                 class="absolute top-full right-0 mt-2 w-48 bg-[#15151c] border border-gray-800 rounded-xl shadow-xl z-50 overflow-hidden"
-               >
-                 <button
-                   @click="switchToUserView"
-                   class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-[#1b1b22] hover:text-white transition flex items-center gap-2"
-                 >
-                   <Icon name="mdi:account-switch" class="text-lg" />
-                   Switch to User View
-                 </button>
-               </div>
+              <!-- Dropdown -->
+              <div
+                v-if="showProfileDropdown"
+                class="absolute top-full right-0 mt-2 w-48 bg-[#15151c] border border-gray-800 rounded-xl shadow-xl z-50 overflow-hidden"
+              >
+                <button
+                  @click="switchToUserView"
+                  class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-[#1b1b22] hover:text-white transition flex items-center gap-2"
+                >
+                  <Icon name="mdi:account-switch" class="text-lg" />
+                  Switch to User View
+                </button>
+              </div>
             </div>
 
           </div>
@@ -113,14 +97,33 @@
         <template v-else>
 
           <!-- Page Title -->
-          <div class="mb-8">
-            <h2 class="text-2xl sm:text-3xl font-bold">
-              Dashboard
-            </h2>
+          <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl sm:text-3xl font-bold">
+                Dashboard
+              </h2>
 
-            <p class="text-gray-500 mt-1">
-              Welcome back, {{ user?.username || 'Admin' }}. Here's what's happening with MovieFlix.
-            </p>
+              <p class="text-gray-500 mt-1">
+                Welcome back, {{ user?.username || 'Admin' }}. Here's what's happening with MovieFlix.
+              </p>
+            </div>
+
+            <!-- Search -->
+            <div class="relative w-full sm:w-64 lg:w-80">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                <Icon name="mdi:magnify" />
+              </span>
+
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Search movies..."
+                class="w-full bg-[#15151c] border border-gray-800
+                       rounded-xl py-2.5 pl-11 pr-4
+                       text-sm text-white placeholder-gray-500
+                       focus:outline-none focus:border-red-500"
+              />
+            </div>
           </div>
 
           <!-- ==================== STATISTICS ==================== -->
@@ -391,7 +394,7 @@
                 </h3>
 
                 <p class="text-sm text-gray-500">
-                  Showing {{ movies.length }} titles
+                  Showing {{ filteredMovies.length }} of {{ movies.length }} titles
                 </p>
               </div>
 
@@ -418,12 +421,12 @@
 
                 <tbody>
 
-                  <tr
-                    v-for="movie in movies"
-                    :key="movie.id"
-                    class="border-b border-gray-800/60
-                           hover:bg-[#1b1b22] transition"
-                  >
+<tr
+  v-for="movie in filteredMovies"
+  :key="movie.id"
+  class="border-b border-gray-800/60
+         hover:bg-[#1b1b22] transition"
+>
 
                     <!-- Title -->
                     <td class="px-6 py-4">
@@ -502,7 +505,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 definePageMeta({ 
   layout: 'admin', 
@@ -510,30 +513,31 @@ definePageMeta({
   role: 'admin' 
 })
 
-const { user } = useAuth()
+const { user, switchRole, getOriginalRole } = useAuth()
 
 /*
-|--------------------------------------------------------------------------
-| Mobile Sidebar State
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | Mobile Sidebar State
+ |--------------------------------------------------------------------------
+ */
 const sidebarOpen = ref(false)
 const showProfileDropdown = ref(false)
+const searchQuery = ref('')
+
+// When accessing the admin dashboard, ensure the role is set to admin.
+// This allows admins to switch to user view and come back by navigating
+// directly to /admin/dashboard.
+onMounted(() => {
+  const original = getOriginalRole()
+  if (original === 'admin' && user.value?.role !== 'admin') {
+    switchRole('admin')
+  }
+})
 
 const switchToUserView = () => {
-  if (user.value) {
-    const updatedUser = { ...user.value, role: 'user' }
-    user.value = updatedUser
-
-    if (typeof window !== 'undefined') {
-      const authData = localStorage.getItem('auth')
-      if (authData) {
-        const data = JSON.parse(authData)
-        data.user = updatedUser
-        localStorage.setItem('auth', JSON.stringify(data))
-      }
-    }
-  }
+  // Switch to user view. The original admin role is preserved in localStorage,
+  // so the admin can switch back by navigating to /admin/dashboard.
+  switchRole('user')
 
   showProfileDropdown.value = false
   navigateTo('/')
@@ -558,12 +562,30 @@ const movies = computed(() => moviesData.value || [])
 const categories = computed(() => categoriesData.value || [])
 
 /*
+ |--------------------------------------------------------------------------
+ | Search Filter
+ |--------------------------------------------------------------------------
+ */
+const filteredMovies = computed(() => {
+  let result = movies.value
+  if (searchQuery.value) {
+    const q = searchQuery.value.toLowerCase()
+    result = result.filter(m =>
+      m.title?.toLowerCase().includes(q) ||
+      m.category?.toLowerCase().includes(q) ||
+      (Array.isArray(m.genre) ? m.genre.join(', ').toLowerCase().includes(q) : false)
+    )
+  }
+  return result
+})
+
+/*
 |--------------------------------------------------------------------------
 | Derived Statistics Calculations
 |--------------------------------------------------------------------------
 */
 const stats = computed(() => {
-  const allMovies = movies.value
+  const allMovies = filteredMovies.value
   const movieCount = allMovies.filter(m => m.type !== 'series').length
   const seriesCount = allMovies.filter(m => m.type === 'series').length
   const totalRating = allMovies.reduce((sum, m) => sum + (Number(m.rating) || 0), 0)
@@ -578,23 +600,23 @@ const stats = computed(() => {
 })
 
 /*
-|--------------------------------------------------------------------------
-| Top Rated Movies
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | Top Rated Movies
+ |--------------------------------------------------------------------------
+ */
 const topRatedMovies = computed(() => {
-  return [...movies.value]
+  return [...filteredMovies.value]
     .sort((a, b) => Number(b.rating) - Number(a.rating))
     .slice(0, 5)
 })
 
 /*
-|--------------------------------------------------------------------------
-| Category Distribution Stats for Chart
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | Category Distribution Stats for Chart
+ |--------------------------------------------------------------------------
+ */
 const categoryStats = computed(() => {
-  const allMovies = movies.value
+  const allMovies = filteredMovies.value
   if (!allMovies.length) return []
 
   const counts = {}

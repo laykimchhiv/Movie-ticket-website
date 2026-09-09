@@ -242,14 +242,6 @@ const setTab = (tab: string) => {
           </div>
         </div>
 
-        <div class="mt-8 flex justify-center">
-          <button
-            @click="logout"
-            class="rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-700 active:scale-[0.98]"
-          >
-            Logout
-          </button>
-        </div>
       </div>
 
       <!-- Favorites Tab -->
