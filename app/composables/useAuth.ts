@@ -328,9 +328,10 @@ export function useAuth() {
   // =========================
   // FAVORITES
   // =========================
-  const addToFavorites = (movieId: number) => {
-    if (!favorites.value.includes(movieId)) {
-      favorites.value.push(movieId)
+  const addToFavorites = (movieId: number | string) => {
+    const id = Number(movieId)
+    if (!favorites.value.includes(id)) {
+      favorites.value.push(id)
 
       if (typeof window !== 'undefined') {
         localStorage.setItem(
@@ -341,9 +342,10 @@ export function useAuth() {
     }
   }
 
-  const removeFromFavorites = (movieId: number) => {
+  const removeFromFavorites = (movieId: number | string) => {
+    const id = Number(movieId)
     favorites.value = favorites.value.filter(
-      (id) => id !== movieId
+      (existingId) => existingId !== id
     )
 
     if (typeof window !== 'undefined') {
@@ -354,8 +356,8 @@ export function useAuth() {
     }
   }
 
-  const isInFavorites = (movieId: number) => {
-    return favorites.value.includes(movieId)
+  const isInFavorites = (movieId: number | string) => {
+    return favorites.value.includes(Number(movieId))
   }
 
   return {

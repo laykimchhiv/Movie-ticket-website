@@ -28,7 +28,7 @@ const { data: movies } = await useFetch<Movie[]>(`${API_BASE}/movies`, {
 
 const favoriteMovies = computed(() => {
   if (!movies.value) return []
-  return movies.value.filter((m) => favorites.value.includes(m.id))
+  return movies.value.filter((m) => favorites.value.includes(Number(m.id)))
 })
 
 const setTab = (tab: string) => {

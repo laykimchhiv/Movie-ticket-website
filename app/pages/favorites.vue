@@ -33,7 +33,7 @@ const movies = computed<Movie[]>(() =>
 const favoriteMovies = computed(() => {
   if (!rawMovies.value) return []
   return movies.value.filter((m) =>
-    favorites.value.includes(m.id as any)
+    favorites.value.includes(Number(m.id))
   )
 })
 
@@ -56,7 +56,7 @@ const handleMovieClick = (movie: Movie) => {
 }
 
 const clearFavorites = () => {
-  favoriteMovies.value.forEach((m) => removeFromFavorites(m.id as any))
+  favoriteMovies.value.forEach((m) => removeFromFavorites(m.id))
 }
 </script>
 
