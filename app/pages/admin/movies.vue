@@ -305,6 +305,60 @@
             />
           </div>
 
+          <div v-if="form.type === 'series'">
+            <label class="block text-sm text-gray-400 mb-2">Parts / Episodes</label>
+            <div class="space-y-3">
+              <div
+                v-for="(part, index) in form.parts"
+                :key="index"
+                class="bg-[#0b0b0f] border border-gray-800 rounded-xl p-4 space-y-3"
+              >
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-300">Part {{ index + 1 }}</span>
+                  <button
+                    @click="removePart(index)"
+                    type="button"
+                    class="text-red-400 hover:text-red-300 transition"
+                    title="Remove part"
+                  >
+                    <Icon name="mdi:trash" class="text-base" />
+                  </button>
+                </div>
+                <input
+                  v-model="part.title"
+                  type="text"
+                  placeholder="Part title"
+                  class="w-full bg-[#15151c] border border-gray-800 rounded-xl
+                         px-4 py-2 text-sm focus:outline-none focus:border-red-500"
+                />
+                <input
+                  v-model="part.description"
+                  type="text"
+                  placeholder="Part description"
+                  class="w-full bg-[#15151c] border border-gray-800 rounded-xl
+                         px-4 py-2 text-sm focus:outline-none focus:border-red-500"
+                />
+                <input
+                  v-model="part.videoUrl"
+                  type="url"
+                  placeholder="Part video URL"
+                  class="w-full bg-[#15151c] border border-gray-800 rounded-xl
+                         px-4 py-2 text-sm focus:outline-none focus:border-red-500"
+                />
+              </div>
+              <button
+                @click="addPart"
+                type="button"
+                class="flex items-center gap-2 w-full justify-center py-2.5 rounded-xl
+                       text-sm font-medium border border-gray-800 text-gray-400
+                       hover:bg-[#1b1b22] hover:text-white transition"
+              >
+                <Icon name="mdi:plus" />
+                Add Part
+              </button>
+            </div>
+          </div>
+
           <div>
             <label class="block text-sm text-gray-400 mb-2">Description</label>
             <textarea
@@ -383,7 +437,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue'
 
-definePageMeta({ layout: 'admin' })
+definePageMeta({ layout: 'admin', middleware: ['auth'], role: 'admin' })
 
 const sidebarOpen = ref(false)
 const searchQuery = ref('')
@@ -407,7 +461,8 @@ const emptyForm = () => ({
   genreInput: '',
   poster: '',
   videoUrl: '',
-  description: ''
+  description: '',
+  parts: []
 })
 
 const form = reactive(emptyForm())
@@ -462,7 +517,8 @@ const openEditModal = (movie) => {
     genreInput: Array.isArray(movie.genre) ? movie.genre.join(', ') : '',
     poster: movie.poster,
     videoUrl: movie.videoUrl || '',
-    description: movie.description || ''
+    description: movie.description || '',
+    parts: movie.parts ? movie.parts.map(p => ({ ...p })) : []
   })
   showModal.value = true
 }
@@ -470,6 +526,14 @@ const openEditModal = (movie) => {
 const closeModal = () => {
   showModal.value = false
   Object.assign(form, emptyForm())
+}
+
+const addPart = () => {
+  form.parts.push({ title: '', description: '', videoUrl: '' })
+}
+
+const removePart = (index) => {
+  form.parts.splice(index, 1)
 }
 
 const saveMovie = async () => {
@@ -497,6 +561,16 @@ const saveMovie = async () => {
       backdrop: '',
       type: form.type,
       videoUrl: form.videoUrl || ''
+    }
+
+    if (form.type === 'series') {
+      payload.parts = form.parts.map((p, i) => ({
+        id: p.id || i + 1,
+        part: i + 1,
+        title: p.title || `Part ${i + 1}`,
+        description: p.description || '',
+        videoUrl: p.videoUrl || ''
+      }))
     }
 
     if (isEditing.value) {
