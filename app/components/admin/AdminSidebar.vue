@@ -2,7 +2,7 @@
   <aside
     :class="[
       'fixed top-0 left-0 z-50 h-screen w-64 bg-[#111116] border-r border-gray-800 transition-transform duration-300',
-      open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      open ? 'translate-x-0' : '-translate-x-full'
     ]"
   >
     <!-- Logo -->

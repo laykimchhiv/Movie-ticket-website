@@ -12,7 +12,7 @@
     <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" />
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <div class="lg:ml-64">
+    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
 
       <!-- ==================== TOP NAVBAR ==================== -->
       <header
@@ -21,6 +21,17 @@
       >
         <div class="h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
+          <!-- Desktop menu -->
+          <button
+            @click="sidebarOpen = !sidebarOpen"
+            class="hidden lg:flex w-10 h-10 rounded-lg bg-[#15151c]
+                   border border-gray-800 text-gray-300 hover:text-white
+                   hover:border-red-500/40 hover:bg-red-500/10
+                   items-center justify-center transition"
+          >
+            <Icon name="mdi:menu" class="text-lg" />
+          </button>
+
           <button
             @click="sidebarOpen = true"
             class="lg:hidden w-10 h-10 rounded-lg bg-[#15151c]
@@ -28,17 +39,6 @@
           >
             <Icon name="mdi:menu" class="text-lg" />
           </button>
-
-          <div class="flex items-center gap-3 ml-auto">
-            <button
-              @click="openAddModal"
-              class="flex items-center gap-2 bg-red-600 hover:bg-red-500
-                     px-4 py-2.5 rounded-xl text-sm font-medium transition"
-            >
-              <Icon name="mdi:plus" />
-              <span class="hidden sm:inline">Add User</span>
-            </button>
-          </div>
         </div>
       </header>
 
@@ -359,7 +359,7 @@ import { ref, computed, reactive } from 'vue'
 
 definePageMeta({ layout: 'admin', middleware: ['auth'], role: 'admin' })
 
-const sidebarOpen = ref(false)
+const sidebarOpen = ref(true)
 const searchQuery = ref('')
 const showModal = ref(false)
 const showDeleteConfirm = ref(false)

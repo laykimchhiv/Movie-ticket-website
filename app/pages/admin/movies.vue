@@ -12,7 +12,7 @@
     <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" />
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <div class="lg:ml-64">
+    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
 
       <!-- ==================== TOP NAVBAR ==================== -->
       <header
@@ -20,6 +20,17 @@
                border-b border-gray-800"
       >
         <div class="h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+
+          <!-- Desktop menu -->
+          <button
+            @click="sidebarOpen = !sidebarOpen"
+            class="hidden lg:flex w-10 h-10 rounded-lg bg-[#15151c]
+                   border border-gray-800 text-gray-300 hover:text-white
+                   hover:border-red-500/40 hover:bg-red-500/10
+                   items-center justify-center transition"
+          >
+            <Icon name="mdi:menu" class="text-lg" />
+          </button>
 
           <button
             @click="sidebarOpen = true"
@@ -29,16 +40,6 @@
             <Icon name="mdi:menu" class="text-lg" />
           </button>
 
-          <div class="flex items-center gap-3 ml-auto">
-            <button
-              @click="openAddModal"
-              class="flex items-center gap-2 bg-red-600 hover:bg-red-500
-                     px-4 py-2.5 rounded-xl text-sm font-medium transition"
-            >
-              <Icon name="mdi:plus" />
-              <span class="hidden sm:inline">Add Movie</span>
-            </button>
-          </div>
         </div>
       </header>
 
@@ -53,24 +54,89 @@
           </div>
 
           <!-- Search -->
-          
+          <div class="relative w-full sm:w-72">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <Icon name="mdi:magnify" />
+            </span>
+            <input
+              v-model="searchQuery"
+              type="text"
+              placeholder="Search movies by title..."
+              class="w-full bg-[#15151c] border border-gray-800
+                     rounded-xl py-2.5 pl-11 pr-4
+                     text-sm text-white placeholder-gray-500
+                     focus:outline-none focus:border-red-500"
+            />
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          <select
+            v-model="selectedCategory"
+            class="bg-[#15151c] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+          >
+            <option value="">All Categories</option>
+            <option v-for="cat in categories" :key="cat.id" :value="cat.name">
+              {{ cat.name }}
+            </option>
+          </select>
+
+          <select
+            v-model="selectedYear"
+            class="bg-[#15151c] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+          >
+            <option value="">All Years</option>
+            <option v-for="year in availableYears" :key="year" :value="year">
+              {{ year }}
+            </option>
+          </select>
+
+          <select
+            v-model="minRating"
+            class="bg-[#15151c] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+          >
+            <option value="0">Min Rating</option>
+            <option v-for="r in [6, 7, 8, 9]" :key="r" :value="r">
+              {{ r }}.0+
+            </option>
+          </select>
+
+          <button
+            v-if="hasActiveFilters"
+            @click="clearFilters"
+            class="ml-auto text-sm text-gray-400 hover:text-white transition flex items-center gap-1"
+          >
+            <Icon name="mdi:close-circle" />
+            Clear filters
+          </button>
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex flex-wrap gap-2 mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="tab in tabs"
+              :key="tab.value"
+              @click="activeFilter = tab.value"
+              :class="[
+                'px-4 py-2 rounded-xl text-sm font-medium transition',
+                activeFilter === tab.value
+                  ? 'bg-red-600 text-white'
+                  : 'bg-[#15151c] text-gray-400 hover:text-white border border-gray-800'
+              ]"
+            >
+              {{ tab.label }}
+              <span class="ml-1 text-xs opacity-70">({{ tab.count }})</span>
+            </button>
+          </div>
           <button
-            v-for="tab in tabs"
-            :key="tab.value"
-            @click="activeFilter = tab.value"
-            :class="[
-              'px-4 py-2 rounded-xl text-sm font-medium transition',
-              activeFilter === tab.value
-                ? 'bg-red-600 text-white'
-                : 'bg-[#15151c] text-gray-400 hover:text-white border border-gray-800'
-            ]"
+            @click="openAddModal"
+            class="flex items-center gap-2 bg-red-600 hover:bg-red-500
+                   px-4 py-2.5 rounded-xl text-sm font-medium transition"
           >
-            {{ tab.label }}
-            <span class="ml-1 text-xs opacity-70">({{ tab.count }})</span>
+            <Icon name="mdi:plus" />
+            <span class="hidden sm:inline">Add Movie</span>
           </button>
         </div>
 
@@ -90,6 +156,14 @@
           v-else
           class="bg-[#15151c] border border-gray-800 rounded-2xl"
         >
+          <div class="p-6 flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h3 class="text-lg font-semibold">All Movies & Series</h3>
+              <p class="text-sm text-gray-500">
+                Showing {{ filteredMovies.length }} of {{ movies.length }} titles
+              </p>
+            </div>
+          </div>
           <div class="overflow-x-auto">
             <table class="w-full min-w-[800px]">
               <thead>
@@ -439,9 +513,12 @@ import { ref, computed, reactive } from 'vue'
 
 definePageMeta({ layout: 'admin', middleware: ['auth'], role: 'admin' })
 
-const sidebarOpen = ref(false)
+const sidebarOpen = ref(true)
 const searchQuery = ref('')
 const activeFilter = ref('all')
+const selectedCategory = ref('')
+const selectedYear = ref('')
+const minRating = ref(0)
 const showModal = ref(false)
 const showDeleteConfirm = ref(false)
 const isEditing = ref(false)
@@ -486,12 +563,47 @@ const filteredMovies = computed(() => {
     const q = searchQuery.value.toLowerCase()
     result = result.filter(m =>
       m.title?.toLowerCase().includes(q) ||
-      m.category?.toLowerCase().includes(q)
+      m.category?.toLowerCase().includes(q) ||
+      (Array.isArray(m.genre) ? m.genre.join(', ').toLowerCase().includes(q) : false)
     )
+  }
+
+  if (selectedCategory.value) {
+    result = result.filter(m => m.category === selectedCategory.value)
+  }
+
+  if (selectedYear.value) {
+    result = result.filter(m => {
+      const year = m.releaseDate ? String(m.releaseDate).substring(0, 4) : ''
+      return year === selectedYear.value
+    })
+  }
+
+  if (minRating.value > 0) {
+    result = result.filter(m => Number(m.rating) >= minRating.value)
   }
 
   return result
 })
+
+const availableYears = computed(() => {
+  const years = new Set()
+  movies.value.forEach(m => {
+    if (m.releaseDate) years.add(String(m.releaseDate).substring(0, 4))
+  })
+  return [...years].sort((a, b) => Number(b) - Number(a))
+})
+
+const hasActiveFilters = computed(() => {
+  return selectedCategory.value || selectedYear.value || minRating.value > 0 || searchQuery.value
+})
+
+const clearFilters = () => {
+  searchQuery.value = ''
+  selectedCategory.value = ''
+  selectedYear.value = ''
+  minRating.value = 0
+}
 
 const tabs = computed(() => [
   { label: 'All', value: 'all', count: movies.value.length },
