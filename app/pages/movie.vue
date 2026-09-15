@@ -17,8 +17,6 @@
               <h2 class="text-2xl font-bold tracking-tight text-red-500">Movies</h2>
             </div>
           </div>
-<<<<<<< HEAD
-
           <div class="relative w-full md:w-96">
             <div class="flex w-full items-center gap-2">
               <div class="relative flex-1">
@@ -72,8 +70,6 @@
               <p class="text-sm text-gray-400">No movies found starting with "{{ searchQuery }}"</p>
             </div>
           </div>
-=======
->>>>>>> 3f8c4a3c4502c2f8d817b5e61bbbfbc238142e29
         </div>
 
         <nav class="flex gap-2 pb-5 overflow-x-auto scrollbar-hide items-center">
@@ -249,10 +245,9 @@ const filteredMovies = computed(() => {
   const search = searchQuery.value.trim()
   const list = movies.value ?? []
 
-  if (!search) return list
-
   return list.filter((movie) => {
-    const matchesSearch = movie.title.toLowerCase().includes(search.toLowerCase())
+    const matchesSearch =
+      !search || movie.title.toLowerCase().includes(search.toLowerCase())
     const matchesCategory =
       selectedCategory.value === 'all' ||
       movie.genre.includes(selectedCategory.value)
