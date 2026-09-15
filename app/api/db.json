@@ -592,6 +592,21 @@
       "backdrop": "",
       "type": "movie",
       "videoUrl": ""
+    },
+    {
+      "id": "UlXnx11KYW8",
+      "title": "Moana",
+      "category": "Animation",
+      "genre": [
+        "Comedy Action Anima"
+      ],
+      "rating": 8.4,
+      "releaseDate": "2016-02-24",
+      "description": "Moana, the adventurous daughter of a Polynesian island chief, sets sail across the ocean to save her people. Along the way, she meets the legendary demigod Maui, and together they face dangerous creatures, discover mysterious islands, and return the heart of the goddess Te Fiti.",
+      "poster": "https://thumb.wikimedia.org/wikipedia/en/thumb/2/26/Moana_Teaser_Poster.jpg/250px-Moana_Teaser_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+      "backdrop": "",
+      "type": "series",
+      "videoUrl": ""
     }
   ],
   "categories": [
