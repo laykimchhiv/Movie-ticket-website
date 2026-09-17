@@ -9,10 +9,10 @@
     ></div>
 
     <!-- ==================== SIDEBAR ==================== -->
-    <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" />
+    <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" @toggle="sidebarOpen = !sidebarOpen" />
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
+    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-16']">
 
       <!-- ==================== TOP NAVBAR ==================== -->
       <header
@@ -33,7 +33,7 @@
           </button>
 
           <button
-            @click="sidebarOpen = true"
+            @click="sidebarOpen = !sidebarOpen"
             class="lg:hidden w-10 h-10 rounded-lg bg-[#15151c]
                    border border-gray-800 text-gray-300 flex items-center justify-center"
           >
@@ -318,11 +318,11 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 
 definePageMeta({ layout: 'admin', middleware: ['auth'], role: 'admin' })
 
-const sidebarOpen = ref(true)
+const sidebarOpen = ref(false)
 const searchQuery = ref('')
 const showModal = ref(false)
 const showDeleteConfirm = ref(false)
@@ -330,6 +330,10 @@ const isEditing = ref(false)
 const saving = ref(false)
 const deleting = ref(false)
 const categoryToDelete = ref(null)
+
+onMounted(() => {
+  sidebarOpen.value = window.innerWidth >= 1024
+})
 
 const API_BASE = 'http://localhost:8000'
 
