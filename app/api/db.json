@@ -15,7 +15,7 @@
       "poster": "https://i.pinimg.com/736x/67/91/b3/6791b331f134fa878b6c66e9b9d833c2.jpg",
       "backdrop": "https://image.tmdb.org/t/p/w1280/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
       "type": "movie",
-      "videoUrl": "https://www.pexels.com/download/video/17487722/"
+      "videoUrl": "/videos/Endgames.mp4"
     },
     {
       "id": "2",
@@ -32,7 +32,7 @@
       "poster": "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
       "backdrop": "https://image.tmdb.org/t/p/w1280/14QbnygCuTO0vl7CAFmPf1fgZfV.jpg",
       "type": "movie",
-      "videoUrl": "https://www.pexels.com/download/video/8507721/"
+      "videoUrl": "/videos/spider.mp4"
     },
     {
       "id": "3",
@@ -48,7 +48,7 @@
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm8EKnIM6khdRa_rSFjkWxIPtLDDJhi2yI2p7VqKVXkg&s=10",
       "backdrop": "",
       "type": "movie",
-      "videoUrl": "https://www.pexels.com/download/video/32729029/"
+      "videoUrl": "/videos/my boss.mp4"
     },
     {
       "id": "4",
@@ -65,7 +65,7 @@
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8EElKa7ncrbbgTaBrCbqQZ2tAoECMtFBiAwp4TxIVZw&s=10",
       "backdrop": "",
       "type": "movie",
-      "videoUrl": "https://www.pexels.com/download/video/27797883/"
+      "videoUrl": "/videos/TB.mp4"
     },
     {
       "id": "5",
@@ -82,7 +82,7 @@
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfQWCmWxXi2Zon9mFWgd-vSRFPc0fLSwJFJW3zgR31JA&s=10",
       "backdrop": "",
       "type": "movie",
-      "videoUrl": "https://example.com/videos/lovely-runner.mp4"
+      "videoUrl": "/videos/lovely.mp4"
     },
     {
       "id": "6",
@@ -98,7 +98,7 @@
       "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSHMeGNwJcSSzhzV7DRsTEujnUHEOskbmzdozMq6DT2g&s=10",
       "backdrop": "",
       "type": "movie",
-      "videoUrl": "https://example.com/videos/revenged-love.mp4"
+      "videoUrl": "/videos/revenge.mp4"
     },
     {
       "id": "7",
@@ -309,7 +309,7 @@
       "poster": "https://i.pinimg.com/736x/3b/d1/c7/3bd1c7be492ea85e64ea3454e1c62cc7.jpg",
       "backdrop": "",
       "type": "movie",
-      "videoUrl": "https://example.com/videos/top-gun-maverick.mp4"
+      "videoUrl": "/videos/green.mp4"
     },
     {
       "id": "20",
