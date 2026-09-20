@@ -121,6 +121,30 @@
       </NuxtLink>
     </div>
 
+    <div
+      v-if="showToast"
+      class="fixed bottom-6 right-6 z-50 animate-fade-in-up"
+    >
+      <div
+        class="flex items-center gap-3 rounded-xl border border-green-500/30 bg-green-600/20 px-5 py-3 text-sm font-medium text-green-400 shadow-lg shadow-green-500/20 backdrop-blur-xl"
+      >
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+        {{ toastMessage }}
+      </div>
+    </div>
+
     <UserLogin v-if="showLogin" @close="showLogin = false" />
   </div>
 </template>
@@ -138,6 +162,8 @@ console.log('API URL:', `${API_BASE}/movies/${id}`)
 const { isLoggedIn, addToFavorites, removeFromFavorites, isInFavorites } =
   useAuth()
 const showLogin = ref(!isLoggedIn.value)
+const showToast = ref(false)
+const toastMessage = ref('')
 
 const isFavorited = computed(() => isInFavorites(Number(id)))
 
@@ -151,9 +177,15 @@ const toggleFavorite = () => {
 
   if (isFavorited.value) {
     removeFromFavorites(movieId)
+    toastMessage.value = 'Removed from favorites'
   } else {
     addToFavorites(movieId)
+    toastMessage.value = 'Added to favorites'
   }
+  showToast.value = true
+  setTimeout(() => {
+    showToast.value = false
+  }, 2000)
 }
 
 const { data: item, pending, error } = await useAsyncData(
@@ -191,3 +223,20 @@ watch(
   { immediate: true }
 )
 </script>
+
+<style scoped>
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+</style>

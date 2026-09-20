@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 const props = defineProps({
   movie: {
     type: Object,
@@ -10,8 +12,10 @@ const emit = defineEmits<{
   click: [movie: any]
 }>()
 
-const { isInWatchlist, addToWatchlist, removeFromWatchlist, isLoggedIn } =
+const { isInWatchlist, addToWatchlist, removeFromWatchlist, isInFavorites, addToFavorites, removeFromFavorites, isLoggedIn } =
   useAuth()
+
+const isFav = computed(() => isInFavorites(props.movie.id))
 
 const toggleWatchlist = (e: Event) => {
   e.stopPropagation()
@@ -20,6 +24,16 @@ const toggleWatchlist = (e: Event) => {
     removeFromWatchlist(props.movie.id)
   } else {
     addToWatchlist(props.movie.id)
+  }
+}
+
+const toggleFavorite = (e: Event) => {
+  e.stopPropagation()
+  if (!isLoggedIn.value) return
+  if (isFav.value) {
+    removeFromFavorites(props.movie.id)
+  } else {
+    addToFavorites(props.movie.id)
   }
 }
 
@@ -53,13 +67,13 @@ const handleClick = () => {
 
       <!-- Watchlist Button -->
       <button
-        class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-sm backdrop-blur transition hover:bg-black/80"
-        :class="{ 'text-red-500': isInWatchlist(movie.id) }"
+        class="group/btn absolute left-2 top-2 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/70 text-white backdrop-blur shadow-lg shadow-black/40 transition hover:bg-black/90 hover:scale-105"
+        :class="{ 'border-red-500/60 bg-red-600/90': isInWatchlist(movie.id) }"
         @click="toggleWatchlist"
       >
         <svg
           v-if="isInWatchlist(movie.id)"
-          class="h-4 w-4 text-red-500"
+          class="h-5 w-5 text-white"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -67,10 +81,10 @@ const handleClick = () => {
         </svg>
         <svg
           v-else
-          class="h-4 w-4 text-white"
+          class="h-5 w-5 text-white/90"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
+          stroke-width="2.5"
           viewBox="0 0 24 24"
         >
           <path

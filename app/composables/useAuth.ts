@@ -8,6 +8,7 @@ interface User {
   email: string
   avatar: string
   role: UserRole
+  about: string
 }
 
 interface RegisteredUser {
@@ -117,6 +118,7 @@ export function useAuth() {
         found.username
       )}&background=6b7280&color=fff`,
       role: found.role || 'user',
+      about: found.about || '',
     }
 
     // Create token
@@ -204,6 +206,7 @@ export function useAuth() {
         savedUser.username
       )}&background=6b7280&color=fff`,
       role: savedUser.role || 'user',
+      about: savedUser.about || '',
     }
 
     // Create token
@@ -360,6 +363,97 @@ export function useAuth() {
     return favorites.value.includes(Number(movieId))
   }
 
+  const updateAbout = (about: string) => {
+    if (!user.value) return
+    const updatedUser = { ...user.value, about }
+    user.value = updatedUser
+
+    if (typeof window !== 'undefined') {
+      const storedAuth = localStorage.getItem('auth')
+      if (storedAuth) {
+        const data = JSON.parse(storedAuth)
+        data.user = updatedUser
+        localStorage.setItem('auth', JSON.stringify(data))
+      }
+    }
+  }
+
+  const updateUsername = (username: string) => {
+    if (!user.value) return
+    const updatedUser = { ...user.value, username }
+    user.value = updatedUser
+
+    if (typeof window !== 'undefined') {
+      const storedAuth = localStorage.getItem('auth')
+      if (storedAuth) {
+        const data = JSON.parse(storedAuth)
+        data.user = updatedUser
+        localStorage.setItem('auth', JSON.stringify(data))
+      }
+    }
+  }
+
+  const updateEmail = (email: string) => {
+    if (!user.value) return
+    const updatedUser = { ...user.value, email }
+    user.value = updatedUser
+
+    if (typeof window !== 'undefined') {
+      const storedAuth = localStorage.getItem('auth')
+      if (storedAuth) {
+        const data = JSON.parse(storedAuth)
+        data.user = updatedUser
+        localStorage.setItem('auth', JSON.stringify(data))
+      }
+    }
+  }
+
+  const updateAvatar = (avatar: string) => {
+    if (!user.value) return
+    const updatedUser = { ...user.value, avatar }
+    user.value = updatedUser
+
+    if (typeof window !== 'undefined') {
+      const storedAuth = localStorage.getItem('auth')
+      if (storedAuth) {
+        const data = JSON.parse(storedAuth)
+        data.user = updatedUser
+        localStorage.setItem('auth', JSON.stringify(data))
+      }
+    }
+  }
+
+  // Update the user's password in JSON Server and locally.
+  // Returns true on success, false if the current password doesn't match.
+  const updatePassword = async (
+    currentPassword: string,
+    newPassword: string
+  ): Promise<boolean> => {
+    if (!user.value) return false
+
+    try {
+      // Verify the current password against the server
+      const res = await fetch(`${API_URL}/users`)
+      if (!res.ok) return false
+      const users: RegisteredUser[] = await res.json()
+      const found = users.find((u) => u.id === user.value!.id)
+      if (!found) return false
+      if (found.password !== currentPassword) return false
+
+      // Persist the new password
+      const patchRes = await fetch(`${API_URL}/users/${user.value.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: newPassword }),
+      })
+      if (!patchRes.ok) return false
+
+      return true
+    } catch {
+      return false
+    }
+  }
+
   return {
     user,
     token,
@@ -381,5 +475,10 @@ export function useAuth() {
     addToFavorites,
     removeFromFavorites,
     isInFavorites,
+    updateAbout,
+    updateUsername,
+    updateEmail,
+    updateAvatar,
+    updatePassword,
   }
 }
