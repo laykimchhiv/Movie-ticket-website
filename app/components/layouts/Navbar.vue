@@ -130,23 +130,21 @@ onUnmounted(() => {
 			</button>
 		</div>
 
-		<div v-if="mobileMenu" class="border-t border-white/10 bg-[#111116] px-5 py-5 md:hidden">
-			<div class="flex flex-col gap-4">
-				<NuxtLink to="/" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
-				<NuxtLink to="/movie" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
-				<NuxtLink to="/watchlist" :class="['text-sm font-medium', isActive('/watchlist') ? 'text-red-400' : 'text-gray-300']">Watchlist</NuxtLink>
-				<NuxtLink to="/coming" :class="['text-sm font-medium', isActive('/coming') ? 'text-red-400' : 'text-gray-300']">Coming Soon</NuxtLink>
-				<NuxtLink to="/about" :class="['text-sm font-medium', isActive('/about') ? 'text-red-400' : 'text-gray-300']">About</NuxtLink>
-				<NuxtLink to="/profile" :class="['text-sm font-medium', isActive('/profile') ? 'text-red-400' : 'text-gray-300']">Profile</NuxtLink>
-			<template v-if="isLoaded && isLoggedIn">
-				<NuxtLink to="/profile" class="text-gray-300">My Profile</NuxtLink>
-				<button class="rounded-lg bg-red-600 py-3 font-semibold text-left text-red-400" @click="handleLogout">Logout</button>
-			</template>
-			<template v-else-if="isLoaded && !isLoggedIn">
-				<button class="rounded-lg bg-red-600 py-3 font-semibold" @click="showLogin = true">Login</button>
-			</template>
+			<div v-if="mobileMenu" class="border-t border-white/10 bg-[#111116] px-5 py-5 md:hidden">
+				<div class="flex flex-col gap-4">
+					<NuxtLink to="/" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
+					<NuxtLink to="/movie" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
+					<NuxtLink to="/watchlist" :class="['text-sm font-medium', isActive('/watchlist') ? 'text-red-400' : 'text-gray-300']">Watchlist</NuxtLink>
+					<NuxtLink to="/about" :class="['text-sm font-medium', isActive('/about') ? 'text-red-400' : 'text-gray-300']">About</NuxtLink>
+					<NuxtLink to="/profile" :class="['text-sm font-medium', isActive('/profile') ? 'text-red-400' : 'text-gray-300']">Profile</NuxtLink>
+				<template v-if="isLoaded && isLoggedIn">
+					<button class="rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700" @click="handleLogout">Logout</button>
+				</template>
+				<template v-else-if="isLoaded && !isLoggedIn">
+					<button class="rounded-lg bg-red-600 py-3 font-semibold" @click="showLogin = true">Login</button>
+				</template>
+				</div>
 			</div>
-		</div>
 	</header>
 
 	<UserLogin v-if="showLogin" @close="showLogin = false" />

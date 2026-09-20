@@ -9,10 +9,10 @@
     ></div>
 
     <!-- ==================== SIDEBAR ==================== -->
-    <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" />
+    <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" @toggle="sidebarOpen = !sidebarOpen" />
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
+    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-16']">
 
 <!-- ==================== TOP NAVBAR ==================== -->
       <header
@@ -34,7 +34,7 @@
 
           <!-- Mobile menu -->
           <button
-            @click="sidebarOpen = true"
+            @click="sidebarOpen = !sidebarOpen"
             class="lg:hidden w-10 h-10 rounded-lg bg-[#15151c]
                    border border-gray-800 text-gray-300 flex items-center justify-center"
           >
@@ -531,7 +531,7 @@ const { user, switchRole, getOriginalRole } = useAuth()
  | Mobile Sidebar State
  |--------------------------------------------------------------------------
  */
-const sidebarOpen = ref(true)
+const sidebarOpen = ref(false)
 const showProfileDropdown = ref(false)
 const searchQuery = ref('')
 
@@ -539,6 +539,8 @@ const searchQuery = ref('')
 // This allows admins to switch to user view and come back by navigating
 // directly to /admin/dashboard.
 onMounted(() => {
+  sidebarOpen.value = window.innerWidth >= 1024
+
   const original = getOriginalRole()
   if (original === 'admin' && user.value?.role !== 'admin') {
     switchRole('admin')

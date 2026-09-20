@@ -41,7 +41,7 @@ const handleLogin = async () => {
   <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
     <!-- Backdrop -->
     <div
-      class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+      class="absolute inset-0 bg-black/85 backdrop-blur-sm"
       @click="emit('close')"
     ></div>
 
@@ -53,34 +53,78 @@ const handleLogin = async () => {
     />
 
     <!-- Login Modal -->
-    <div v-else class="relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-[#12121a] shadow-2xl">
-      <!-- Header gradient -->
-      <div class="relative h-36 overflow-hidden bg-gradient-to-br from-red-600 to-red-900">
-        <div class="absolute inset-0 opacity-30">
-          <div class="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-red-500 blur-3xl"></div>
-          <div class="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-orange-500 blur-3xl"></div>
+    <div v-else class="relative z-10 w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-[#12121a] shadow-2xl">
+      <!-- Left Side - Visual -->
+      <div class="relative hidden h-full min-h-[520px] w-2/5 overflow-hidden bg-gradient-to-br from-red-700 via-red-900 to-[#1a0505] p-8 md:flex md:flex-col md:justify-between">
+        <div class="absolute inset-0 opacity-20">
+          <div class="absolute -left-16 -top-16 h-64 w-64 rounded-full bg-red-500 blur-3xl"></div>
+          <div class="absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-orange-500 blur-3xl"></div>
+          <div class="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"></div>
+          <div class="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"></div>
         </div>
-        <button
-          class="absolute right-4 top-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/30 text-white transition hover:bg-black/50"
-          @click="emit('close')"
-        >
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <div class="relative flex h-full flex-col items-center justify-center">
-          <div class="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur">
-            <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+
+        <div class="relative flex items-center gap-2">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 backdrop-blur">
+            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
             </svg>
           </div>
-          <h2 class="text-xl font-bold text-white">Welcome Back</h2>
-          <p class="mt-1 text-sm text-red-200">Sign in to your Flixora account</p>
+          <span class="text-xl font-bold text-white">Fli<span class="text-red-400">xora</span></span>
+        </div>
+
+        <div class="relative">
+          <h2 class="text-3xl font-bold leading-tight text-white">Your next favorite movie is waiting.</h2>
+          <p class="mt-4 text-sm leading-relaxed text-red-100/80">
+            Sign in to continue watching your favorite movies and series.
+          </p>
+          <div class="mt-8 flex items-center gap-2 text-xs text-red-200/70">
+            <span class="h-1 w-8 rounded-full bg-red-400"></span>
+            <span>Unlimited entertainment, one account.</span>
+          </div>
+        </div>
+
+        <div class="relative text-xs text-red-200/50">
+          © 2026 Flixora. All rights reserved.
         </div>
       </div>
 
-      <!-- Form -->
-      <div class="p-7">
+      <!-- Right Side - Form -->
+      <div class="w-full p-8 md:w-3/5 md:p-10">
+        <div class="flex items-center justify-between md:hidden">
+          <div class="flex items-center gap-2">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-red-600">
+              <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+              </svg>
+            </div>
+            <span class="text-lg font-bold text-white">Fli<span class="text-red-500">xora</span></span>
+          </div>
+          <button
+            class="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition hover:bg-white/5 hover:text-white"
+            @click="emit('close')"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="mb-8 hidden md:block">
+          <button
+            class="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition hover:bg-white/5 hover:text-white"
+            @click="emit('close')"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-bold text-white">Welcome back</h2>
+          <p class="mt-2 text-sm text-gray-400">Sign in to your Flixora account to continue.</p>
+        </div>
+
         <form @submit.prevent="handleLogin" class="space-y-5">
           <!-- Error Message -->
           <div
@@ -101,7 +145,7 @@ const handleLogin = async () => {
                 v-model="username"
                 type="text"
                 placeholder="Enter your username"
-                class="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-4 text-sm text-white outline-none placeholder:text-gray-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50"
+                class="w-full rounded-xl border border-white/10 bg-white/5 py-3.5 pl-11 pr-4 text-sm text-white outline-none placeholder:text-gray-500 transition focus:border-red-500 focus:ring-1 focus:ring-red-500/50"
               />
             </div>
           </div>
@@ -111,21 +155,21 @@ const handleLogin = async () => {
             <label class="mb-2 block text-sm font-medium text-gray-300">Password</label>
             <div class="relative">
               <svg class="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 002 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               <input
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="Enter your password"
-                class="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-12 text-sm text-white outline-none placeholder:text-gray-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50"
+                class="w-full rounded-xl border border-white/10 bg-white/5 py-3.5 pl-11 pr-12 text-sm text-white outline-none placeholder:text-gray-500 transition focus:border-red-500 focus:ring-1 focus:ring-red-500/50"
               />
               <button
                 type="button"
-                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-gray-300"
                 @click="showPassword = !showPassword"
               >
                 <svg v-if="showPassword" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                 </svg>
                 <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -145,7 +189,7 @@ const handleLogin = async () => {
               />
               <span class="text-sm text-gray-400">Remember me</span>
             </label>
-            <a href="#" class="text-sm font-medium text-red-500 hover:text-red-400">
+            <a href="#" class="text-sm font-medium text-red-500 transition hover:text-red-400">
               Forgot password?
             </a>
           </div>
@@ -153,14 +197,14 @@ const handleLogin = async () => {
           <!-- Submit -->
           <button
             type="submit"
-            class="w-full rounded-xl bg-red-600 py-3.5 text-sm font-semibold text-white transition hover:bg-red-700 active:scale-[0.98]"
+            class="w-full rounded-xl bg-gradient-to-r from-red-600 to-red-700 py-3.5 text-sm font-semibold text-white shadow-lg shadow-red-900/40 transition hover:from-red-500 hover:to-red-600 active:scale-[0.98]"
           >
             Sign In
           </button>
         </form>
 
         <!-- Divider -->
-        <div class="my-6 flex items-center gap-4">
+        <div class="my-7 flex items-center gap-4">
           <div class="h-px flex-1 bg-white/10"></div>
           <span class="text-xs text-gray-500">or continue with</span>
           <div class="h-px flex-1 bg-white/10"></div>
@@ -186,10 +230,10 @@ const handleLogin = async () => {
         </div>
 
         <!-- Switch to Register -->
-        <p class="mt-6 text-center text-sm text-gray-400">
+        <p class="mt-7 text-center text-sm text-gray-400">
           Don't have an account?
           <button
-            class="font-semibold text-red-500 hover:text-red-400"
+            class="font-semibold text-red-500 transition hover:text-red-400"
             @click="showRegister = true"
           >
             Sign Up
