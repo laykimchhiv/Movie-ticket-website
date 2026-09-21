@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from '#imports'
 import { useAuth } from '~/composables/useAuth'
 
@@ -10,6 +10,14 @@ const { user, isLoggedIn, isLoaded, logout } = useAuth()
 const route = useRoute()
 
 const isActive = (path: string) => route.path === path
+
+watch(
+  () => route.fullPath,
+  () => {
+    mobileMenu.value = false
+    showProfileDropdown.value = false
+  }
+)
 
 const handleLogout = () => {
   logout()
@@ -132,11 +140,11 @@ onUnmounted(() => {
 
 			<div v-if="mobileMenu" class="border-t border-white/10 bg-[#111116] px-5 py-5 md:hidden">
 				<div class="flex flex-col gap-4">
-					<NuxtLink to="/" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
-					<NuxtLink to="/movie" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
-					<NuxtLink to="/watchlist" :class="['text-sm font-medium', isActive('/watchlist') ? 'text-red-400' : 'text-gray-300']">Watchlist</NuxtLink>
-					<NuxtLink to="/about" :class="['text-sm font-medium', isActive('/about') ? 'text-red-400' : 'text-gray-300']">About</NuxtLink>
-					<NuxtLink to="/profile" :class="['text-sm font-medium', isActive('/profile') ? 'text-red-400' : 'text-gray-300']">Profile</NuxtLink>
+					<NuxtLink to="/" @click="mobileMenu = false" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
+					<NuxtLink to="/movie" @click="mobileMenu = false" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
+					<NuxtLink to="/watchlist" @click="mobileMenu = false" :class="['text-sm font-medium', isActive('/watchlist') ? 'text-red-400' : 'text-gray-300']">Watchlist</NuxtLink>
+					<NuxtLink to="/about" @click="mobileMenu = false" :class="['text-sm font-medium', isActive('/about') ? 'text-red-400' : 'text-gray-300']">About</NuxtLink>
+					<NuxtLink to="/profile" @click="mobileMenu = false" :class="['text-sm font-medium', isActive('/profile') ? 'text-red-400' : 'text-gray-300']">Profile</NuxtLink>
 				<template v-if="isLoaded && isLoggedIn">
 					<button class="rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700" @click="handleLogout">Logout</button>
 				</template>
