@@ -32,6 +32,8 @@ const emailInput = ref('')
 const editingAvatar = ref(false)
 const avatarPreview = ref(user.value?.avatar || '')
 const avatarFileInput = ref<HTMLInputElement | null>(null)
+const savingAvatar = ref(false)
+const removingAvatar = ref(false)
 
 const API_BASE = 'http://localhost:8000'
 
@@ -64,7 +66,18 @@ const favoriteMovies = computed(() =>
   movies.value.filter((m) => favorites.value.includes(Number(m.id)))
 )
 
-const filteredFavorites = computed(() => favoriteMovies.value)
+const searchQuery = ref('')
+
+const filteredFavorites = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+  return query
+    ? favoriteMovies.value.filter((m) =>
+        m.title.toLowerCase().includes(query) ||
+        m.description.toLowerCase().includes(query) ||
+        m.genre.some((genre) => genre.toLowerCase().includes(query)),
+      )
+    : favoriteMovies.value
+})
 
 const handleTabChange = (tab: string) => {
   activeTab.value = tab
@@ -112,59 +125,76 @@ const clearFavorites = () => {
   favoriteMovies.value.forEach((m) => removeFromFavorites(m.id))
 }
 
-const updateUserAbout = (newAbout: string) => {
-  about.value = newAbout
-  updateAbout(newAbout)
-}
-
-const startEditAbout = () => {
-  aboutInput.value = about.value
-  editingAbout.value = true
-}
-
-const saveAbout = () => {
-  updateUserAbout(aboutInput.value)
-  editingAbout.value = false
-}
-
-const cancelEditAbout = () => {
-  aboutInput.value = ''
-  editingAbout.value = false
-}
-
-const startEditUsername = () => {
-  usernameInput.value = user.value?.username || ''
-  editingUsername.value = true
-}
-
-const saveUsername = () => {
-  if (usernameInput.value.trim()) {
-    updateUsername(usernameInput.value.trim())
+const updateUserAbout = async (newAbout: string) => {
+    try {
+      await updateAbout(newAbout)
+    } catch (e) {
+      console.error('Failed to update about:', e)
+    }
   }
-  editingUsername.value = false
-}
 
-const cancelEditUsername = () => {
-  usernameInput.value = ''
-  editingUsername.value = false
-}
-
-const startEditEmail = () => {
-  emailInput.value = user.value?.email || ''
-  editingEmail.value = true
-}
-
-const saveEmail = () => {
-  if (emailInput.value.trim()) {
-    updateEmail(emailInput.value.trim())
+  const startEditAbout = () => {
+    aboutInput.value = about.value
+    editingAbout.value = true
   }
-  editingEmail.value = false
-}
 
-const cancelEditEmail = () => {
-  emailInput.value = ''
-  editingEmail.value = false
-}
+  const saveAbout = async () => {
+    try {
+      await updateUserAbout(aboutInput.value)
+      editingAbout.value = false
+    } catch (e) {
+      console.error('Failed to save about:', e)
+    }
+  }
+
+  const cancelEditAbout = () => {
+    aboutInput.value = ''
+    editingAbout.value = false
+  }
+
+  const startEditUsername = () => {
+    usernameInput.value = user.value?.username || ''
+    editingUsername.value = true
+  }
+
+  const saveUsername = async () => {
+    const newUsername = usernameInput.value.trim()
+    if (!newUsername) return
+
+    try {
+      await updateUsername(newUsername)
+      editingUsername.value = false
+    } catch (e: any) {
+      alert(e.message || 'Failed to update username. Please try again.')
+    }
+  }
+
+  const cancelEditUsername = () => {
+    usernameInput.value = ''
+    editingUsername.value = false
+  }
+
+  const startEditEmail = () => {
+    emailInput.value = user.value?.email || ''
+    editingEmail.value = true
+  }
+
+  const saveEmail = async () => {
+    const newEmail = emailInput.value.trim()
+    if (!newEmail) return
+
+    try {
+      await updateEmail(newEmail)
+      editingEmail.value = false
+    } catch (e: any) {
+      alert(e.message || 'Failed to update email. Please try again.')
+    }
+  }
+
+  const cancelEditEmail = () => {
+    emailInput.value = ''
+    editingEmail.value = false
+  }
 
 const startEditAvatar = () => {
   avatarPreview.value = user.value?.avatar || ''
@@ -183,15 +213,34 @@ const onAvatarFileChange = (event: Event) => {
   reader.readAsDataURL(file)
 }
 
-const saveAvatar = () => {
-  if (avatarPreview.value.trim()) {
-    updateAvatar(avatarPreview.value.trim())
+const saveAvatar = async () => {
+  const avatar = avatarPreview.value.trim()
+  if (!avatar || savingAvatar.value) return
+
+  savingAvatar.value = true
+  const saved = await updateAvatar(avatar)
+  savingAvatar.value = false
+
+  if (saved) {
+    editingAvatar.value = false
   }
-  editingAvatar.value = false
+}
+
+const removeAvatar = async () => {
+  if (removingAvatar.value) return
+
+  removingAvatar.value = true
+  const removed = await updateAvatar('')
+  removingAvatar.value = false
+
+  if (removed) {
+    avatarPreview.value = ''
+    editingAvatar.value = false
+  }
 }
 
 const cancelEditAvatar = () => {
-  avatarPreview.value = ''
+  avatarPreview.value = user.value?.avatar || ''
   editingAvatar.value = false
 }
 
@@ -533,11 +582,6 @@ const preferences = ref({
               <h2 class="text-lg font-semibold text-white">
                 Account Information
               </h2>
-              <span
-                class="rounded-full bg-red-600/10 px-3 py-1 text-xs font-medium text-red-400 border border-red-500/20 backdrop-blur-sm"
-              >
-                {{ roleLabel }}
-              </span>
             </div>
 
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -545,7 +589,7 @@ const preferences = ref({
               <AccountFieldCard
                 icon="profile"
                 label="Username"
-                :value="user?.username"
+                :value="user?.username ?? ''"
                 :editing="editingUsername"
                 :inputValue="usernameInput"
                 @edit="startEditUsername"
@@ -558,7 +602,7 @@ const preferences = ref({
               <AccountFieldCard
                 icon="mail"
                 label="Email"
-                :value="user?.email"
+                :value="user?.email ?? ''"
                 :editing="editingEmail"
                 :inputValue="emailInput"
                 @edit="startEditEmail"
@@ -581,7 +625,7 @@ const preferences = ref({
                     <div class="flex flex-col gap-3">
                       <div class="flex items-center justify-between">
                         <span class="text-sm font-semibold text-white tracking-widest font-mono bg-[#12121a] px-3 py-1.5 rounded-lg border border-white/10 min-w-[120px] text-center">
-                          {{ showPassword ? passwordValue.value : '••••••••' }}
+                          {{ showPassword ? passwordValue : '••••••••' }}
                         </span>
                       </div>
                       <div class="flex justify-end gap-2">
@@ -821,18 +865,31 @@ const preferences = ref({
           </div>
         </div>
 
-        <div class="mt-5 flex justify-end gap-2">
+        <div class="mt-5 flex flex-wrap justify-end gap-2">
           <button
+            v-if="user?.avatar"
+            type="button"
+            @click="removeAvatar"
+            :disabled="removingAvatar || savingAvatar"
+            class="rounded-lg border border-red-500/30 bg-red-500/10 px-5 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500/20 hover:border-red-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {{ removingAvatar ? 'Removing...' : 'Remove Avatar' }}
+          </button>
+          <button
+            type="button"
             @click="cancelEditAvatar"
-            class="rounded-lg border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10 hover:border-white/20"
+            :disabled="savingAvatar || removingAvatar"
+            class="rounded-lg border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10 hover:border-white/20 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Cancel
           </button>
           <button
+            type="button"
             @click="saveAvatar"
-            class="rounded-lg bg-gradient-to-r from-red-600 to-red-700 px-5 py-2 text-sm font-semibold text-white transition hover:from-red-700 hover:to-red-800"
+            :disabled="savingAvatar || removingAvatar || !avatarPreview.trim()"
+            class="rounded-lg bg-gradient-to-r from-red-600 to-red-700 px-5 py-2 text-sm font-semibold text-white transition hover:from-red-700 hover:to-red-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Save
+            {{ savingAvatar ? 'Saving...' : 'Save' }}
           </button>
         </div>
       </div>

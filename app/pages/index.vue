@@ -16,7 +16,7 @@ const handleMovieClick = (movie: any) => {
 const { data: rawMovies } = await useFetch<any[]>(`${API_BASE}/movies`)
 
 const movies = computed(() =>
-  (rawMovies.value?.slice(0,6) ?? []).map((m) => ({
+  (rawMovies.value ?? []).map((m) => ({
     id: m.id,
     title: m.title,
     genre: Array.isArray(m.genre) ? m.genre.join(', ') : m.genre,
@@ -55,7 +55,7 @@ const comingSoon = ref([
 const search = ref('')
 
 const filteredMovies = computed(() => {
-  if (!search.value) return movies.value
+  if (!search.value) return movies.value.slice(0, 6)
 
   return movies.value.filter((movie) =>
     movie.title.toLowerCase().includes(search.value.toLowerCase())

@@ -23,9 +23,6 @@
                 <input
                   ref="searchInput"
                   v-model="searchQuery"
-                  @focus="showSearchDropdown = true"
-                  @click="showSearchDropdown = true"
-                  @blur="setTimeout(() => showSearchDropdown = false, 200)"
                   @keyup.enter="handleSearch"
                   type="text"
                   placeholder="Search movies..."
@@ -46,28 +43,6 @@
               >
                 {{ searchQuery ? 'Search' : 'Clear' }}
               </button>
-            </div>
-
-            <div
-              v-if="showSearchDropdown && searchQuery.trim() && searchResults.length > 0"
-              class="absolute left-0 right-0 top-full z-50 mt-2 max-h-80 overflow-y-auto rounded-xl border border-white/10 bg-[#15151b] shadow-2xl"
-            >
-              <button
-                v-for="movie in searchResults"
-                :key="movie.id"
-                @mousedown="searchQuery = movie.title; showSearchDropdown = false"
-                class="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-white/5"
-              >
-                <span class="text-sm">🎬</span>
-                <span class="truncate text-sm font-medium text-white">{{ movie.title }}</span>
-              </button>
-            </div>
-
-            <div
-              v-else-if="showSearchDropdown && searchQuery.trim() && searchResults.length === 0"
-              class="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border border-white/10 bg-[#15151b] p-4 text-center"
-            >
-              <p class="text-sm text-gray-400">No movies found starting with "{{ searchQuery }}"</p>
             </div>
           </div>
         </div>
@@ -95,35 +70,10 @@
             </span>
             <input
               v-model="searchQuery"
-              @focus="showSearchDropdown = true"
-              @click="showSearchDropdown = true"
-              @blur="closeSearchDropdown"
               type="text"
               placeholder="Search movies..."
               class="w-full bg-[#15151c] border border-gray-800 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500"
             />
-
-            <div
-              v-if="showSearchDropdown && searchQuery.trim() && searchResults.length > 0"
-              class="absolute right-0 left-auto top-full z-50 mt-2 w-80 max-h-80 overflow-y-auto rounded-xl border border-white/10 bg-[#15151b] shadow-2xl"
-            >
-              <button
-                v-for="movie in searchResults"
-                :key="movie.id"
-                @mousedown="selectMovie(movie)"
-                class="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-white/5"
-              >
-                <span class="text-sm">🎬</span>
-                <span class="truncate text-sm font-medium text-white">{{ movie.title }}</span>
-              </button>
-            </div>
-
-            <div
-              v-else-if="showSearchDropdown && searchQuery.trim() && searchResults.length === 0"
-              class="absolute right-0 left-auto top-full z-50 mt-2 w-80 rounded-xl border border-white/10 bg-[#15151b] p-4 text-center"
-            >
-              <p class="text-sm text-gray-400">No movies found starting with "{{ searchQuery }}"</p>
-            </div>
           </div>
         </nav>
       </div>
@@ -163,7 +113,6 @@
 import { ref, computed, watch } from 'vue'
 const { isLoggedIn } = useAuth()
 const showLogin = ref(false)
-const showSearchDropdown = ref(false)
 const route = useRoute()
 const router = useRouter()
 
@@ -255,24 +204,4 @@ const filteredMovies = computed(() => {
     return matchesSearch && matchesCategory
   })
 })
-
-const searchResults = computed(() => {
-  const search = searchQuery.value.toLowerCase().trim()
-  if (!search) return []
-  return (movies.value ?? [])
-    .filter((movie) => movie.title.toLowerCase().startsWith(search))
-    .slice(0, 8)
-})
-
-const selectMovie = (movie: Movie) => {
-  searchQuery.value = movie.title
-  showSearchDropdown.value = false
-  handleMovieClick(movie)
-}
-
-const closeSearchDropdown = () => {
-  setTimeout(() => {
-    showSearchDropdown.value = false
-  }, 200)
-}
 </script>

@@ -1,50 +1,24 @@
 <template>
   <div class="min-h-screen bg-[#0b0b0f] text-white">
 
-    <!-- ==================== MOBILE OVERLAY ==================== -->
+    <!-- ==================== OVERLAY ==================== -->
     <div
       v-if="sidebarOpen"
-      class="fixed inset-0 bg-black/60 z-40 lg:hidden"
+      class="fixed inset-0 bg-black/50 z-40"
       @click="sidebarOpen = false"
     ></div>
 
     <!-- ==================== SIDEBAR ==================== -->
-    <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" @toggle="sidebarOpen = !sidebarOpen" />
+    <AdminSidebar :open="sidebarOpen" @toggle="sidebarOpen = !sidebarOpen" />
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-16']">
+    <div class="transition-margin duration-300">
 
       <!-- ==================== TOP NAVBAR ==================== -->
-      <header
-        class="h-20 sticky top-0 z-30 bg-[#0b0b0f]/90 backdrop-blur-xl
-               border-b border-gray-800"
-      >
-        <div class="h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-
-          <!-- Desktop menu -->
-          <button
-            @click="sidebarOpen = !sidebarOpen"
-            class="hidden lg:flex w-10 h-10 rounded-lg bg-[#15151c]
-                   border border-gray-800 text-gray-300 hover:text-white
-                   hover:border-red-500/40 hover:bg-red-500/10
-                   items-center justify-center transition"
-          >
-            <Icon name="mdi:menu" class="text-lg" />
-          </button>
-
-          <button
-            @click="sidebarOpen = !sidebarOpen"
-            class="lg:hidden w-10 h-10 rounded-lg bg-[#15151c]
-                   border border-gray-800 text-gray-300 flex items-center justify-center"
-          >
-            <Icon name="mdi:menu" class="text-lg" />
-          </button>
-
-        </div>
-      </header>
+      <AdminHeader @toggle="sidebarOpen = !sidebarOpen" />
 
       <!-- ==================== PAGE CONTENT ==================== -->
-      <main class="p-4 sm:p-6 lg:p-8">
+      <main class="p-4 sm:p-6 lg:p-8 ml-3 mr-3">
 
         <!-- Page Title -->
         <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -527,7 +501,7 @@ const deleting = ref(false)
 const movieToDelete = ref(null)
 
 onMounted(() => {
-  sidebarOpen.value = window.innerWidth >= 1024
+  sidebarOpen.value = false
 })
 
 const API_BASE = 'http://localhost:8000'

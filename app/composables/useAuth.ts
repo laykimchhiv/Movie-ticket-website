@@ -16,6 +16,8 @@ interface RegisteredUser {
   username: string
   password: string
   email: string
+  avatar?: string
+  about?: string
   role: UserRole
 }
 
@@ -114,7 +116,7 @@ export function useAuth() {
       id: found.id,
       username: found.username,
       email: found.email,
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+      avatar: found.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(
         found.username
       )}&background=6b7280&color=fff`,
       role: found.role || 'user',
@@ -363,7 +365,7 @@ export function useAuth() {
     return favorites.value.includes(Number(movieId))
   }
 
-  const updateAbout = (about: string) => {
+  const updateAbout = async (about: string) => {
     if (!user.value) return
     const updatedUser = { ...user.value, about }
     user.value = updatedUser
@@ -376,10 +378,40 @@ export function useAuth() {
         localStorage.setItem('auth', JSON.stringify(data))
       }
     }
+
+    try {
+      await fetch(`${API_URL}/users/${user.value.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ about }),
+      })
+    } catch {
+      // Local state already updated; server failure is non-fatal
+    }
   }
 
-  const updateUsername = (username: string) => {
+  const updateUsername = async (username: string) => {
     if (!user.value) return
+
+    try {
+      // Check for duplicate username (excluding the current user)
+      const res = await fetch(`${API_URL}/users`)
+      if (res.ok) {
+        const users: RegisteredUser[] = await res.json()
+        const duplicate = users.find(
+          (u) => u.username === username && u.id !== user.value!.id
+        )
+        if (duplicate) {
+          throw new Error('Username already exists')
+        }
+      }
+    } catch (e) {
+      if (e instanceof Error && e.message === 'Username already exists') {
+        throw e
+      }
+      // Network error is non-fatal; proceed with local update
+    }
+
     const updatedUser = { ...user.value, username }
     user.value = updatedUser
 
@@ -391,10 +423,46 @@ export function useAuth() {
         localStorage.setItem('auth', JSON.stringify(data))
       }
     }
+
+    try {
+      await fetch(`${API_URL}/users/${user.value.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username }),
+      })
+    } catch {
+      // Local state already updated; server failure is non-fatal
+    }
   }
 
-  const updateEmail = (email: string) => {
+  const updateEmail = async (email: string) => {
     if (!user.value) return
+
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      throw new Error('Invalid email format')
+    }
+
+    try {
+      // Check for duplicate email (excluding the current user)
+      const res = await fetch(`${API_URL}/users`)
+      if (res.ok) {
+        const users: RegisteredUser[] = await res.json()
+        const duplicate = users.find(
+          (u) => u.email === email && u.id !== user.value!.id
+        )
+        if (duplicate) {
+          throw new Error('Email already exists')
+        }
+      }
+    } catch (e) {
+      if (e instanceof Error && (e.message === 'Email already exists' || e.message === 'Invalid email format')) {
+        throw e
+      }
+      // Network error is non-fatal; proceed with local update
+    }
+
     const updatedUser = { ...user.value, email }
     user.value = updatedUser
 
@@ -406,10 +474,21 @@ export function useAuth() {
         localStorage.setItem('auth', JSON.stringify(data))
       }
     }
+
+    try {
+      await fetch(`${API_URL}/users/${user.value.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+    } catch {
+      // Local state already updated; server failure is non-fatal
+    }
   }
 
-  const updateAvatar = (avatar: string) => {
-    if (!user.value) return
+  const updateAvatar = async (avatar: string) => {
+    if (!user.value) return false
+
     const updatedUser = { ...user.value, avatar }
     user.value = updatedUser
 
@@ -420,6 +499,18 @@ export function useAuth() {
         data.user = updatedUser
         localStorage.setItem('auth', JSON.stringify(data))
       }
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/users/${user.value.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ avatar }),
+      })
+
+      return response.ok
+    } catch {
+      return false
     }
   }
 

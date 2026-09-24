@@ -1,97 +1,26 @@
 <template>
   <div class="min-h-screen bg-[#0b0b0f] text-white">
 
-    <!-- ==================== MOBILE OVERLAY ==================== -->
+    <!-- ==================== OVERLAY ==================== -->
     <div
       v-if="sidebarOpen"
-      class="fixed inset-0 bg-black/60 z-40 lg:hidden"
+      class="fixed inset-0 bg-black/50 z-40"
       @click="sidebarOpen = false"
     ></div>
 
     <!-- ==================== SIDEBAR ==================== -->
-    <AdminSidebar :open="sidebarOpen" @close="sidebarOpen = false" @toggle="sidebarOpen = !sidebarOpen" />
+    <AdminSidebar :open="sidebarOpen" @toggle="sidebarOpen = !sidebarOpen" />
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <div :class="['transition-margin duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-16']">
+    <div class="transition-margin duration-300">
 
-<!-- ==================== TOP NAVBAR ==================== -->
-      <header
-        class="h-20 sticky top-0 z-30 bg-[#0b0b0f]/90 backdrop-blur-xl
-               border-b border-gray-800"
-      >
-        <div class="h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-
-          <!-- Desktop menu -->
-          <button
-            @click="sidebarOpen = !sidebarOpen"
-            class="hidden lg:flex w-10 h-10 rounded-lg bg-[#15151c]
-                   border border-gray-800 text-gray-300 hover:text-white
-                   hover:border-red-500/40 hover:bg-red-500/10
-                   items-center justify-center transition"
-          >
-            <Icon name="mdi:menu" class="text-lg" />
-          </button>
-
-          <!-- Mobile menu -->
-          <button
-            @click="sidebarOpen = !sidebarOpen"
-            class="lg:hidden w-10 h-10 rounded-lg bg-[#15151c]
-                   border border-gray-800 text-gray-300 flex items-center justify-center"
-          >
-            <Icon name="mdi:menu" class="text-lg" />
-          </button>
-
-          <!-- Right side -->
-          <div class="flex items-center gap-3 ml-auto relative">
-
-            <!-- Notification -->
-            <button
-              class="relative w-10 h-10 rounded-xl bg-[#15151c]
-                     border border-gray-800 hover:border-gray-700
-                     flex items-center justify-center"
-            >
-              <Icon name="mdi:bell" />
-            </button>
-
-            <!-- Admin Profile -->
-            <div class="hidden sm:flex items-center gap-3 ml-2 relative">
-              <button @click="showProfileDropdown = !showProfileDropdown" class="flex items-center gap-3 px-2 py-1.5 rounded-xl hover:bg-[#1b1b22] transition cursor-pointer">
-                <div
-                  class="w-9 h-9 rounded-full bg-red-600
-                         flex items-center justify-center font-semibold"
-                >
-                  {{ user?.username?.charAt(0).toUpperCase() || 'A' }}
-                </div>
-
-                <div class="text-left">
-                  <p class="text-sm font-medium">{{ user?.username || 'Admin' }}</p>
-                  <p class="text-xs text-gray-500">Administrator</p>
-                </div>
-
-                <Icon name="mdi:chevron-down" class="text-gray-500 text-lg transition-transform" :class="showProfileDropdown ? 'rotate-180' : ''" />
-              </button>
-
-              <!-- Dropdown -->
-              <div
-                v-if="showProfileDropdown"
-                class="absolute top-full right-0 mt-2 w-48 bg-[#15151c] border border-gray-800 rounded-xl shadow-xl z-50 overflow-hidden"
-              >
-                <button
-                  @click="switchToUserView"
-                  class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-[#1b1b22] hover:text-white transition flex items-center gap-2"
-                >
-                  <Icon name="mdi:account-switch" class="text-lg" />
-                  Switch to User View
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </header>
+      <!-- ==================== TOP NAVBAR ==================== -->
+      <AdminHeader @toggle="sidebarOpen = !sidebarOpen">
+        <AdminTopBar />
+      </AdminHeader>
 
       <!-- ==================== PAGE CONTENT ==================== -->
-      <main class="p-4 sm:p-6 lg:p-8">
+      <main class="p-4 sm:p-6 lg:p-8 ml-3 mr-3">
 
         <!-- Loading State -->
         <div v-if="pending" class="flex items-center justify-center py-20">
@@ -532,29 +461,19 @@ const { user, switchRole, getOriginalRole } = useAuth()
  |--------------------------------------------------------------------------
  */
 const sidebarOpen = ref(false)
-const showProfileDropdown = ref(false)
 const searchQuery = ref('')
 
 // When accessing the admin dashboard, ensure the role is set to admin.
 // This allows admins to switch to user view and come back by navigating
 // directly to /admin/dashboard.
 onMounted(() => {
-  sidebarOpen.value = window.innerWidth >= 1024
+  sidebarOpen.value = false
 
   const original = getOriginalRole()
   if (original === 'admin' && user.value?.role !== 'admin') {
     switchRole('admin')
   }
 })
-
-const switchToUserView = () => {
-  // Switch to user view. The original admin role is preserved in localStorage,
-  // so the admin can switch back by navigating to /admin/dashboard.
-  switchRole('user')
-
-  showProfileDropdown.value = false
-  navigateTo('/')
-}
 
 /*
 |--------------------------------------------------------------------------

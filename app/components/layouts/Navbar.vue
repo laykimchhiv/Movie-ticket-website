@@ -1,17 +1,33 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from '#imports'
 import { useAuth } from '~/composables/useAuth'
 
 const mobileMenu = ref(false)
 const showLogin = ref(false)
 const showProfileDropdown = ref(false)
+const showLogoutConfirm = ref(false)
 const { user, isLoggedIn, isLoaded, logout } = useAuth()
 const route = useRoute()
+const search = defineModel<string>('search', { default: '' })
+const avatarUrl = computed(
+  () =>
+    user.value?.avatar ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(
+      user.value?.username || ''
+    )}&background=6b7280&color=fff`
+)
 
 const isActive = (path: string) => route.path === path
 
 const handleLogout = () => {
+  showProfileDropdown.value = false
+  mobileMenu.value = false
+  showLogoutConfirm.value = true
+}
+
+const handleLogoutConfirm = () => {
+  showLogoutConfirm.value = false
   logout()
 }
 
@@ -23,11 +39,15 @@ const closeProfileDropdown = () => {
   showProfileDropdown.value = false
 }
 
-const handleClickOutside = (event: MouseEvent) => {
+	const handleClickOutside = (event: MouseEvent) => {
   const target = event.target as HTMLElement
   if (!target.closest('.profile-dropdown-container')) {
     closeProfileDropdown()
   }
+}
+
+const handleLogoutCancel = () => {
+  showLogoutConfirm.value = false
 }
 
 onMounted(() => {
@@ -55,7 +75,7 @@ onUnmounted(() => {
 				</span>
 			</a>
 
-			<nav class="hidden items-center gap-8 md:flex">
+			<nav class="hidden items-center gap-10 md:flex">
 				<NuxtLink to="/" :class="['text-sm font-medium transition', isActive('/') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Home</NuxtLink>
 				<NuxtLink to="/movie" :class="['text-sm font-medium transition', isActive('/movie') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Movies</NuxtLink>
 				<NuxtLink to="/watchlist" :class="['text-sm font-medium transition', isActive('/watchlist') ? 'text-red-400' : 'text-gray-400 hover:text-white']">Watchlist</NuxtLink>
@@ -63,6 +83,16 @@ onUnmounted(() => {
 			</nav>
 
 			<div class="hidden items-center gap-4 md:flex">
+			<div v-if="route.path === '/'" class="hidden md:block">
+				<input
+					v-model="search"
+					type="search"
+					placeholder="Search movies..."
+					aria-label="Search movies"
+					autocomplete="off"
+					class="h-10 w-64 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/20 focus:ring-2 focus:ring-white/10"
+				/>
+			</div>
 			<template v-if="isLoaded && isLoggedIn">
 			<div class="relative profile-dropdown-container">
 				<button
@@ -72,7 +102,7 @@ onUnmounted(() => {
 					:aria-expanded="showProfileDropdown"
 					aria-haspopup="true"
 				>
-					<img :src="user?.avatar" :alt="user?.username" class="h-9 w-9 rounded-full border border-white/10 hover:border-red-500/50 transition-colors" />
+					<img :src="avatarUrl" :alt="user?.username" class="h-9 w-9 rounded-full border border-white/10 hover:border-red-500/50 transition-colors" />
 				</button>
 				
 				<div v-if="showProfileDropdown" class="absolute right-0 mt-2 w-56 rounded-xl bg-[#111116] border border-white/10 shadow-2xl py-2 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
@@ -103,7 +133,7 @@ onUnmounted(() => {
 						<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
 						</svg>
-						Logout
+						Log Out
 					</button>
 				</div>
 			</div>
@@ -132,13 +162,21 @@ onUnmounted(() => {
 
 			<div v-if="mobileMenu" class="border-t border-white/10 bg-[#111116] px-5 py-5 md:hidden">
 				<div class="flex flex-col gap-4">
+					<div v-if="route.path === '/'" class="relative">
+						<input
+							v-model="search"
+							type="text"
+							placeholder="Search movies..."
+							class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/20 focus:ring-2 focus:ring-white/10"
+						/>
+					</div>
 					<NuxtLink to="/" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
 					<NuxtLink to="/movie" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
 					<NuxtLink to="/watchlist" :class="['text-sm font-medium', isActive('/watchlist') ? 'text-red-400' : 'text-gray-300']">Watchlist</NuxtLink>
 					<NuxtLink to="/about" :class="['text-sm font-medium', isActive('/about') ? 'text-red-400' : 'text-gray-300']">About</NuxtLink>
 					<NuxtLink to="/profile" :class="['text-sm font-medium', isActive('/profile') ? 'text-red-400' : 'text-gray-300']">Profile</NuxtLink>
 				<template v-if="isLoaded && isLoggedIn">
-					<button class="rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700" @click="handleLogout">Logout</button>
+					<button class="rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700" @click="handleLogout">Log Out</button>
 				</template>
 				<template v-else-if="isLoaded && !isLoggedIn">
 					<button class="rounded-lg bg-red-600 py-3 font-semibold" @click="showLogin = true">Login</button>
@@ -148,4 +186,29 @@ onUnmounted(() => {
 	</header>
 
 	<UserLogin v-if="showLogin" @close="showLogin = false" />
+
+	<div
+		v-if="showLogoutConfirm"
+		class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-5 backdrop-blur-sm"
+		@click.self="handleLogoutCancel"
+	>
+		<div class="w-full max-w-sm rounded-2xl border border-white/10 bg-[#15151b] p-6 text-center shadow-2xl">
+			<h3 class="text-lg font-bold text-white">Log Out</h3>
+			<p class="mt-2 text-sm text-gray-400">Are you sure you want to log out?</p>
+			<div class="mt-5 flex items-center justify-center gap-3">
+				<button
+					class="rounded-xl border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10"
+					@click="handleLogoutCancel"
+				>
+					Cancel
+				</button>
+				<button
+					class="rounded-xl bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+					@click="handleLogoutConfirm"
+				>
+					Log Out
+				</button>
+			</div>
+		</div>
+	</div>
 </template>
