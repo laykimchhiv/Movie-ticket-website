@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRoute } from '#imports'
+import { useRoute, navigateTo } from '#imports'
 import { useAuth } from '~/composables/useAuth'
 
 const mobileMenu = ref(false)
 const showLogin = ref(false)
 const showProfileDropdown = ref(false)
 const showLogoutConfirm = ref(false)
-const { user, isLoggedIn, isLoaded, logout } = useAuth()
+  const { user, isLoggedIn, isLoaded, logout, getOriginalRole, switchRole } = useAuth()
 const route = useRoute()
-const search = defineModel<string>('search', { default: '' })
 const avatarUrl = computed(
   () =>
     user.value?.avatar ||
@@ -19,6 +18,8 @@ const avatarUrl = computed(
 )
 
 const isActive = (path: string) => route.path === path
+
+const isAdmin = computed(() => getOriginalRole() === 'admin')
 
 const handleLogout = () => {
   showProfileDropdown.value = false
@@ -37,6 +38,12 @@ const toggleProfileDropdown = () => {
 
 const closeProfileDropdown = () => {
   showProfileDropdown.value = false
+}
+
+const switchToAdminView = async () => {
+  switchRole('admin')
+  closeProfileDropdown()
+  await navigateTo('/admin/dashboard')
 }
 
 	const handleClickOutside = (event: MouseEvent) => {
@@ -83,16 +90,6 @@ onUnmounted(() => {
 			</nav>
 
 			<div class="hidden items-center gap-4 md:flex">
-			<div v-if="route.path === '/'" class="hidden md:block">
-				<input
-					v-model="search"
-					type="search"
-					placeholder="Search movies..."
-					aria-label="Search movies"
-					autocomplete="off"
-					class="h-10 w-64 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/20 focus:ring-2 focus:ring-white/10"
-				/>
-			</div>
 			<template v-if="isLoaded && isLoggedIn">
 			<div class="relative profile-dropdown-container">
 				<button
@@ -123,13 +120,22 @@ onUnmounted(() => {
 						</svg>
 						Profile
 					</NuxtLink>
-					
-					<div class="border-y border-white/10 my-1"></div>
-					
-					<button
-						class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-white/5 hover:text-white hover:text-red-400 transition-colors"
-						@click="handleLogout"
-					>
+				
+				<button
+					v-if="isAdmin"
+					class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors cursor-pointer"
+					@click="switchToAdminView"
+				>
+					<Icon name="mdi:account-switch" class="h-5 w-5 text-gray-400" />
+					Switch to Admin View
+				</button>
+
+				<div v-if="isAdmin" class="border-y border-white/10 my-1"></div>
+				
+				<button
+					class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-white/5 hover:text-white hover:text-red-400 transition-colors"
+					@click="handleLogout"
+				>
 						<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
 						</svg>
@@ -162,14 +168,6 @@ onUnmounted(() => {
 
 			<div v-if="mobileMenu" class="border-t border-white/10 bg-[#111116] px-5 py-5 md:hidden">
 				<div class="flex flex-col gap-4">
-					<div v-if="route.path === '/'" class="relative">
-						<input
-							v-model="search"
-							type="text"
-							placeholder="Search movies..."
-							class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/20 focus:ring-2 focus:ring-white/10"
-						/>
-					</div>
 					<NuxtLink to="/" :class="['text-sm font-medium', isActive('/') ? 'text-red-400' : 'text-gray-300']">Home</NuxtLink>
 					<NuxtLink to="/movie" :class="['text-sm font-medium', isActive('/movie') ? 'text-red-400' : 'text-gray-300']">Movies</NuxtLink>
 					<NuxtLink to="/watchlist" :class="['text-sm font-medium', isActive('/watchlist') ? 'text-red-400' : 'text-gray-300']">Watchlist</NuxtLink>

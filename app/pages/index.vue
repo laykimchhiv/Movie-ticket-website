@@ -22,7 +22,7 @@ const movies = computed(() =>
     genre: Array.isArray(m.genre) ? m.genre.join(', ') : m.genre,
     rating: m.rating,
     image: m.poster,
-  }))
+  })).slice(0, 6)
 )
 
 const comingSoon = ref([
@@ -51,22 +51,12 @@ const comingSoon = ref([
             'https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg',
     },
 ])
-
-const search = ref('')
-
-const filteredMovies = computed(() => {
-  if (!search.value) return movies.value.slice(0, 6)
-
-  return movies.value.filter((movie) =>
-    movie.title.toLowerCase().includes(search.value.toLowerCase())
-  )
-})
 </script>
 
 <template>
     <div class="min-h-screen bg-[#0b0b0f] text-white">
 
-        <Navbar v-model:search="search" />
+        <Navbar />
 
         <!-- ================= HERO ================= -->
         <section class="relative min-h-162.5 overflow-hidden pt-20">
@@ -168,16 +158,11 @@ const filteredMovies = computed(() => {
             <!-- Movie Grid -->
             <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
                 <UserMovieCard
-                v-for="movie in filteredMovies"
+                v-for="movie in movies"
                 :key="movie.title"
                 :movie="movie"
                 @click="handleMovieClick"
                 />
-            </div>
-
-            <!-- Empty Search -->
-            <div v-if="filteredMovies.length === 0" class="py-20 text-center text-gray-500">
-                No movies found.
             </div>
 
         </section>

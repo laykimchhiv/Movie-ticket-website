@@ -210,13 +210,13 @@
                           justify-between gap-4 mb-6">
 
                 <div>
-                  <h3 class="text-lg font-semibold">
-                    Movies by Category
-                  </h3>
+              <h3 class="text-lg font-semibold">
+                Content by Category
+              </h3>
 
-                  <p class="text-sm text-gray-500">
-                    Distribution of content by category
-                  </p>
+              <p class="text-sm text-gray-500">
+                Distribution of content by category
+              </p>
                 </div>
 
               </div>
@@ -551,20 +551,30 @@ const categoryStats = computed(() => {
   const allMovies = filteredMovies.value
   if (!allMovies.length) return []
 
+  const validCategoryNames = new Set(categories.value.map(c => c.name))
+
   const counts = {}
 
   allMovies.forEach(m => {
-    const cat = m.category || 'Uncategorized'
-    counts[cat] = (counts[cat] || 0) + 1
+    const genres = Array.isArray(m.genre) ? m.genre : [m.genre]
+    genres.forEach(g => {
+      if (g && validCategoryNames.has(g)) {
+        counts[g] = (counts[g] || 0) + 1
+      }
+    })
   })
 
   const entries = Object.entries(counts)
+  if (!entries.length) return []
+
   const max = Math.max(...entries.map(([, c]) => c), 1)
 
-  return entries.map(([name, count]) => ({
-    name,
-    count,
-    height: Math.round((count / max) * 90)
-  }))
+  return entries
+    .map(([name, count]) => ({
+      name,
+      count,
+      height: Math.round((count / max) * 90)
+    }))
+    .sort((a, b) => b.count - a.count)
 })
 </script>

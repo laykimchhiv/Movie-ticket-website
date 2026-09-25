@@ -185,7 +185,7 @@
     {
       "id": "12",
       "title": "ABO Desire",
-      "category": "BL Series",
+      "category": "C-Drama",
       "genre": [
         "Drama",
         "Romance",
@@ -429,7 +429,7 @@
     {
       "id": "27",
       "title": "The lion king",
-      "category": "Anime",
+      "category": "Animation",
       "genre": [
         "Comedy",
         "Animation"
@@ -445,7 +445,7 @@
     {
       "id": "28",
       "title": "One Piece",
-      "category": "Anime",
+      "category": "Animation",
       "genre": [
         "Action",
         "Adventure",
@@ -458,6 +458,7 @@
       "poster": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p186423_b_v8_ae.jpg",
       "backdrop": "",
       "type": "series",
+      "videoUrl": "",
       "parts": [
         {
           "id": 1,
@@ -485,7 +486,7 @@
     {
       "id": "29",
       "title": "Zootopia",
-      "category": "Anime",
+      "category": "Animation",
       "genre": [
         "Comedy",
         "Adventure",
@@ -498,6 +499,7 @@
       "poster": "https://i.pinimg.com/1200x/93/0e/bd/930ebdcbe7dda50d57f4fa109ca7bb4c.jpg",
       "backdrop": "",
       "type": "series",
+      "videoUrl": "",
       "parts": [
         {
           "id": 1,
@@ -518,7 +520,7 @@
     {
       "id": "30",
       "title": "Sing",
-      "category": "Anime",
+      "category": "Animation",
       "genre": [
         "Comedy",
         "Adventure",
@@ -531,6 +533,7 @@
       "poster": "https://i.pinimg.com/736x/a5/3a/5a/a53a5a247ec5aa3016b2f85f56621922.jpg",
       "backdrop": "",
       "type": "series",
+      "videoUrl": "",
       "parts": [
         {
           "id": 1,
@@ -598,7 +601,7 @@
       "title": "Moana",
       "category": "Animation",
       "genre": [
-        "Comedy Action Anima"
+        "Comedy Action Animation"
       ],
       "rating": 8.4,
       "releaseDate": "2016-02-24",
